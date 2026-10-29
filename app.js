@@ -372,7 +372,7 @@
     }
   }
 
-  function processPayment(e) {
+  async function processPayment(e) {
     if (e) e.preventDefault();
     const nameInput = document.getElementById('checkout-name');
     const emailInput = document.getElementById('checkout-email');
@@ -387,8 +387,8 @@
       return;
     }
 
-    // Simulate payment loading
     const payBtn = document.getElementById('pay-submit-btn');
+    const originalBtnText = payBtn ? payBtn.innerHTML : '';
     if (payBtn) {
       payBtn.disabled = true;
       payBtn.innerHTML = `
@@ -396,49 +396,104 @@
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        Processing Payment...
+        Opening Cashfree Gateway...
       `;
     }
 
-    setTimeout(() => {
-      const orderId = 'DZ-' + Math.floor(100000 + Math.random() * 900000);
-      const totalPaid = getCartTotal();
-      state.orderCompleted = {
-        orderId,
-        name,
-        email,
-        phone,
-        items: [...state.cart],
-        bump: state.orderBumpAdded,
-        total: totalPaid,
-        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-      };
+    const totalPaid = getCartTotal();
+    const purchasedItems = [...state.cart];
+    const bumpIncluded = state.orderBumpAdded;
 
-      // Save order to dizozet_orders for Admin Portal
-      try {
-        const existingOrders = JSON.parse(localStorage.getItem('dizozet_orders') || '[]');
-        existingOrders.unshift({
-          ...state.orderCompleted,
-          timestamp: Date.now(),
-          status: 'Paid'
-        });
-        localStorage.setItem('dizozet_orders', JSON.stringify(existingOrders));
-      } catch (e) {}
+    try {
+      // 1. Create order on Cashfree via Vercel serverless API
+      const resp = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: totalPaid,
+          name,
+          email,
+          phone,
+          items: purchasedItems.map(i => ({ id: i.product.id, title: i.product.title, price: i.price, license: i.license }))
+        })
+      });
 
-      // Record in Firebase Cloud Firestore
-      if (window.DizozetDB && window.DizozetDB.recordOrder) {
-        window.DizozetDB.recordOrder(state.orderCompleted);
+      const orderData = await resp.json();
+
+      if (!orderData.success || !orderData.payment_session_id) {
+        throw new Error(orderData.error || 'Could not initiate payment session');
       }
 
-      // Clear Cart
-      state.cart = [];
-      state.orderBumpAdded = false;
-      saveCart();
+      // 2. Open Cashfree JS Checkout Modal
+      if (typeof Cashfree !== 'undefined') {
+        const cashfree = Cashfree({ mode: "production" });
+        
+        cashfree.checkout({
+          paymentSessionId: orderData.payment_session_id,
+          redirectTarget: "_modal"
+        }).then(async (result) => {
+          if (result.error) {
+            console.warn('Cashfree payment dismissed or error:', result.error);
+            if (payBtn) {
+              payBtn.disabled = false;
+              payBtn.innerHTML = originalBtnText;
+            }
+            return;
+          }
 
-      // Show Success Modal
-      closeCheckout();
-      openSuccessModal(state.orderCompleted);
-    }, 1500);
+          // Verify order status
+          await handlePaymentSuccess(orderData.order_id, name, email, phone, totalPaid, purchasedItems, bumpIncluded);
+        });
+      } else {
+        window.location.href = `https://api.cashfree.com/pg/orders/${orderData.order_id}`;
+      }
+
+    } catch (err) {
+      console.error('Payment error:', err);
+      alert('Payment Error: ' + err.message);
+      if (payBtn) {
+        payBtn.disabled = false;
+        payBtn.innerHTML = originalBtnText;
+      }
+    }
+  }
+
+  async function handlePaymentSuccess(orderId, name, email, phone, totalPaid, purchasedItems, bumpIncluded) {
+    state.orderCompleted = {
+      orderId,
+      name,
+      email,
+      phone,
+      items: purchasedItems || [...state.cart],
+      bump: bumpIncluded,
+      total: totalPaid,
+      date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+    };
+
+    // Save order to dizozet_orders for Admin Portal
+    try {
+      const existingOrders = JSON.parse(localStorage.getItem('dizozet_orders') || '[]');
+      existingOrders.unshift({
+        ...state.orderCompleted,
+        timestamp: Date.now(),
+        status: 'Paid'
+      });
+      localStorage.setItem('dizozet_orders', JSON.stringify(existingOrders));
+    } catch (e) {}
+
+    // Record in Firebase Cloud Firestore
+    if (window.DizozetDB && window.DizozetDB.recordOrder) {
+      window.DizozetDB.recordOrder(state.orderCompleted);
+    }
+
+    // Clear Cart
+    state.cart = [];
+    state.orderBumpAdded = false;
+    saveCart();
+
+    // Show Success Modal
+    closeCheckout();
+    openSuccessModal(state.orderCompleted);
   }
 
   function openSuccessModal(order) {
@@ -449,6 +504,19 @@
     document.getElementById('success-email').textContent = order.email;
     document.getElementById('success-total').textContent = `₹${order.total}.00`;
 
+    // Dynamic Google Drive Link
+    const driveBtn = modal.querySelector('a[href*="drive.google"]');
+    let driveLink = 'https://drive.google.com';
+    if (order.items && order.items.length > 0) {
+      const itemWithDrive = order.items.find(i => i.product && i.product.googleDriveLink);
+      if (itemWithDrive) {
+        driveLink = itemWithDrive.product.googleDriveLink;
+      }
+    }
+    if (driveBtn) {
+      driveBtn.href = driveLink;
+    }
+
     modal.classList.remove('hidden');
     requestAnimationFrame(() => modal.classList.remove('opacity-0'));
   }
@@ -458,6 +526,33 @@
     if (modal) {
       modal.classList.add('opacity-0');
       setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+  }
+
+  // Handle return redirect from Cashfree (e.g. UPI apps / Mobile)
+  async function checkRedirectPayment() {
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get('order_id');
+    if (orderId && orderId.startsWith('DZ_')) {
+      try {
+        const resp = await fetch('/api/verify-order?order_id=' + encodeURIComponent(orderId));
+        const data = await resp.json();
+        if (data && data.order_status === 'PAID') {
+          window.history.replaceState({}, document.title, window.location.pathname);
+          const customer = data.customer_details || {};
+          handlePaymentSuccess(
+            orderId,
+            customer.customer_name || 'Customer',
+            customer.customer_email || '',
+            customer.customer_phone || '',
+            data.order_amount || 59,
+            [],
+            false
+          );
+        }
+      } catch (e) {
+        console.warn('Redirect verify error:', e);
+      }
     }
   }
 
@@ -941,6 +1036,9 @@
         renderFreshGrid();
       });
     }
+
+    // Check Cashfree return redirect
+    checkRedirectPayment();
 
     // Checkout form submit
     const checkoutForm = document.getElementById('checkout-form');
