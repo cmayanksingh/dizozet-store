@@ -471,6 +471,12 @@
                 <input id="set-banner" type="text" value="🔥 FLASH SALE: GET ANY REELS BUNDLE AT ₹59 ONLY | USE CODE: DIZO85" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
               </div>
 
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Master Google Drive Link (Automatic delivery for all orders)</label>
+                <input id="set-drive-link" type="text" placeholder="https://drive.google.com/drive/folders/..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                <span class="text-[10px] text-slate-500">Jab customer pay karega, use turant yeh Google Drive link milega.</span>
+              </div>
+
               <div class="pt-4 border-t border-slate-800">
                 <label class="block text-xs font-bold text-slate-300 mb-1">Change Admin Password</label>
                 <input id="set-password" type="text" placeholder="Leave blank to keep current password" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" />
@@ -1181,6 +1187,7 @@
       document.getElementById('set-whatsapp').value = s.whatsapp || '917895768118';
       document.getElementById('set-upi').value = s.upi || '7895768118@ptsbi';
       document.getElementById('set-banner').value = s.banner || '🔥 FLASH SALE: GET ANY REELS BUNDLE AT ₹59 ONLY | USE CODE: DIZO85';
+      document.getElementById('set-drive-link').value = s.masterDriveLink || '';
     }
 
     function handleSaveSettings() {
@@ -1189,6 +1196,7 @@
       s.whatsapp = document.getElementById('set-whatsapp').value.trim();
       s.upi = document.getElementById('set-upi').value.trim();
       s.banner = document.getElementById('set-banner').value.trim();
+      s.masterDriveLink = document.getElementById('set-drive-link').value.trim();
 
       const newPass = document.getElementById('set-password').value.trim();
       if (newPass) {

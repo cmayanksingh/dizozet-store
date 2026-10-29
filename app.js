@@ -506,11 +506,12 @@
 
     // Dynamic Google Drive Link
     const driveBtn = modal.querySelector('a[href*="drive.google"]');
-    let driveLink = 'https://drive.google.com';
+    const storeSettings = getStoreSettings();
+    let driveLink = storeSettings.masterDriveLink || 'https://drive.google.com';
     if (order.items && order.items.length > 0) {
-      const itemWithDrive = order.items.find(i => i.product && i.product.googleDriveLink);
+      const itemWithDrive = order.items.find(i => i.product && i.product.googleDriveLink && i.product.googleDriveLink.trim().length > 5);
       if (itemWithDrive) {
-        driveLink = itemWithDrive.product.googleDriveLink;
+        driveLink = itemWithDrive.product.googleDriveLink.trim();
       }
     }
     if (driveBtn) {
