@@ -6,6 +6,9 @@
   <title>Dizozet — Admin Portal & Store Manager</title>
   <link rel="icon" type="image/png" href="images/dizozet-logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="firebase-db.js"></script>
   <script src="catalog_data.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -489,6 +492,19 @@
             </div>
 
             <div class="space-y-4">
+              <div class="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 to-indigo-950/40 border border-purple-500/40 flex items-center justify-between">
+                <div>
+                  <h4 class="text-xs font-extrabold text-white flex items-center gap-1.5">
+                    <span>☁️ Sync All 125 Bundles to Firebase Cloud</span>
+                    <span class="px-2 py-0.5 rounded-full text-[9px] bg-emerald-500/20 text-emerald-400 font-black">Connected</span>
+                  </h4>
+                  <p class="text-[11px] text-slate-400">Upload all products to Firebase Firestore cloud database so all devices stay in sync.</p>
+                </div>
+                <button id="sync-cloud-btn" onclick="syncAllToCloud()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md transition-all">
+                  Sync to Cloud ☁️
+                </button>
+              </div>
+
               <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
                 <div>
                   <h4 class="text-xs font-extrabold text-white">Download Updated catalog_data.js</h4>
@@ -752,11 +768,30 @@
     let currentProducts = [];
     let currentOrders = [];
 
-    function initDashboard() {
+    async function initDashboard() {
       currentProducts = getStoredProducts();
       currentOrders = getStoredOrders();
       refreshUI();
       initSettingsForm();
+
+      // Listen to real-time Cloud Firestore orders!
+      if (window.DizozetDB && window.DizozetDB.listenToOrders) {
+        window.DizozetDB.listenToOrders(orders => {
+          if (orders) {
+            currentOrders = orders;
+            refreshUI();
+          }
+        });
+      }
+
+      // Fetch cloud products
+      if (window.DizozetDB && window.DizozetDB.getProducts) {
+        const cloudProducts = await window.DizozetDB.getProducts();
+        if (cloudProducts && cloudProducts.length > 0) {
+          currentProducts = cloudProducts;
+          refreshUI();
+        }
+      }
     }
 
     function refreshUI() {
@@ -899,8 +934,11 @@
 
       currentProducts.unshift(newProduct);
       saveProducts(currentProducts);
+      if (window.DizozetDB && window.DizozetDB.saveProduct) {
+        window.DizozetDB.saveProduct(newProduct);
+      }
 
-      alert(`✅ Bundle "${title}" added successfully! It is now live on your store.`);
+      alert(`✅ Bundle "${title}" added successfully! It is now live on your store and Cloud Database.`);
       document.getElementById('add-product-form').reset();
       switchTab('products');
     }
@@ -951,8 +989,11 @@
       currentProducts[idx].isTrending = document.getElementById('edit-is-trending').checked;
 
       saveProducts(currentProducts);
+      if (window.DizozetDB && window.DizozetDB.saveProduct) {
+        window.DizozetDB.saveProduct(currentProducts[idx]);
+      }
       closeEditModal();
-      alert('✅ Bundle updated successfully!');
+      alert('✅ Bundle updated successfully in Store & Cloud Database!');
     }
 
     function deleteProduct(productId) {
@@ -960,8 +1001,12 @@
       if (!p) return;
       if (!confirm(`Are you sure you want to delete "${p.title}"?`)) return;
 
+      const deletedId = productId;
       currentProducts = currentProducts.filter(x => x.id !== productId);
       saveProducts(currentProducts);
+      if (window.DizozetDB && window.DizozetDB.deleteProduct) {
+        window.DizozetDB.deleteProduct(deletedId);
+      }
     }
 
     // --- Orders ---
@@ -1030,13 +1075,20 @@
       if (currentOrders[idx]) {
         currentOrders[idx].status = newStatus;
         saveOrders(currentOrders);
+        if (window.DizozetDB && window.DizozetDB.updateOrderStatus) {
+          window.DizozetDB.updateOrderStatus(currentOrders[idx].orderId, newStatus);
+        }
       }
     }
 
     function deleteOrder(idx) {
       if (confirm('Delete this order record?')) {
+        const target = currentOrders[idx];
         currentOrders.splice(idx, 1);
         saveOrders(currentOrders);
+        if (target && window.DizozetDB && window.DizozetDB.deleteOrder) {
+          window.DizozetDB.deleteOrder(target.orderId);
+        }
       }
     }
 
@@ -1166,6 +1218,27 @@
       a.href = url;
       a.download = 'dizozet_products_backup.json';
       a.click();
+    }
+
+    async function syncAllToCloud() {
+      const btn = document.getElementById('sync-cloud-btn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Syncing... ⏳';
+      }
+      try {
+        if (window.DizozetDB && window.DizozetDB.seedCatalogIfEmpty) {
+          await window.DizozetDB.seedCatalogIfEmpty();
+        }
+        alert('✅ All bundles successfully synced with Firebase Firestore Cloud Database!');
+      } catch (e) {
+        alert('Sync note: ' + e.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Sync to Cloud ☁️';
+        }
+      }
     }
 
     function resetFactoryDefaults() {

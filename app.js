@@ -425,6 +425,11 @@
         localStorage.setItem('dizozet_orders', JSON.stringify(existingOrders));
       } catch (e) {}
 
+      // Record in Firebase Cloud Firestore
+      if (window.DizozetDB && window.DizozetDB.recordOrder) {
+        window.DizozetDB.recordOrder(state.orderCompleted);
+      }
+
       // Clear Cart
       state.cart = [];
       state.orderBumpAdded = false;
