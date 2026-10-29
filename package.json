@@ -1,0 +1,21 @@
+{
+  "name": "dizistore",
+  "version": "1.0.0",
+  "description": "Pixel-perfect recreation of Dizistore (https://dizistore.in/) with photos, prices, design, layout, colors, and interactive features.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "dizistore",
+    "reels",
+    "ecommerce",
+    "store",
+    "tailwind"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "isomorphic-git": "^1.44.8"
+  }
+}
