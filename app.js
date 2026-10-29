@@ -20,6 +20,45 @@
     visibleProductsLimit: 16
   };
 
+  // Dynamic Catalog, Settings & Coupons Loader
+  function getCatalog() {
+    try {
+      const stored = localStorage.getItem('dizozet_catalog');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return (typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : [];
+  }
+
+  function getStoreSettings() {
+    try {
+      const stored = localStorage.getItem('dizozet_settings');
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return {
+      storeName: 'Dizozet',
+      whatsapp: '917895768118',
+      upi: '7895768118@ptsbi',
+      banner: '🔥 FLASH SALE: GET ANY REELS BUNDLE AT ₹59 ONLY | USE CODE: DIZO85'
+    };
+  }
+
+  function getCoupons() {
+    try {
+      const stored = localStorage.getItem('dizozet_coupons');
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return [
+      { code: 'DIZO85', discountPercent: 15, active: true },
+      { code: 'DIZI85', discountPercent: 15, active: true },
+      { code: 'VIRAL85', discountPercent: 15, active: true },
+      { code: 'SAVE10', discountPercent: 10, active: true }
+    ];
+  }
+
+
   // Load cart from localStorage (with backwards compatibility)
   try {
     const savedCart = localStorage.getItem('dizozet_cart') || localStorage.getItem('viralbox_cart');
@@ -67,7 +106,7 @@
 
   // --- Cart Operations ---
   function addToCart(productId, license = 'personal') {
-    const product = PRODUCTS_DATA.find(p => p.id === productId);
+    const product = getCatalog().find(p => p.id === productId);
     if (!product) return;
 
     const price = license === 'reseller' ? product.resellerPrice : product.personalPrice;
@@ -151,10 +190,11 @@
   function getCartTotal() {
     const subtotal = getCartSubtotal();
     let discount = 0;
-    if (state.couponApplied === 'DIZO85' || state.couponApplied === 'DIZI85' || state.couponApplied === 'VIRAL85') {
-      discount = Math.round(subtotal * 0.15); // Extra 15% off
-    } else if (state.couponApplied === 'SAVE10') {
-      discount = Math.round(subtotal * 0.10);
+    if (state.couponApplied) {
+      const activeCoupons = getCoupons();
+      const matched = activeCoupons.find(c => c.active && c.code.toUpperCase() === state.couponApplied.toUpperCase());
+      const pct = matched ? matched.discountPercent : 15;
+      discount = Math.round(subtotal * (pct / 100));
     }
     state.discountAmount = discount;
     return Math.max(0, subtotal - discount);
@@ -374,6 +414,17 @@
         date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
       };
 
+      // Save order to dizozet_orders for Admin Portal
+      try {
+        const existingOrders = JSON.parse(localStorage.getItem('dizozet_orders') || '[]');
+        existingOrders.unshift({
+          ...state.orderCompleted,
+          timestamp: Date.now(),
+          status: 'Paid'
+        });
+        localStorage.setItem('dizozet_orders', JSON.stringify(existingOrders));
+      } catch (e) {}
+
       // Clear Cart
       state.cart = [];
       state.orderBumpAdded = false;
@@ -407,7 +458,7 @@
 
   // --- Reel Video Preview Modal ---
   function openReelPreview(productId) {
-    const p = PRODUCTS_DATA.find(x => x.id === productId) || PRODUCTS_DATA[0];
+    const p = getCatalog().find(x => x.id === productId) || getCatalog()[0];
     state.previewProduct = p;
 
     const modal = document.getElementById('reel-preview-modal');
@@ -448,7 +499,7 @@
 
   // --- Product Detail Modal ---
   function openProductDetail(productId) {
-    const p = PRODUCTS_DATA.find(x => x.id === productId);
+    const p = getCatalog().find(x => x.id === productId);
     if (!p) return;
     state.detailProduct = p;
 
@@ -584,9 +635,9 @@
     if (!container) return;
 
     // Filter trending or top products
-    let trending = PRODUCTS_DATA.filter(p => p.isHot || p.isTrending);
+    let trending = getCatalog().filter(p => p.isHot || p.isTrending);
     if (trending.length < 8) {
-      trending = PRODUCTS_DATA.slice(0, 10);
+      trending = getCatalog().slice(0, 10);
     }
 
     container.innerHTML = trending.map(p => {
@@ -653,7 +704,7 @@
     const container = document.getElementById('fresh-grid-container');
     if (!container) return;
 
-    let filtered = PRODUCTS_DATA;
+    let filtered = getCatalog();
 
     // Filter by Category
     if (state.selectedCategory !== 'All') {
@@ -690,7 +741,7 @@
     if (!container) return;
 
     // 6 sample videos with real MP4 previews
-    const previewItems = PRODUCTS_DATA.filter(p => p.previewVideoUrl).slice(0, 6);
+    const previewItems = getCatalog().filter(p => p.previewVideoUrl).slice(0, 6);
     container.innerHTML = previewItems.map((p, idx) => `
       <div class="w-[240px] sm:w-[280px] shrink-0 rounded-[28px] overflow-hidden bg-slate-900 border border-slate-800 shadow-xl relative aspect-[9/16] group">
         <video src="${p.previewVideoUrl}" class="w-full h-full object-cover" loop muted playsinline autoplay></video>
