@@ -14,8 +14,5 @@
     "tailwind"
   ],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "isomorphic-git": "^1.44.8"
-  }
+  "license": "ISC"
 }
