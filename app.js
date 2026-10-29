@@ -1,4 +1,4 @@
-// Dizistore Application Logic
+// Dizozet Application Logic
 (function () {
   'use strict';
 
@@ -22,7 +22,7 @@
 
   // Load cart from localStorage (with backwards compatibility)
   try {
-    const savedCart = localStorage.getItem('dizistore_cart') || localStorage.getItem('viralbox_cart');
+    const savedCart = localStorage.getItem('dizozet_cart') || localStorage.getItem('viralbox_cart');
     if (savedCart) {
       state.cart = JSON.parse(savedCart);
     }
@@ -30,7 +30,7 @@
 
   function saveCart() {
     try {
-      localStorage.setItem('dizistore_cart', JSON.stringify(state.cart));
+      localStorage.setItem('dizozet_cart', JSON.stringify(state.cart));
     } catch (e) {}
     updateCartUI();
   }
@@ -151,7 +151,7 @@
   function getCartTotal() {
     const subtotal = getCartSubtotal();
     let discount = 0;
-    if (state.couponApplied === 'DIZI85' || state.couponApplied === 'VIRAL85') {
+    if (state.couponApplied === 'DIZO85' || state.couponApplied === 'DIZI85' || state.couponApplied === 'VIRAL85') {
       discount = Math.round(subtotal * 0.15); // Extra 15% off
     } else if (state.couponApplied === 'SAVE10') {
       discount = Math.round(subtotal * 0.10);
@@ -202,10 +202,10 @@
     let html = '';
     state.cart.forEach(item => {
       const p = item.product;
-      const thumb = p.localThumbnail || p.thumbnail || 'images/dizistore-logo.png';
+      const thumb = p.localThumbnail || p.thumbnail || 'images/dizozet-logo.png';
       html += `
         <div class="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#eee8f8] shadow-xs flex items-center gap-3 relative group">
-          <img src="${thumb}" alt="${p.title}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 bg-slate-100" onerror="this.src='images/dizistore-logo.png'"/>
+          <img src="${thumb}" alt="${p.title}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 bg-slate-100" onerror="this.src='images/dizozet-logo.png'"/>
           <div class="flex-1 min-w-0">
             <h4 class="text-xs sm:text-[13px] font-extrabold text-[#162048] line-clamp-2 leading-snug">${p.title}</h4>
             <div class="flex items-center gap-2 mt-1">
@@ -214,14 +214,14 @@
             </div>
             <div class="flex items-center justify-between mt-2.5">
               <div class="flex items-center gap-1.5 border border-slate-200 rounded-lg px-2 py-0.5">
-                <button type="button" class="text-slate-400 hover:text-slate-800 text-sm font-black px-1" onclick="window.Dizistore.updateItemQty('${p.id}', '${item.license}', -1)">-</button>
+                <button type="button" class="text-slate-400 hover:text-slate-800 text-sm font-black px-1" onclick="window.Dizozet.updateItemQty('${p.id}', '${item.license}', -1)">-</button>
                 <span class="text-xs font-bold text-slate-700 min-w-[14px] text-center">${item.quantity}</span>
-                <button type="button" class="text-slate-400 hover:text-slate-800 text-sm font-black px-1" onclick="window.Dizistore.updateItemQty('${p.id}', '${item.license}', 1)">+</button>
+                <button type="button" class="text-slate-400 hover:text-slate-800 text-sm font-black px-1" onclick="window.Dizozet.updateItemQty('${p.id}', '${item.license}', 1)">+</button>
               </div>
               <span class="font-black text-sm text-[#162048]">₹${item.price * item.quantity}.00</span>
             </div>
           </div>
-          <button type="button" aria-label="Remove item" class="absolute top-2.5 right-2.5 text-slate-300 hover:text-rose-500 transition-colors p-1" onclick="window.Dizistore.removeFromCart('${p.id}', '${item.license}')">
+          <button type="button" aria-label="Remove item" class="absolute top-2.5 right-2.5 text-slate-300 hover:text-rose-500 transition-colors p-1" onclick="window.Dizozet.removeFromCart('${p.id}', '${item.license}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
@@ -455,7 +455,7 @@
     const modal = document.getElementById('product-detail-modal');
     if (!modal) return;
 
-    const thumb = p.localThumbnail || p.thumbnail || 'images/dizistore-logo.png';
+    const thumb = p.localThumbnail || p.thumbnail || 'images/dizozet-logo.png';
     document.getElementById('detail-modal-img').src = thumb;
     document.getElementById('detail-modal-title').textContent = p.title;
     document.getElementById('detail-modal-desc').textContent = p.shortDescription || '';
@@ -506,13 +506,13 @@
 
   // --- Rendering Catalog Grids ---
   function createProductCardHTML(p) {
-    const thumb = p.localThumbnail || p.thumbnail || 'images/dizistore-logo.png';
+    const thumb = p.localThumbnail || p.thumbnail || 'images/dizozet-logo.png';
     const discount = Math.round(((p.personalOriginalPrice - p.personalPrice) / p.personalOriginalPrice) * 100);
 
     return `
       <div class="bg-white rounded-2xl sm:rounded-[24px] border border-[#eee8f8] shadow-[0_2px_12px_rgba(40,20,80,0.03)] hover:shadow-[0_14px_32px_rgba(108,60,240,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group">
-        <div class="relative aspect-[4/3] overflow-hidden bg-slate-900 block cursor-pointer" onclick="window.Dizistore.openProductDetail('${p.id}')">
-          <img src="${thumb}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='images/dizistore-logo.png'"/>
+        <div class="relative aspect-[4/3] overflow-hidden bg-slate-900 block cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
+          <img src="${thumb}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='images/dizozet-logo.png'"/>
           
           ${p.isHot ? `
             <div class="absolute top-0 right-0 overflow-hidden w-24 h-24 pointer-events-none">
@@ -529,7 +529,7 @@
           ` : ''}
 
           <div class="absolute top-2.5 left-2.5 flex items-center gap-1">
-            <button type="button" aria-label="Play video preview" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#7c3aed] transition-colors" onclick="event.stopPropagation(); window.Dizistore.openReelPreview('${p.id}')">
+            <button type="button" aria-label="Play video preview" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#7c3aed] transition-colors" onclick="event.stopPropagation(); window.Dizozet.openReelPreview('${p.id}')">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
             </button>
           </div>
@@ -542,7 +542,7 @@
 
         <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-3">
           <div class="space-y-1.5">
-            <h3 class="font-extrabold text-xs sm:text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizistore.openProductDetail('${p.id}')">
+            <h3 class="font-extrabold text-xs sm:text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
               ${p.title}
             </h3>
             <div class="flex items-center gap-1.5 pt-0.5 flex-wrap">
@@ -564,11 +564,11 @@
             </div>
 
             <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
-              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-colors" onclick="window.Dizistore.addToCart('${p.id}', 'personal')">
+              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                 <span>Add</span>
               </button>
-              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizistore.buyNow('${p.id}', 'personal')">
+              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                 <span>Buy Now</span>
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
@@ -590,19 +590,19 @@
     }
 
     container.innerHTML = trending.map(p => {
-      const thumb = p.localThumbnail || p.thumbnail || 'images/dizistore-logo.png';
+      const thumb = p.localThumbnail || p.thumbnail || 'images/dizozet-logo.png';
       const discount = Math.round(((p.personalOriginalPrice - p.personalPrice) / p.personalOriginalPrice) * 100);
       return `
         <div class="w-72 sm:w-[305px] bg-white rounded-[24px] border border-[#eee8f8] shadow-[0_4px_18px_rgba(40,20,80,0.03)] hover:shadow-[0_14px_32px_rgba(108,60,240,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group shrink-0">
-          <div class="relative aspect-[4/3] overflow-hidden bg-slate-900 block cursor-pointer" onclick="window.Dizistore.openProductDetail('${p.id}')">
-            <img src="${thumb}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='images/dizistore-logo.png'"/>
+          <div class="relative aspect-[4/3] overflow-hidden bg-slate-900 block cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
+            <img src="${thumb}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='images/dizozet-logo.png'"/>
             <div class="absolute top-0 right-0 overflow-hidden w-24 h-24 pointer-events-none">
               <div class="absolute transform rotate-45 bg-gradient-to-r from-red-700 to-rose-700 text-white font-black text-[9px] py-1 right-[-32px] top-[18px] w-[120px] text-center shadow-md flex items-center justify-center gap-1">
                 <span>🔥</span><span>HOT</span>
               </div>
             </div>
             <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-md text-[10px] font-black bg-black/85 text-white border border-white/20">1080P</span>
-            <button type="button" aria-label="Preview" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30" onclick="event.stopPropagation(); window.Dizistore.openReelPreview('${p.id}')">
+            <button type="button" aria-label="Preview" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30" onclick="event.stopPropagation(); window.Dizozet.openReelPreview('${p.id}')">
               <span class="w-12 h-12 rounded-full bg-white/95 text-[#6533e4] shadow-xl flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform">
                 <svg class="w-5 h-5 ml-0.5 fill-[#6533e4]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
               </span>
@@ -611,7 +611,7 @@
 
           <div class="p-4 flex-1 flex flex-col justify-between space-y-3.5">
             <div class="space-y-2">
-              <h3 class="font-extrabold text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizistore.openProductDetail('${p.id}')">
+              <h3 class="font-extrabold text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
                 ${p.title}
               </h3>
               <div class="flex items-center gap-2 pt-0.5">
@@ -633,11 +633,11 @@
               </div>
 
               <div class="grid grid-cols-2 gap-2">
-                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors" onclick="window.Dizistore.addToCart('${p.id}', 'personal')">
+                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                   <span>Add to Cart</span>
                 </button>
-                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizistore.buyNow('${p.id}', 'personal')">
+                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                   <span>Buy Now</span>
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
                 </button>
@@ -706,7 +706,7 @@
             <h4 class="font-extrabold text-xs sm:text-sm text-white line-clamp-2 leading-tight">${p.title}</h4>
             <div class="flex items-center justify-between pt-1">
               <span class="text-xs font-black text-cyan-300">₹${p.personalPrice}.00</span>
-              <button type="button" class="py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] text-white font-extrabold text-[11px] hover:opacity-95 shadow-md" onclick="window.Dizistore.buyNow('${p.id}', 'personal')">
+              <button type="button" class="py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] text-white font-extrabold text-[11px] hover:opacity-95 shadow-md" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                 Get Pack
               </button>
             </div>
@@ -867,12 +867,12 @@
     if (couponBtn && couponInput) {
       couponBtn.addEventListener('click', () => {
         const code = couponInput.value.trim().toUpperCase();
-        if (code === 'DIZI85' || code === 'VIRAL85' || code === 'SAVE10') {
+        if (code === 'DIZO85' || code === 'DIZI85' || code === 'VIRAL85' || code === 'SAVE10') {
           state.couponApplied = code;
           showToast(`Coupon "${code}" applied successfully!`);
           updateCartUI();
         } else {
-          alert('Invalid coupon code. Try "DIZI85" for 15% discount!');
+          alert('Invalid coupon code. Try "DIZO85" for 15% discount!');
         }
       });
     }
@@ -894,7 +894,8 @@
   }
 
   // Expose global methods
-  window.Dizistore = {
+  window.Dizozet = {
+    state,
     state,
     addToCart,
     removeFromCart,
@@ -917,7 +918,8 @@
   };
 
   // Backwards compatibility alias
-  window.ViralBox = window.Dizistore;
+  window.Dizistore = window.Dizozet;
+  window.ViralBox = window.Dizozet;
 
   // Run on DOM loaded
   if (document.readyState === 'loading') {

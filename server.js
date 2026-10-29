@@ -55,7 +55,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`\n======================================================`);
-  console.log(`🚀 Dizistore Recreated Website is running!`);
+  console.log(`🚀 Dizozet Recreated Website is running!`);
   console.log(`🔗 Local URL: http://localhost:${PORT}`);
   console.log(`======================================================\n`);
 });

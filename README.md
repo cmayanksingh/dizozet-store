@@ -1,7 +1,7 @@
-# Dizistore – Website
+# Dizozet – Website
 
-A pixel-perfect digital reels bundle store with **Dizistore** branding and DizoPulse integration:
-- **Brand Identity**: **Dizistore** with official 3D neon logo
+A pixel-perfect digital reels bundle store with **Dizozet** branding and DizoPulse integration:
+- **Brand Identity**: **Dizozet** with official 3D neon logo
 - **Designed by DizoPulse**: Footer attribution with direct WhatsApp integration
 - **Create Your Own Store**: Direct pre-filled WhatsApp link to order an online store with DizoPulse
 - **Official WhatsApp Support**: **+91 78957 68118** with a floating WhatsApp action button

@@ -1,4 +1,4 @@
-// Dizistore Catalog Data
+// Dizozet Catalog Data
 const PRODUCTS_DATA = [
   {
     "id": "rb-1000-ulti-pulti-duniya-ulti-duniya-reverse-world-ai-reels-bundle",
@@ -6548,7 +6548,7 @@ const TESTIMONIALS_DATA = [
     "name": "Pooja Kashyap",
     "handle": "@daily_motivation_hub",
     "chip": "Made 10x ROI in 7 Days",
-    "quote": "I launched my motivation theme page and monetized it within 2 weeks! Dizistore saved me hundreds of hours of video editing.",
+    "quote": "I launched my motivation theme page and monetized it within 2 weeks! Dizozet saved me hundreds of hours of video editing.",
     "followers": "280K Followers"
   },
   {
