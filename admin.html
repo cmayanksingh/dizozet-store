@@ -276,7 +276,7 @@
                     <th class="py-3.5 px-3">Reels</th>
                     <th class="py-3.5 px-3">Price</th>
                     <th class="py-3.5 px-3">Badges</th>
-                    <th class="py-3.5 px-4 text-right">Actions</th>
+                    <th class="py-3.5 px-4 text-right sticky right-0 bg-[#090e1c] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] z-10 min-w-[130px]">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="products-table-body" class="divide-y divide-slate-800/60 font-medium">
@@ -859,12 +859,15 @@
       tbody.innerHTML = list.map(p => {
         const thumb = p.localThumbnail || p.thumbnail || 'images/dizozet-logo.png';
         return `
-          <tr class="hover:bg-slate-800/40 transition-colors">
+          <tr class="hover:bg-slate-800/40 transition-colors group">
             <td class="py-3 px-4 flex items-center gap-3">
-              <img src="${thumb}" alt="${p.title}" class="w-10 h-10 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0" onerror="this.src='images/dizozet-logo.png'" />
-              <div class="min-w-0 max-w-xs sm:max-w-md">
-                <span class="font-bold text-white block truncate" title="${p.title}">${p.title}</span>
-                <span class="text-[10px] text-slate-500 block truncate">ID: ${p.id}</span>
+              <img src="${thumb}" alt="${p.title}" class="w-10 h-10 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0 cursor-pointer hover:opacity-80" onclick="openEditModal('${p.id}')" onerror="this.src='images/dizozet-logo.png'" />
+              <div class="min-w-0 max-w-[220px] sm:max-w-xs md:max-w-sm cursor-pointer" onclick="openEditModal('${p.id}')">
+                <span class="font-bold text-white block truncate hover:text-purple-400 transition-colors" title="${p.title}">${p.title}</span>
+                <span class="text-[10px] text-slate-500 block truncate flex items-center gap-1.5">
+                  <span>ID: ${p.id}</span>
+                  <span class="text-purple-400 font-bold opacity-0 group-hover:opacity-100 transition-opacity">✏️ Click to Edit</span>
+                </span>
               </div>
             </td>
             <td class="py-3 px-3 text-slate-300">
@@ -879,9 +882,13 @@
               ${p.isHot ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-rose-500/20 text-rose-400 border border-rose-500/30 mr-1">HOT</span>' : ''}
               ${p.isTrending ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/30">TRENDING</span>' : ''}
             </td>
-            <td class="py-3 px-4 text-right space-x-1">
-              <button onclick="openEditModal('${p.id}')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors">Edit</button>
-              <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-bold transition-colors">Delete</button>
+            <td class="py-3 px-4 text-right space-x-1.5 sticky right-0 bg-[#0d1424] group-hover:bg-[#11192e] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] z-10 min-w-[130px] transition-colors">
+              <button onclick="openEditModal('${p.id}')" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-black shadow-md shadow-purple-500/25 transition-all hover:scale-105 inline-flex items-center gap-1">
+                <span>✏️</span><span>Edit</span>
+              </button>
+              <button onclick="deleteProduct('${p.id}')" title="Delete bundle" class="px-2 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 text-xs font-bold transition-colors">
+                🗑️
+              </button>
             </td>
           </tr>
         `;
