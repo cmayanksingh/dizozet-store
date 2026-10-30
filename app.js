@@ -26,7 +26,17 @@
       const stored = localStorage.getItem('dizozet_catalog');
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          if (typeof PRODUCTS_DATA !== 'undefined') {
+            parsed.forEach(p => {
+              const base = PRODUCTS_DATA.find(b => b.id === p.id);
+              if (base && base.googleDriveLink && (!p.googleDriveLink || p.googleDriveLink.length < 5)) {
+                p.googleDriveLink = base.googleDriveLink;
+              }
+            });
+          }
+          return parsed;
+        }
       }
     } catch (e) {}
     return (typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : [];
