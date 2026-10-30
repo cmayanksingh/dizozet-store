@@ -26,8 +26,10 @@
             sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
           },
           colors: {
-            'rb-purple': '#6533e4',
-            'rb-purple-dark': '#5326c9',
+            'rb-orange': '#ff5a1f',
+            'rb-orange-dark': '#e04812',
+            'rb-purple': '#ff5a1f',
+            'rb-purple-dark': '#e04812',
             'rb-dark': '#0b1021',
           }
         }
@@ -62,14 +64,14 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-[#6533e4] selection:text-white pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-0 bg-[#fbfaff] text-slate-800">
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#ff5a1f] selection:text-white pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-0 bg-[#fffdfa] text-slate-800">
 
   <!-- ================= TOP ANNOUNCEMENT BAR ================= -->
-  <div class="bg-gradient-to-r from-[#6b39ff] via-[#4338ca] to-[#0ea5e9] py-2 px-4 text-center text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 sticky top-0 z-50 shadow-xs">
+  <div class="bg-gradient-to-r from-[#ea580c] via-[#ff5a1f] to-[#f59e0b] py-2 px-4 text-center text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 sticky top-0 z-50 shadow-sm">
     <span class="animate-bounce">⚡</span>
     <span id="announcement-banner-text">FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS FOR ₹199 | USE CODE: <span class="bg-white/20 px-1.5 py-0.5 rounded text-white tracking-wider font-extrabold">DIZO85</span></span>
     <span class="hidden md:inline text-white/50">|</span>
-    <a href="https://wa.me/917895768118" target="_blank" rel="noopener noreferrer" class="site-whatsapp-link hidden md:inline-flex items-center gap-1 text-cyan-200 hover:text-white transition-colors">
+    <a href="https://wa.me/917895768118" target="_blank" rel="noopener noreferrer" class="site-whatsapp-link hidden md:inline-flex items-center gap-1 text-amber-100 hover:text-white transition-colors">
       <span id="header-wa-text">WhatsApp: +91 78957 68118</span>
     </a>
   </div>
@@ -81,22 +83,22 @@
         
         <!-- Logo & Dizozet Brand Name (Clean: No tagline below name) -->
         <a class="flex items-center gap-3 group shrink-0 cursor-pointer" onclick="window.Dizozet.navigateTo('home')">
-          <div class="h-10 sm:h-11 w-10 sm:w-11 rounded-2xl bg-[#080d1a] border border-slate-800/80 p-1 flex items-center justify-center shadow-md shadow-purple-500/15 group-hover:scale-105 transition-transform overflow-hidden">
+          <div class="h-10 sm:h-11 w-10 sm:w-11 rounded-2xl bg-[#080d1a] border border-slate-800/80 p-1 flex items-center justify-center shadow-md shadow-orange-500/15 group-hover:scale-105 transition-transform overflow-hidden">
             <img src="images/dizozet-logo.png" alt="Dizozet Logo" class="w-full h-full object-contain" onerror="this.src='images/dizozet-logo.jpg'" />
           </div>
-          <span class="font-black text-[22px] sm:text-[24px] tracking-tight leading-none text-[#162048] group-hover:text-[#6533e4] transition-colors">Dizozet</span>
+          <span class="font-black text-[22px] sm:text-[24px] tracking-tight leading-none text-[#162048] group-hover:text-[#ff5a1f] transition-colors">Dizozet</span>
         </a>
 
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center gap-7">
           <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#162048]" data-tab="home" onclick="window.Dizozet.navigateTo('home')">
             Home
-            <span class="nav-underline absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-[#6b39ff] to-[#ff4fb3] rounded-full"></span>
+            <span class="nav-underline absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-[#ff5a1f] to-[#f59e0b] rounded-full"></span>
           </button>
-          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#162048]" data-tab="shop" onclick="window.Dizozet.navigateTo('shop')">Shop</button>
-          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#162048]" data-tab="reels" onclick="window.Dizozet.navigateTo('reels')">Reels Feed</button>
-          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#162048]" data-tab="orders" onclick="window.Dizozet.navigateTo('orders')">My Orders</button>
-          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#162048]" data-tab="about" onclick="window.Dizozet.navigateTo('about')">About Us</button>
+          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#ff5a1f]" data-tab="shop" onclick="window.Dizozet.navigateTo('shop')">Shop</button>
+          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#ff5a1f]" data-tab="reels" onclick="window.Dizozet.navigateTo('reels')">Reels Feed</button>
+          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#ff5a1f]" data-tab="orders" onclick="window.Dizozet.navigateTo('orders')">My Orders</button>
+          <button type="button" class="desktop-nav-link text-[15px] font-bold transition-all relative py-1 text-[#3c4666] hover:text-[#ff5a1f]" data-tab="about" onclick="window.Dizozet.navigateTo('about')">About Us</button>
         </nav>
 
         <!-- Right Side: Search & Cart Button -->
@@ -104,27 +106,27 @@
           
           <!-- Search input form (Desktop) -->
           <div class="relative hidden sm:block">
-            <form class="flex items-center bg-[#fbf9ff] hover:bg-[#f5f0ff] focus-within:bg-white border border-[#e8dfff] rounded-full pl-3.5 pr-2 py-0.5 focus-within:ring-2 focus-within:ring-[#7c3aed]/20 focus-within:border-[#7c3aed] transition-all" onsubmit="event.preventDefault();">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#7c3aed] shrink-0"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-              <input type="text" autocomplete="off" spellcheck="false" aria-label="Search bundles" placeholder="Search bundles..." class="site-search-input w-44 lg:w-56 py-2 px-2 bg-transparent text-[13px] font-medium text-[#182247] placeholder:text-[#525b7a] focus:outline-none" />
+            <form class="flex items-center bg-[#fffbf5] hover:bg-[#fff7ed] focus-within:bg-white border border-[#fed7aa] rounded-full pl-3.5 pr-2 py-0.5 focus-within:ring-2 focus-within:ring-[#ff5a1f]/20 focus-within:border-[#ff5a1f] transition-all" onsubmit="event.preventDefault();">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff5a1f] shrink-0"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" autocomplete="off" spellcheck="false" aria-label="Search bundles" placeholder="Search bundles..." class="site-search-input w-44 lg:w-56 py-2 px-2 bg-transparent text-[13px] font-medium text-[#182247] placeholder:text-[#8c6b54] focus:outline-none" />
             </form>
           </div>
 
           <!-- Mobile Search Trigger Button -->
-          <button type="button" aria-label="Search" class="sm:hidden w-9 h-9 rounded-xl bg-[#f5f1fd] text-[#5e2de0] flex items-center justify-center hover:bg-purple-100 transition-colors" onclick="document.getElementById('mobile-search-bar')?.classList.toggle('hidden')">
+          <button type="button" aria-label="Search" class="sm:hidden w-9 h-9 rounded-xl bg-orange-50 text-[#ea580c] flex items-center justify-center hover:bg-orange-100 transition-colors" onclick="document.getElementById('mobile-search-bar')?.classList.toggle('hidden')">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
           </button>
 
           <!-- Cart Button (Mobile) -->
-          <button type="button" aria-label="Cart" class="sm:hidden w-9 h-9 rounded-xl bg-[#f5f1fd] text-[#5e2de0] flex items-center justify-center relative hover:bg-purple-100 transition-colors" onclick="window.Dizozet.openCart()">
+          <button type="button" aria-label="Cart" class="sm:hidden w-9 h-9 rounded-xl bg-orange-50 text-[#ea580c] flex items-center justify-center relative hover:bg-orange-100 transition-colors" onclick="window.Dizozet.openCart()">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
             <span class="cart-badge-count hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-600 text-white text-[10px] font-black flex items-center justify-center border-2 border-white">0</span>
           </button>
 
           <!-- Cart Button (Desktop) -->
-          <button type="button" aria-label="Cart" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-[#f4f1fa] hover:bg-[#eae4f7] border border-[#e2d8f5] text-[#162048] font-bold text-sm transition-all group relative" onclick="window.Dizozet.openCart()">
+          <button type="button" aria-label="Cart" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50/80 hover:bg-orange-100/80 border border-orange-200/90 text-[#162048] font-bold text-sm transition-all group relative" onclick="window.Dizozet.openCart()">
             <div class="relative">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#5e2de0] group-hover:scale-110 transition-transform"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ea580c] group-hover:scale-110 transition-transform"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
               <span class="cart-badge-count hidden absolute -top-2 -right-2 w-4 h-4 rounded-full bg-rose-600 text-white text-[9px] font-black flex items-center justify-center">0</span>
             </div>
             <span>Cart</span>
@@ -135,8 +137,8 @@
 
       <!-- Expandable Mobile Search Bar -->
       <div id="mobile-search-bar" class="hidden pb-3 sm:hidden">
-        <div class="flex items-center bg-[#fbf9ff] border border-[#e8dfff] rounded-xl px-3 py-1.5">
-          <svg class="w-4 h-4 text-[#7c3aed] mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <div class="flex items-center bg-[#fffbf5] border border-[#fed7aa] rounded-xl px-3 py-1.5">
+          <svg class="w-4 h-4 text-[#ff5a1f] mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
           <input type="text" placeholder="Search 222,000+ reels..." class="site-search-input w-full bg-transparent text-xs font-medium text-[#182247] focus:outline-none" />
         </div>
       </div>
@@ -152,11 +154,11 @@
       <!-- ================= HERO SECTION ================= -->
       <section class="pt-4 pb-4 sm:pt-6 sm:pb-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="relative rounded-[30px] sm:rounded-[36px] bg-gradient-to-br from-[#ffffff] via-[#f8fafc] to-[#f3f0fb] border border-[#ece4fc] p-6 sm:p-10 lg:p-12 overflow-hidden shadow-sm">
+          <div class="relative rounded-[30px] sm:rounded-[36px] bg-gradient-to-br from-[#ffffff] via-[#fffbf7] to-[#fff5ed] border border-[#fed7aa]/60 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-sm">
             
             <!-- Glowing Blur Background Accents -->
-            <div class="pointer-events-none absolute -right-16 top-0 bottom-0 w-full lg:w-[58%] z-0" style="background: radial-gradient(circle at 68% 42%, rgba(124, 58, 237, 0.15) 0%, rgba(6, 182, 212, 0.12) 36%, transparent 70%);"></div>
-            <div class="pointer-events-none absolute -left-12 -bottom-24 w-80 h-60 rounded-full bg-cyan-400/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute -right-16 top-0 bottom-0 w-full lg:w-[58%] z-0" style="background: radial-gradient(circle at 68% 42%, rgba(255, 90, 31, 0.14) 0%, rgba(245, 158, 11, 0.10) 36%, transparent 70%);"></div>
+            <div class="pointer-events-none absolute -left-12 -bottom-24 w-80 h-60 rounded-full bg-amber-400/10 blur-3xl"></div>
 
             <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
               
@@ -164,7 +166,7 @@
               <div class="lg:col-span-7 space-y-6">
                 
                 <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-purple-100 to-cyan-100 text-[#5e2de0] border border-purple-200/60 shadow-xs">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-orange-100 via-amber-50 to-orange-50 text-[#ea580c] border border-orange-200/80 shadow-xs">
                   <span>⚡</span>
                   <span id="hero-badge-text">India's #1 Viral Reels Bundle Platform</span>
                 </div>
@@ -172,7 +174,7 @@
                 <!-- Hero Headline -->
                 <h1 id="hero-main-title" class="text-[38px] sm:text-[54px] lg:text-[60px] font-black tracking-[-0.03em] leading-[1.08] text-[#162048]">
                   Viral Reels. <br class="hidden sm:inline" />
-                  <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#6d36e8] via-[#4f46e5] to-[#06b6d4]">10x Faster Growth.</span> <br />
+                  <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#ff5a1f] via-[#ea580c] to-[#f59e0b]">10x Faster Growth.</span> <br />
                   Instant Download.
                 </h1>
 
@@ -205,14 +207,14 @@
 
                 <!-- CTA Buttons -->
                 <div class="flex flex-wrap items-center gap-3.5 pt-2">
-                  <button type="button" onclick="document.getElementById('fresh-reels-section').scrollIntoView({ behavior: 'smooth' })" class="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#6533e4] to-[#4f46e5] hover:opacity-95 text-white font-extrabold text-sm sm:text-base flex items-center gap-2 shadow-lg shadow-purple-500/25 transition-all hover:scale-[1.02]">
+                  <button type="button" onclick="document.getElementById('fresh-reels-section').scrollIntoView({ behavior: 'smooth' })" class="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#ea580c] hover:to-[#c2410c] text-white font-extrabold text-sm sm:text-base flex items-center gap-2 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02]">
                     <span>▣ Browse Bundles</span>
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
                   </button>
 
-                  <a href="#rbui-preview" class="py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-[#162048] font-bold text-sm sm:text-base flex items-center gap-2 shadow-xs transition-colors">
-                    <span class="w-5 h-5 rounded-full bg-purple-100 text-[#6533e4] flex items-center justify-center">
-                      <svg class="w-3 h-3 ml-0.5 fill-[#6533e4]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                  <a href="#rbui-preview" class="py-3.5 px-6 rounded-2xl bg-white hover:bg-orange-50/50 border border-slate-200 text-[#162048] font-bold text-sm sm:text-base flex items-center gap-2 shadow-xs transition-colors">
+                    <span class="w-5 h-5 rounded-full bg-orange-100 text-[#ff5a1f] flex items-center justify-center">
+                      <svg class="w-3 h-3 ml-0.5 fill-[#ff5a1f]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
                     </span>
                     <span>View Previews</span>
                   </a>
@@ -221,7 +223,7 @@
                 <!-- 3 Stat Highlight Cards -->
                 <div class="grid grid-cols-3 gap-3.5 pt-3 max-w-xl">
                   
-                  <div class="relative overflow-hidden p-3.5 rounded-[20px] bg-gradient-to-br from-[#7c3aed] to-[#6366f1] text-white shadow-md">
+                  <div class="relative overflow-hidden p-3.5 rounded-[20px] bg-gradient-to-br from-[#ff5a1f] to-[#ea580c] text-white shadow-md">
                     <div class="text-[20px] sm:text-[22px] font-black tracking-tight">222,000+</div>
                     <div class="text-[10px] sm:text-[11px] font-bold text-white/90 mt-0.5">Ready-to-Post Reels</div>
                   </div>
@@ -244,12 +246,12 @@
               <div class="lg:col-span-5 relative flex items-center justify-center min-h-[360px] sm:min-h-[420px]">
                 
                 <!-- Left Tilted Card (-8deg) -->
-                <div class="absolute left-2 sm:left-4 w-[150px] sm:w-[175px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-[0_20px_45px_rgba(30,15,70,0.22)] border-[5px] border-white transform -rotate-[8deg] -translate-x-4 sm:-translate-x-6 translate-y-2 z-10 transition-all hover:scale-95 duration-500 block bg-slate-900 group cursor-pointer" onclick="window.Dizozet.openReelPreview('rb-1000-ulti-pulti-duniya-ulti-duniya-reverse-world-ai-reels-bundle')">
+                <div class="absolute left-2 sm:left-4 w-[150px] sm:w-[175px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-[0_20px_45px_rgba(255,90,31,0.18)] border-[5px] border-white transform -rotate-[8deg] -translate-x-4 sm:-translate-x-6 translate-y-2 z-10 transition-all hover:scale-95 duration-500 block bg-slate-900 group cursor-pointer" onclick="window.Dizozet.openReelPreview('rb-1000-ulti-pulti-duniya-ulti-duniya-reverse-world-ai-reels-bundle')">
                   <img src="images/1000-ulti-pulti-duniya-ulti-duniya-reverse-world-ai-reels-bundle-2.png" alt="1000+ Ulti Pulti Duniya AI Reels" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='images/dizozet-logo.png'" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent flex flex-col justify-between p-3 text-white">
                     <div></div>
-                    <div class="w-10 h-10 rounded-full bg-white/95 shadow-md flex items-center justify-center mx-auto text-[#5e2de0]">
-                      <svg class="w-4 h-4 ml-0.5 fill-[#5e2de0]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    <div class="w-10 h-10 rounded-full bg-white/95 shadow-md flex items-center justify-center mx-auto text-[#ff5a1f]">
+                      <svg class="w-4 h-4 ml-0.5 fill-[#ff5a1f]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
                     </div>
                     <div>
                       <span class="text-[8.5px] font-extrabold uppercase tracking-[0.14em] text-white/80 block mb-0.5">HOT PREVIEW</span>
@@ -259,22 +261,22 @@
                 </div>
 
                 <!-- Right Tilted Card (+8deg) -->
-                <div class="absolute right-2 sm:right-4 w-[150px] sm:w-[175px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-[0_20px_45px_rgba(30,15,70,0.22)] border-[5px] border-white transform rotate-[8deg] translate-x-4 sm:translate-x-6 translate-y-2 z-10 transition-all hover:scale-95 duration-500 block bg-slate-900 group cursor-pointer" onclick="window.Dizozet.openReelPreview('rb-upcoming-mad-scientist')">
+                <div class="absolute right-2 sm:right-4 w-[150px] sm:w-[175px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-[0_20px_45px_rgba(255,90,31,0.18)] border-[5px] border-white transform rotate-[8deg] translate-x-4 sm:translate-x-6 translate-y-2 z-10 transition-all hover:scale-95 duration-500 block bg-slate-900 group cursor-pointer" onclick="window.Dizozet.openReelPreview('rb-upcoming-mad-scientist')">
                   <img src="images/1500-mad-scientist-reels-bundle-4-2-1024x768.jpg" alt="1500+ Mad Scientist Reels" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='images/dizozet-logo.png'" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent flex flex-col justify-between p-3 text-white">
                     <div></div>
-                    <div class="w-10 h-10 rounded-full bg-white/95 shadow-md flex items-center justify-center mx-auto text-[#5e2de0]">
-                      <svg class="w-4 h-4 ml-0.5 fill-[#5e2de0]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    <div class="w-10 h-10 rounded-full bg-white/95 shadow-md flex items-center justify-center mx-auto text-[#ff5a1f]">
+                      <svg class="w-4 h-4 ml-0.5 fill-[#ff5a1f]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
                     </div>
                     <div>
-                      <span class="text-[8.5px] font-extrabold uppercase tracking-[0.14em] text-cyan-300 block mb-0.5">TRENDING</span>
+                      <span class="text-[8.5px] font-extrabold uppercase tracking-[0.14em] text-amber-300 block mb-0.5">TRENDING</span>
                       <p class="text-[11px] font-extrabold text-white line-clamp-2 leading-tight">1500+ Mad Scientist</p>
                     </div>
                   </div>
                 </div>
 
                 <!-- Center Front Hero Card -->
-                <div class="w-[170px] sm:w-[200px] aspect-[9/16] rounded-[28px] overflow-hidden shadow-[0_25px_60px_rgba(100,50,220,0.35)] border-[5px] border-white z-20 relative bg-slate-950 group cursor-pointer transform hover:scale-105 transition-all duration-300" onclick="window.Dizozet.openReelPreview('rb-1500-ai-funny-kids-reels-bundle')">
+                <div class="w-[170px] sm:w-[200px] aspect-[9/16] rounded-[28px] overflow-hidden shadow-[0_25px_60px_rgba(255,90,31,0.30)] border-[5px] border-white z-20 relative bg-slate-950 group cursor-pointer transform hover:scale-105 transition-all duration-300" onclick="window.Dizozet.openReelPreview('rb-1500-ai-funny-kids-reels-bundle')">
                   <img src="images/1500-ai-funny-kids-reels-bundle-4-2-768x576.jpg" alt="1500+ AI Funny Kids Reels" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='images/dizozet-logo.png'" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent flex flex-col justify-between p-3.5 text-white">
                     <div class="flex items-center justify-between">
@@ -282,7 +284,7 @@
                       <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold bg-black/60 backdrop-blur-md">1080P</span>
                     </div>
 
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#7c3aed] to-[#06b6d4] shadow-lg flex items-center justify-center mx-auto text-white transform group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#ff5a1f] to-[#f59e0b] shadow-lg flex items-center justify-center mx-auto text-white transform group-hover:scale-110 transition-transform">
                       <svg class="w-5 h-5 ml-0.5 fill-white" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
                     </div>
 
@@ -318,7 +320,7 @@
               </div>
             </div>
 
-            <button type="button" onclick="window.Dizozet.navigateTo('shop')" class="text-xs font-bold text-[#6533e4] hover:underline flex items-center gap-1">
+            <button type="button" onclick="window.Dizozet.navigateTo('shop')" class="text-xs font-bold text-[#ff5a1f] hover:underline flex items-center gap-1">
               <span>View All Bundles</span>
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
             </button>
@@ -338,7 +340,7 @@
         <div class="space-y-6 relative z-10">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div class="space-y-1">
-              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-black uppercase tracking-wider border border-cyan-500/20">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-black uppercase tracking-wider border border-orange-500/20">
                 <span>▶ Live Video Samples</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Preview the Reels Before You Buy</h2>
@@ -347,7 +349,7 @@
 
             <div class="flex items-center gap-2">
               <span class="text-xs font-bold text-slate-400">Scroll to explore samples</span>
-              <span class="text-cyan-400">→</span>
+              <span class="text-orange-400">→</span>
             </div>
           </div>
 
@@ -370,14 +372,14 @@
 
             <!-- Category Pills Container -->
             <div class="flex items-center gap-2 overflow-x-auto max-w-full pb-1 scrollbar-none">
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-black transition-all bg-[#6533e4] text-white shadow-md shadow-purple-500/20 shrink-0" data-cat="All" onclick="window.Dizozet.selectCategory('All')">All Bundles</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="AI Reels" onclick="window.Dizozet.selectCategory('AI Reels')">AI Reels</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="Story Reels" onclick="window.Dizozet.selectCategory('Story Reels')">Story Reels</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="Kids & Baby Reels" onclick="window.Dizozet.selectCategory('Kids & Baby Reels')">Kids &amp; Baby</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="Health Reels" onclick="window.Dizozet.selectCategory('Health Reels')">Health &amp; Fitness</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="Influencer Reels" onclick="window.Dizozet.selectCategory('Influencer Reels')">Influencer</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="ASMR Reels" onclick="window.Dizozet.selectCategory('ASMR Reels')">ASMR</button>
-              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0" data-cat="Motivation & Mindset" onclick="window.Dizozet.selectCategory('Motivation & Mindset')">Motivation</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-black transition-all bg-[#ff5a1f] text-white shadow-md shadow-orange-500/20 shrink-0" data-cat="All" onclick="window.Dizozet.selectCategory('All')">All Bundles</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="AI Reels" onclick="window.Dizozet.selectCategory('AI Reels')">AI Reels</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="Story Reels" onclick="window.Dizozet.selectCategory('Story Reels')">Story Reels</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="Kids & Baby Reels" onclick="window.Dizozet.selectCategory('Kids & Baby Reels')">Kids &amp; Baby</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="Health Reels" onclick="window.Dizozet.selectCategory('Health Reels')">Health &amp; Fitness</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="Influencer Reels" onclick="window.Dizozet.selectCategory('Influencer Reels')">Influencer</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="ASMR Reels" onclick="window.Dizozet.selectCategory('ASMR Reels')">ASMR</button>
+              <button type="button" class="cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0" data-cat="Motivation & Mindset" onclick="window.Dizozet.selectCategory('Motivation & Mindset')">Motivation</button>
             </div>
           </div>
 
@@ -399,12 +401,12 @@
       <!-- ================= SECTION 5: UNLOCK EVERY BUNDLE IN ONE PLAN ================= -->
       <section id="dizozet-plans" class="py-6 sm:py-10 [contain:layout_style]">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="relative rounded-[28px] sm:rounded-[34px] bg-white border border-slate-200/90 p-4 sm:p-7 space-y-6 shadow-[0_14px_45px_rgba(124,58,237,0.06)] overflow-hidden">
+          <div class="relative rounded-[28px] sm:rounded-[34px] bg-white border border-slate-200/90 p-4 sm:p-7 space-y-6 shadow-[0_14px_45px_rgba(255,90,31,0.08)] overflow-hidden">
             
-            <div class="absolute top-0 left-6 right-6 h-[3px] bg-gradient-to-r from-[#7c3aed] via-[#2563eb] to-[#06b6d4] rounded-b-full"></div>
+            <div class="absolute top-0 left-6 right-6 h-[3px] bg-gradient-to-r from-[#ff5a1f] via-[#f97316] to-[#f59e0b] rounded-b-full"></div>
 
             <!-- Banner Header -->
-            <div class="max-w-[660px] mx-auto relative rounded-[20px] bg-gradient-to-r from-[#7c3aed] via-[#4f46e5] to-[#06b6d4] px-6 py-5 sm:px-8 sm:py-6 text-white shadow-[0_12px_30px_rgba(79,70,229,0.25)] overflow-hidden text-center space-y-1.5">
+            <div class="max-w-[660px] mx-auto relative rounded-[20px] bg-gradient-to-r from-[#ea580c] via-[#ff5a1f] to-[#f59e0b] px-6 py-5 sm:px-8 sm:py-6 text-white shadow-[0_12px_30px_rgba(255,90,31,0.25)] overflow-hidden text-center space-y-1.5">
               <h2 class="text-xl sm:text-[29px] font-black text-white tracking-tight leading-tight">Unlock Every Reels Bundle in One Plan</h2>
               <p class="text-xs sm:text-[13.5px] text-white/95 font-medium max-w-md mx-auto leading-relaxed">
                 Choose Personal or Reseller access, pay once,<br class="hidden sm:inline" /> and unlock every bundle included with your plan.
@@ -413,8 +415,8 @@
 
             <!-- Plan Selector Buttons -->
             <div class="max-w-[530px] mx-auto bg-slate-100 p-1.5 rounded-[18px] grid grid-cols-2 gap-1.5 border border-slate-200">
-              <button type="button" id="plan-tab-personal" class="py-2.5 px-4 rounded-[14px] text-left transition-all bg-white shadow-[0_2px_10px_rgba(124,58,237,0.1)] border border-slate-200/90" onclick="window.Dizozet.togglePlan('personal')">
-                <div class="text-xs sm:text-[13.5px] font-extrabold text-[#7c3aed]">Personal</div>
+              <button type="button" id="plan-tab-personal" class="py-2.5 px-4 rounded-[14px] text-left transition-all bg-white shadow-[0_2px_10px_rgba(255,90,31,0.12)] border border-slate-200/90" onclick="window.Dizozet.togglePlan('personal')">
+                <div class="text-xs sm:text-[13.5px] font-extrabold text-[#ea580c]">Personal</div>
                 <div class="text-[11px] text-slate-500 font-medium mt-0.5">For your own pages</div>
               </button>
               
@@ -423,33 +425,33 @@
                   <div class="text-xs sm:text-[13.5px] font-extrabold text-slate-600">Reseller</div>
                   <div class="text-[11px] text-slate-500 font-medium mt-0.5">For resale &amp; clients</div>
                 </div>
-                <span class="text-[9.5px] font-black uppercase tracking-wider text-cyan-800 bg-cyan-100 px-2.5 py-0.5 rounded-full shrink-0">POPULAR</span>
+                <span class="text-[9.5px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full shrink-0">POPULAR</span>
               </button>
             </div>
 
             <!-- Plan Card Details -->
-            <div class="relative rounded-[26px] p-5 sm:p-7 space-y-6 transition-colors bg-gradient-to-b from-violet-50/40 to-white border border-violet-200/80 shadow-[0_10px_30px_rgba(124,58,237,0.06)]">
+            <div class="relative rounded-[26px] p-5 sm:p-7 space-y-6 transition-colors bg-gradient-to-b from-orange-50/40 to-white border border-orange-200/80 shadow-[0_10px_30px_rgba(255,90,31,0.06)]">
               <div class="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
                 
                 <div class="md:col-span-6 flex flex-col justify-between space-y-5">
                   <div class="flex items-start gap-3.5">
-                    <div class="w-12 h-12 rounded-[16px] text-white flex items-center justify-center shrink-0 bg-gradient-to-br from-[#7c3aed] to-[#6366f1] shadow-[0_6px_16px_rgba(124,58,237,0.28)]">
+                    <div class="w-12 h-12 rounded-[16px] text-white flex items-center justify-center shrink-0 bg-gradient-to-br from-[#ff5a1f] to-[#ea580c] shadow-[0_6px_16px_rgba(255,90,31,0.28)]">
                       <svg class="w-4 h-4 fill-white text-white ml-0.5" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
                     </div>
                     <div class="space-y-1">
-                      <span id="plan-card-badge" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full inline-block bg-violet-100 text-[#7c3aed]">PERSONAL ACCESS</span>
+                      <span id="plan-card-badge" class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full inline-block bg-orange-100 text-[#ea580c]">PERSONAL ACCESS</span>
                       <h3 id="plan-card-title" class="text-xl sm:text-[22px] font-black text-slate-900 leading-snug">All Bundles – Personal Use</h3>
                       <p id="plan-card-desc" class="text-xs sm:text-[13px] text-slate-500 font-medium leading-relaxed">Premium ready-to-post reels for your own pages and channels.</p>
                     </div>
                   </div>
 
-                  <div class="rounded-[20px] p-5 space-y-2.5 bg-white border border-violet-100">
+                  <div class="rounded-[20px] p-5 space-y-2.5 bg-white border border-orange-100">
                     <div class="flex items-center justify-between">
                       <span class="text-[10.5px] font-extrabold tracking-wider text-slate-500 uppercase">ONE-TIME PRICE</span>
                       <span id="plan-card-discount" class="bg-emerald-100 text-emerald-800 border border-emerald-200 font-extrabold text-[11px] px-3 py-0.5 rounded-full">73% OFF</span>
                     </div>
                     <div class="flex items-baseline gap-2.5">
-                      <span id="plan-card-price" class="text-4xl sm:text-[42px] font-black leading-none tracking-tight text-[#7c3aed]">₹699</span>
+                      <span id="plan-card-price" class="text-4xl sm:text-[42px] font-black leading-none tracking-tight text-[#ff5a1f]">₹699</span>
                       <span id="plan-card-orig" class="text-slate-400 text-base sm:text-[17px] line-through decoration-rose-500/75 decoration-2 font-bold">₹2599</span>
                     </div>
                     <div class="text-[11.5px] text-slate-600 font-bold">Pay once • Instant Google Drive access</div>
@@ -457,33 +459,33 @@
                 </div>
 
                 <!-- Features Checkmarks List -->
-                <div id="plan-card-features" class="md:col-span-6 relative rounded-[20px] bg-white px-5 py-3.5 flex flex-col justify-center border border-violet-200/80 divide-y divide-slate-100">
+                <div id="plan-card-features" class="md:col-span-6 relative rounded-[20px] bg-white px-5 py-3.5 flex flex-col justify-center border border-orange-200/80 divide-y divide-slate-100">
                   <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-violet-100 text-[#7c3aed]">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-[#ea580c]">
                       <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <span class="text-xs sm:text-[13px] font-bold text-slate-700">Access to 126 published reels bundles</span>
                   </div>
                   <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-violet-100 text-[#7c3aed]">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-[#ea580c]">
                       <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <span class="text-xs sm:text-[13px] font-bold text-slate-700">Unlimited access to all bundles</span>
                   </div>
                   <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-violet-100 text-[#7c3aed]">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-[#ea580c]">
                       <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <span class="text-xs sm:text-[13px] font-bold text-slate-700">Personal use license</span>
                   </div>
                   <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-violet-100 text-[#7c3aed]">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-[#ea580c]">
                       <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <span class="text-xs sm:text-[13px] font-bold text-slate-700">High-quality ready-to-post reels</span>
                   </div>
                   <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-violet-100 text-[#7c3aed]">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-orange-100 text-[#ea580c]">
                       <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <span class="text-xs sm:text-[13px] font-bold text-slate-700">Instant Google Drive access</span>
@@ -493,7 +495,7 @@
               </div>
 
               <!-- Action Button -->
-              <button type="button" onclick="window.Dizozet.buyPlan(window.Dizozet.state?.selectedPlan === 'reseller' ? 'plan-reseller' : 'plan-personal')" class="w-full py-3.5 sm:py-4 px-6 rounded-[16px] bg-gradient-to-r from-[#7c3aed] via-[#2563eb] to-[#06b6d4] hover:opacity-95 text-white font-extrabold text-sm sm:text-[15px] flex items-center justify-center gap-2.5 shadow-[0_10px_26px_rgba(37,99,235,0.3)] transition-all hover:scale-[1.005]">
+              <button type="button" onclick="window.Dizozet.buyPlan(window.Dizozet.state?.selectedPlan === 'reseller' ? 'plan-reseller' : 'plan-personal')" class="w-full py-3.5 sm:py-4 px-6 rounded-[16px] bg-gradient-to-r from-[#ff5a1f] via-[#f97316] to-[#ea580c] hover:opacity-95 text-white font-extrabold text-sm sm:text-[15px] flex items-center justify-center gap-2.5 shadow-[0_10px_26px_rgba(255,90,31,0.3)] transition-all hover:scale-[1.005]">
                 <span id="plan-card-cta-text">Get Personal Access</span>
                 <span class="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center">
                   <svg class="w-3.5 h-3.5 text-white stroke-[2.5]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
@@ -576,7 +578,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-2xl mx-auto mb-12">
-            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-100 text-[#5126c9] text-xs font-black uppercase tracking-wider mb-2">
+            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-100 text-[#ea580c] text-xs font-black uppercase tracking-wider mb-2">
               📊 Proven Results
             </div>
             <h2 class="text-2xl sm:text-4xl font-black text-[#182247] tracking-tight">Creator Growth in Real Numbers</h2>
@@ -586,23 +588,23 @@
           <!-- 4 Stats Cards -->
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12">
             
-            <div class="p-6 rounded-3xl bg-white border border-[#ede7fa] shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-purple-600 bg-purple-100 mb-1">
+            <div class="p-6 rounded-3xl bg-white border border-orange-100/80 shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-orange-600 bg-orange-100 mb-1">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
               </div>
               <div class="text-2xl sm:text-3xl font-black text-[#182247]">14.2M+</div>
               <div class="text-xs font-semibold text-[#4a5270]">Organic Views Generated</div>
             </div>
 
-            <div class="p-6 rounded-3xl bg-white border border-[#ede7fa] shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
-              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-pink-600 bg-pink-100 mb-1">
+            <div class="p-6 rounded-3xl bg-white border border-orange-100/80 shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-rose-600 bg-rose-100 mb-1">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               </div>
               <div class="text-2xl sm:text-3xl font-black text-[#182247]">3,850+</div>
               <div class="text-xs font-semibold text-[#4a5270]">Creators &amp; Agencies</div>
             </div>
 
-            <div class="p-6 rounded-3xl bg-white border border-[#ede7fa] shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
+            <div class="p-6 rounded-3xl bg-white border border-orange-100/80 shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
               <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500 bg-amber-100 mb-1">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </div>
@@ -610,7 +612,7 @@
               <div class="text-xs font-semibold text-[#4a5270]">Average User Rating</div>
             </div>
 
-            <div class="p-6 rounded-3xl bg-white border border-[#ede7fa] shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
+            <div class="p-6 rounded-3xl bg-white border border-orange-100/80 shadow-sm text-center flex flex-col items-center justify-center space-y-2 hover:-translate-y-1 transition-transform">
               <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-emerald-600 bg-emerald-100 mb-1">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
               </div>
@@ -623,7 +625,7 @@
           <!-- 3 Testimonial Cards -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fbf9ff] border border-[#ece4fc] shadow-sm flex flex-col justify-between space-y-4">
+            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fffcf9] border border-orange-100 shadow-sm flex flex-col justify-between space-y-4">
               <div class="space-y-3">
                 <div class="inline-block px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900">+95K Followers in 30 Days</div>
                 <p class="text-sm text-[#182247] font-medium leading-relaxed italic">"The AI Reels pack from Dizozet helped me scale from 5K to 100K followers in just 45 days. The 9:16 framing and audio syncing are top tier."</p>
@@ -631,13 +633,13 @@
               <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <h3 class="font-extrabold text-sm text-[#182247]">Aman Verma</h3>
-                  <p class="text-xs text-[#5126c9] font-semibold">@aman_edits</p>
+                  <p class="text-xs text-[#ea580c] font-semibold">@aman_edits</p>
                 </div>
                 <span class="text-xs font-bold text-[#4a5270]">100K Followers</span>
               </div>
             </div>
 
-            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fbf9ff] border border-[#ece4fc] shadow-sm flex flex-col justify-between space-y-4">
+            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fffcf9] border border-orange-100 shadow-sm flex flex-col justify-between space-y-4">
               <div class="space-y-3">
                 <div class="inline-block px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900">Made 10x ROI in 7 Days</div>
                 <p class="text-sm text-[#182247] font-medium leading-relaxed italic">"I launched my motivation theme page and monetized it within 2 weeks! Dizozet saved me hundreds of hours of video editing."</p>
@@ -645,13 +647,13 @@
               <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <h3 class="font-extrabold text-sm text-[#182247]">Pooja Kashyap</h3>
-                  <p class="text-xs text-[#5126c9] font-semibold">@daily_motivation_hub</p>
+                  <p class="text-xs text-[#ea580c] font-semibold">@daily_motivation_hub</p>
                 </div>
                 <span class="text-xs font-bold text-[#4a5270]">280K Followers</span>
               </div>
             </div>
 
-            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fbf9ff] border border-[#ece4fc] shadow-sm flex flex-col justify-between space-y-4">
+            <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-white to-[#fffcf9] border border-orange-100 shadow-sm flex flex-col justify-between space-y-4">
               <div class="space-y-3">
                 <div class="inline-block px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900">8.4M Views on Single Short</div>
                 <p class="text-sm text-[#182247] font-medium leading-relaxed italic">"High retention is guaranteed. My average watch percentage jumped from 60% to 110% on YouTube Shorts with the ASMR pack."</p>
@@ -659,7 +661,7 @@
               <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <div>
                   <h3 class="font-extrabold text-sm text-[#182247]">Rohan Mehra</h3>
-                  <p class="text-xs text-[#5126c9] font-semibold">@satisfying_daily_viral</p>
+                  <p class="text-xs text-[#ea580c] font-semibold">@satisfying_daily_viral</p>
                 </div>
                 <span class="text-xs font-bold text-[#4a5270]">520K Followers</span>
               </div>
@@ -683,7 +685,7 @@
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
               <button type="button" class="w-full p-4 sm:p-5 text-left font-extrabold text-xs sm:text-sm text-[#162048] flex items-center justify-between hover:bg-slate-50 transition-colors" onclick="window.Dizozet.toggleFaq(0)">
                 <span>How do I receive access to the reels after purchase?</span>
-                <svg id="faq-icon-0" class="w-4 h-4 text-[#7c3aed] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="faq-icon-0" class="w-4 h-4 text-[#ff5a1f] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div id="faq-content-0" class="hidden px-4 sm:px-5 pb-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 pt-3">
                 You will receive an instant Google Drive download link immediately on your order confirmation screen and via email right after payment. You get lifetime access with unlimited downloads.
@@ -693,7 +695,7 @@
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
               <button type="button" class="w-full p-4 sm:p-5 text-left font-extrabold text-xs sm:text-sm text-[#162048] flex items-center justify-between hover:bg-slate-50 transition-colors" onclick="window.Dizozet.toggleFaq(1)">
                 <span>Are these reels watermark-free and editable?</span>
-                <svg id="faq-icon-1" class="w-4 h-4 text-[#7c3aed] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="faq-icon-1" class="w-4 h-4 text-[#ff5a1f] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div id="faq-content-1" class="hidden px-4 sm:px-5 pb-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 pt-3">
                 Yes, 100%! All reels are high-definition MP4 files without any watermarks or branding. You can post them directly or edit them in CapCut, VN, Premiere Pro, or InShot by adding your logo, captions, or custom music.
@@ -703,7 +705,7 @@
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
               <button type="button" class="w-full p-4 sm:p-5 text-left font-extrabold text-xs sm:text-sm text-[#162048] flex items-center justify-between hover:bg-slate-50 transition-colors" onclick="window.Dizozet.toggleFaq(2)">
                 <span>Can I monetize these reels on Instagram and YouTube Shorts?</span>
-                <svg id="faq-icon-2" class="w-4 h-4 text-[#7c3aed] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="faq-icon-2" class="w-4 h-4 text-[#ff5a1f] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div id="faq-content-2" class="hidden px-4 sm:px-5 pb-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 pt-3">
                 Absolutely! Thousands of creators use our bundles for Instagram Reels, YouTube Shorts, and Facebook. The reels are crafted for high watch time and viral reach, making them perfect for theme page growth and monetization.
@@ -713,7 +715,7 @@
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
               <button type="button" class="w-full p-4 sm:p-5 text-left font-extrabold text-xs sm:text-sm text-[#162048] flex items-center justify-between hover:bg-slate-50 transition-colors" onclick="window.Dizozet.toggleFaq(3)">
                 <span>What is the difference between Personal and Reseller License?</span>
-                <svg id="faq-icon-3" class="w-4 h-4 text-[#7c3aed] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="faq-icon-3" class="w-4 h-4 text-[#ff5a1f] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div id="faq-content-3" class="hidden px-4 sm:px-5 pb-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 pt-3">
                 The Personal License allows you to use the reels across all your own social media channels, theme pages, and client management. The Reseller License grants you full Master Resell Rights (MRR) to resell the bundles directly to your own customers and keep 100% of the profits.
@@ -723,7 +725,7 @@
             <div class="rounded-2xl border border-slate-200 overflow-hidden">
               <button type="button" class="w-full p-4 sm:p-5 text-left font-extrabold text-xs sm:text-sm text-[#162048] flex items-center justify-between hover:bg-slate-50 transition-colors" onclick="window.Dizozet.toggleFaq(4)">
                 <span>Which payment methods do you support?</span>
-                <svg id="faq-icon-4" class="w-4 h-4 text-[#7c3aed] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="faq-icon-4" class="w-4 h-4 text-[#ff5a1f] transition-transform transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div id="faq-content-4" class="hidden px-4 sm:px-5 pb-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-100 pt-3">
                 We support all major Indian payment methods through secure checkout: UPI (Google Pay, PhonePe, Paytm, BHIM), Credit/Debit Cards (Visa, Mastercard, RuPay), and Net Banking.
@@ -743,12 +745,12 @@
           <h1 class="text-2xl sm:text-3xl font-black text-[#162048]">All Viral Reels Bundles</h1>
           <p class="text-xs sm:text-sm text-slate-500 font-medium">Browse our full library of 128+ bundles containing 222,000+ reels on Dizozet.</p>
         </div>
-        <button type="button" onclick="window.Dizozet.navigateTo('home')" class="text-xs font-bold text-[#6533e4] hover:underline">← Back to Home</button>
+        <button type="button" onclick="window.Dizozet.navigateTo('home')" class="text-xs font-bold text-[#ff5a1f] hover:underline">← Back to Home</button>
       </div>
 
       <!-- Search in shop -->
       <div class="relative max-w-md">
-        <input type="text" placeholder="Search through 128+ bundles..." class="site-search-input w-full p-3 rounded-xl border border-slate-200 bg-white shadow-xs text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" />
+        <input type="text" placeholder="Search through 128+ bundles..." class="site-search-input w-full p-3 rounded-xl border border-slate-200 bg-white shadow-xs text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" />
       </div>
 
       <!-- Shop Grid -->
@@ -785,15 +787,15 @@
     <!-- ================= VIEW: MY ORDERS ================= -->
     <div id="view-orders" class="view-page hidden max-w-xl mx-auto px-4 py-12 space-y-6">
       <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4 text-center">
-        <div class="w-14 h-14 rounded-2xl bg-purple-100 text-[#7c3aed] flex items-center justify-center mx-auto">
+        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-[#ea580c] flex items-center justify-center mx-auto">
           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         </div>
         <h1 class="text-2xl font-black text-[#162048]">Track Your Dizozet Order</h1>
         <p class="text-xs text-slate-500 font-medium">Enter your email or Order ID (e.g. DZ-123456) to retrieve your Google Drive access links.</p>
         
         <form class="space-y-3 pt-2" onsubmit="event.preventDefault(); alert('Please check your email inbox or WhatsApp for your lifetime Google Drive access link!');">
-          <input type="text" placeholder="e.g. DZ-123456 or your@email.com" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" required />
-          <button type="submit" class="w-full py-3 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs shadow-md">
+          <input type="text" placeholder="e.g. DZ-123456 or your@email.com" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" required />
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#ea580c] hover:to-[#c2410c] text-white font-extrabold text-xs shadow-md">
             Find My Downloads
           </button>
         </form>
@@ -820,7 +822,7 @@
             <span class="text-lg">✉️</span>
             <div>
               <span class="block text-slate-400 text-[10px]">Email Support</span>
-              <a href="mailto:support@dizozet.com" class="text-[#7c3aed] hover:underline">support@dizozet.com</a>
+              <a href="mailto:support@dizozet.com" class="text-[#ff5a1f] hover:underline">support@dizozet.com</a>
             </div>
           </div>
         </div>
@@ -861,7 +863,7 @@
           </div>
 
           <div class="flex items-center gap-3 p-2">
-            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-violet-500/10 text-violet-400 border border-violet-500/20">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-orange-500/10 text-orange-400 border border-orange-500/20">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></svg>
             </div>
             <div>
@@ -871,7 +873,7 @@
           </div>
 
           <div class="flex items-center gap-3 p-2">
-            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-amber-500/10 text-amber-400 border border-amber-500/20">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></svg>
             </div>
             <div>
@@ -881,7 +883,7 @@
           </div>
 
           <div class="flex items-center gap-3 p-2">
-            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
             <div>
@@ -891,7 +893,7 @@
           </div>
 
           <div class="flex items-center gap-3 p-2 col-span-2 md:col-span-1 justify-center md:justify-start">
-            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 bg-rose-500/10 text-rose-400 border border-rose-500/20">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
             <div>
@@ -910,7 +912,7 @@
           <!-- Brand Info -->
           <div class="lg:col-span-5 space-y-3">
             <div class="flex items-center gap-3 cursor-pointer" onclick="window.Dizozet.navigateTo('home')">
-              <div class="w-11 h-11 rounded-2xl bg-[#080d1a] border border-slate-800 p-1 flex items-center justify-center shadow-md shadow-violet-500/20 shrink-0 overflow-hidden">
+              <div class="w-11 h-11 rounded-2xl bg-[#080d1a] border border-slate-800 p-1 flex items-center justify-center shadow-md shadow-orange-500/20 shrink-0 overflow-hidden">
                 <img src="images/dizozet-logo.png" alt="Dizozet Logo" class="w-full h-full object-contain" onerror="this.src='images/dizozet-logo.jpg'" />
               </div>
               <span class="font-extrabold text-xl text-white tracking-tight block">Dizozet</span>
@@ -928,44 +930,44 @@
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('home')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">Home</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('home')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">Home</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('shop')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">All Bundles</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('shop')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">All Bundles</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('reels')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">Reels Feed</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('reels')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">Reels Feed</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('orders')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">My Orders</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('orders')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">My Orders</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('about')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">About Us</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('about')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">About Us</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('contact')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">Contact</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('contact')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">Contact</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('refund')">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">Refunds</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.navigateTo('refund')">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">Refunds</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
 
-              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-violet-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.openCart()">
-                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-cyan-400 transition-colors">Cart</span>
-                <svg class="w-3.5 h-3.5 text-violet-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              <button type="button" class="p-3.5 rounded-2xl bg-[#0e1628] border border-slate-800 hover:border-orange-500/60 flex items-center justify-between text-left group transition-all" onclick="window.Dizozet.openCart()">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200 group-hover:text-amber-400 transition-colors">Cart</span>
+                <svg class="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
             </div>
           </div>
@@ -973,23 +975,23 @@
         </div>
 
         <!-- Create Your Own Store Dedicated CTA Banner -->
-        <div class="rounded-2xl bg-gradient-to-r from-purple-950/70 via-[#0e172e] to-cyan-950/50 p-4 sm:p-5 border border-purple-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+        <div class="rounded-2xl bg-gradient-to-r from-orange-950/70 via-[#180f07] to-amber-950/50 p-4 sm:p-5 border border-orange-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
           <div class="space-y-0.5 text-center sm:text-left">
-            <span class="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1 justify-center sm:justify-start">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1 justify-center sm:justify-start">
               <span>🚀</span>
               <span>Launch Your Online Business</span>
             </span>
             <h4 class="text-sm sm:text-base font-black text-white">Want to build your own online store like Dizozet?</h4>
             <p class="text-xs text-slate-400">Get your automated digital store built professionally with DizoPulse.</p>
           </div>
-          <a href="https://wa.me/917895768118?text=Hello%20DizoPulse%2C%20I%20want%20to%20create%20my%20own%20online%20store.%20Please%20share%20the%20details." target="_blank" rel="noopener noreferrer" class="py-2.5 px-5 rounded-xl bg-gradient-to-r from-[#06b6d4] to-[#7c3aed] text-white font-extrabold text-xs shadow-md hover:opacity-95 transition-all hover:scale-[1.02] shrink-0 flex items-center gap-2">
+          <a href="https://wa.me/917895768118?text=Hello%20DizoPulse%2C%20I%20want%20to%20create%20my%20own%20online%20store.%20Please%20share%20the%20details." target="_blank" rel="noopener noreferrer" class="py-2.5 px-5 rounded-xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#ea580c] hover:to-[#c2410c] text-white font-extrabold text-xs shadow-md hover:opacity-95 transition-all hover:scale-[1.02] shrink-0 flex items-center gap-2">
             <span>Create Your Own Store</span>
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </a>
         </div>
 
         <!-- Payment & Trust Badges + Copyright + Designed by DizoPulse Credit -->
-        <div class="pt-6 pb-2 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-5 bg-gradient-to-r from-purple-950/30 via-[#0e1628] to-slate-900/40 p-4 sm:p-5 rounded-2xl border border-purple-500/30 shadow-md">
+        <div class="pt-6 pb-2 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-5 bg-gradient-to-r from-orange-950/30 via-[#140b05] to-slate-900/40 p-4 sm:p-5 rounded-2xl border border-orange-500/30 shadow-md">
           
           <!-- Payment trust info -->
           <div class="flex items-center gap-3.5 text-center sm:text-left">
@@ -1015,9 +1017,9 @@
           <!-- Separate DizoPulse Credit at the very bottom -->
           <div class="flex flex-col items-center sm:items-end text-center sm:text-right space-y-1">
             <div class="text-xs font-extrabold text-slate-300">
-              Designed by <a href="https://wa.me/917895768118" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:opacity-85 transition-opacity font-black">DizoPulse</a>
+              Designed by <a href="https://wa.me/917895768118" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent hover:opacity-85 transition-opacity font-black">DizoPulse</a>
             </div>
-            <a href="https://wa.me/917895768118?text=Hello%20DizoPulse%2C%20I%20want%20to%20create%20my%20own%20online%20store.%20Please%20share%20the%20details." target="_blank" rel="noopener noreferrer" class="text-[10.5px] font-bold text-cyan-400 hover:text-cyan-300 italic tracking-wide transition-colors flex items-center gap-1">
+            <a href="https://wa.me/917895768118?text=Hello%20DizoPulse%2C%20I%20want%20to%20create%20my%20own%20online%20store.%20Please%20share%20the%20details." target="_blank" rel="noopener noreferrer" class="text-[10.5px] font-bold text-amber-400 hover:text-amber-300 italic tracking-wide transition-colors flex items-center gap-1">
               <span>Create Your Own Store</span>
               <span class="not-italic">→</span>
             </a>
@@ -1050,31 +1052,31 @@
   </a>
 
   <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
-  <nav class="md:hidden fixed left-2 right-2 bottom-2 z-50 min-h-[58px] bg-white/95 backdrop-blur-xl border border-[#4e377e]/12 rounded-[19px] shadow-[0_16px_40px_rgba(39,25,76,0.19)] px-1.5 py-1.5 grid grid-cols-4 items-stretch">
+  <nav class="md:hidden fixed left-2 right-2 bottom-2 z-50 min-h-[58px] bg-white/95 backdrop-blur-xl border border-orange-500/15 rounded-[19px] shadow-[0_16px_40px_rgba(255,90,31,0.15)] px-1.5 py-1.5 grid grid-cols-4 items-stretch">
     
-    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all bg-gradient-to-br from-[#ede9fe] to-[#e0f2fe] text-[#7c3aed] font-extrabold" data-tab="home" onclick="window.Dizozet.navigateTo('home')">
-      <span class="mobile-active-bar absolute -top-[5px] left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]"></span>
+    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all bg-gradient-to-br from-orange-50 to-amber-100 text-[#ea580c] font-extrabold" data-tab="home" onclick="window.Dizozet.navigateTo('home')">
+      <span class="mobile-active-bar absolute -top-[5px] left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full bg-gradient-to-r from-[#ff5a1f] to-[#f59e0b]"></span>
       <span class="relative flex items-center justify-center w-[26px] h-[26px]">
         <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 9.5 9-7 9 7V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
       </span>
       <span class="text-[10px] mt-0.5 tracking-tight font-extrabold leading-tight">Home</span>
     </button>
 
-    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#7c3aed] font-bold" data-tab="reels" onclick="window.Dizozet.navigateTo('reels')">
+    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#ea580c] font-bold" data-tab="reels" onclick="window.Dizozet.navigateTo('reels')">
       <span class="relative flex items-center justify-center w-[26px] h-[26px]">
         <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><polygon points="10 8.5 15.5 12 10 15.5" fill="currentColor"/></svg>
       </span>
       <span class="text-[10px] mt-0.5 tracking-tight font-extrabold leading-tight">Preview</span>
     </button>
 
-    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#7c3aed] font-bold" data-tab="shop" onclick="window.Dizozet.navigateTo('shop')">
+    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#ea580c] font-bold" data-tab="shop" onclick="window.Dizozet.navigateTo('shop')">
       <span class="relative flex items-center justify-center w-[26px] h-[26px]">
         <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6.5 12 3l8 3.5-8 3.5zM4 11l8 3.5 8-3.5M4 15.5 12 19l8-3.5"/></svg>
       </span>
       <span class="text-[10px] mt-0.5 tracking-tight font-extrabold leading-tight">Bundle</span>
     </button>
 
-    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#7c3aed] font-bold" aria-label="Cart" onclick="window.Dizozet.openCart()">
+    <button type="button" class="mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#ea580c] font-bold" aria-label="Cart" onclick="window.Dizozet.openCart()">
       <span class="relative flex items-center justify-center w-[26px] h-[26px]">
         <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
         <span class="cart-badge-count hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-600 text-white text-[9px] font-black flex items-center justify-center">0</span>
@@ -1092,7 +1094,7 @@
     <!-- Cart Header -->
     <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
       <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-[#7c3aed]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <svg class="w-5 h-5 text-[#ff5a1f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
         <h3 class="font-black text-base text-[#162048]">Your Cart</h3>
       </div>
       <button type="button" aria-label="Close cart" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" onclick="window.Dizozet.closeCart()">
@@ -1105,12 +1107,12 @@
       
       <!-- Empty state -->
       <div id="cart-empty-state" class="text-center py-12 space-y-3 hidden">
-        <div class="w-16 h-16 rounded-3xl bg-purple-50 text-[#7c3aed] flex items-center justify-center mx-auto">
+        <div class="w-16 h-16 rounded-3xl bg-orange-50 text-[#ff5a1f] flex items-center justify-center mx-auto">
           <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
         </div>
         <h4 class="font-extrabold text-base text-slate-800">Your cart is empty</h4>
         <p class="text-xs text-slate-400 max-w-xs mx-auto">Explore our high retention trending bundles and start building your viral page today.</p>
-        <button type="button" class="py-2.5 px-6 rounded-xl bg-[#6533e4] text-white font-extrabold text-xs shadow-md mt-2" onclick="window.Dizozet.closeCart()">
+        <button type="button" class="py-2.5 px-6 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md mt-2" onclick="window.Dizozet.closeCart()">
           Browse Bundles
         </button>
       </div>
@@ -1123,7 +1125,7 @@
       <!-- Order Bump Bonus Box -->
       <div class="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-200/80 shadow-xs space-y-2.5">
         <div class="flex items-start gap-3">
-          <input type="checkbox" id="cart-bump-checkbox" class="mt-1 w-4 h-4 rounded text-[#7c3aed] focus:ring-[#7c3aed] cursor-pointer" />
+          <input type="checkbox" id="cart-bump-checkbox" class="mt-1 w-4 h-4 rounded text-[#ff5a1f] focus:ring-[#ff5a1f] cursor-pointer" />
           <div class="flex-1">
             <div class="flex items-center gap-1.5 flex-wrap">
               <span class="text-[9.5px] font-black uppercase bg-amber-500 text-white px-2 py-0.5 rounded">EXCLUSIVE BONUS</span>
@@ -1137,7 +1139,7 @@
 
       <!-- Coupon Code Box -->
       <div class="flex items-center gap-2 pt-1">
-        <input type="text" id="coupon-code-input" placeholder="Coupon code (e.g. DIZI85)" class="flex-1 p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" />
+        <input type="text" id="coupon-code-input" placeholder="Coupon code (e.g. DIZI85)" class="flex-1 p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" />
         <button type="button" id="apply-coupon-btn" class="py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors">
           Apply
         </button>
@@ -1158,11 +1160,11 @@
         </div>
         <div class="flex justify-between text-sm sm:text-base font-black text-[#162048] pt-1.5 border-t border-slate-200">
           <span>Total</span>
-          <span id="cart-total" class="text-[#7c3aed]">₹0.00</span>
+          <span id="cart-total" class="text-[#ff5a1f]">₹0.00</span>
         </div>
       </div>
 
-      <button type="button" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#6533e4] to-[#4f46e5] hover:opacity-95 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25 transition-transform hover:scale-[1.01]" onclick="window.Dizozet.openCheckout()">
+      <button type="button" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:opacity-95 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transition-transform hover:scale-[1.01]" onclick="window.Dizozet.openCheckout()">
         <span>Proceed to Checkout</span>
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
       </button>
@@ -1193,8 +1195,8 @@
       <form id="checkout-form" class="p-4 sm:p-6 space-y-4">
         
         <!-- Order Items Summary inside Checkout -->
-        <div class="p-3 rounded-2xl bg-purple-50/60 border border-purple-100 space-y-1">
-          <div class="text-[10px] font-black uppercase text-purple-900 tracking-wider">Order Summary</div>
+        <div class="p-3 rounded-2xl bg-orange-50/60 border border-orange-100 space-y-1">
+          <div class="text-[10px] font-black uppercase text-orange-950 tracking-wider">Order Summary</div>
           <div id="checkout-summary-list" class="max-h-24 overflow-y-auto space-y-1 pr-1"></div>
         </div>
 
@@ -1202,17 +1204,17 @@
         <div class="space-y-3">
           <div>
             <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1">Full Name</label>
-            <input type="text" id="checkout-name" placeholder="e.g. Rahul Sharma" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" value="Rahul Sharma" />
+            <input type="text" id="checkout-name" placeholder="e.g. Rahul Sharma" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" value="Rahul Sharma" />
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1">Email Address</label>
-              <input type="email" id="checkout-email" placeholder="you@gmail.com" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" value="creator@example.com" />
+              <input type="email" id="checkout-email" placeholder="you@gmail.com" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" value="creator@example.com" />
             </div>
             <div>
               <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1">WhatsApp Number</label>
-              <input type="tel" id="checkout-phone" placeholder="9876543210" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]" value="9876543210" />
+              <input type="tel" id="checkout-phone" placeholder="9876543210" required class="w-full p-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#ff5a1f]" value="9876543210" />
             </div>
           </div>
         </div>
@@ -1279,7 +1281,7 @@
       </div>
 
       <!-- Instant Google Drive Download CTA Button -->
-      <a href="https://drive.google.com" target="_blank" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#6533e4] to-[#06b6d4] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25 transition-transform hover:scale-[1.01]">
+      <a href="https://drive.google.com" target="_blank" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transition-transform hover:scale-[1.01]">
         <span>🚀 Open Google Drive Folders</span>
       </a>
 
@@ -1318,7 +1320,7 @@
             <span class="text-[10px] text-slate-400 block">Personal License</span>
             <span id="reel-preview-price" class="text-base font-black text-white">₹59.00</span>
           </div>
-          <button type="button" id="reel-preview-buy-btn" class="py-2 px-4 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs shadow-md">
+          <button type="button" id="reel-preview-buy-btn" class="py-2 px-4 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md">
             Buy Now
           </button>
         </div>
@@ -1333,7 +1335,7 @@
       
       <!-- Modal Header -->
       <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-        <span id="detail-modal-category" class="text-xs font-black uppercase tracking-wider text-[#7c3aed]">AI Reels</span>
+        <span id="detail-modal-category" class="text-xs font-black uppercase tracking-wider text-[#ff5a1f]">AI Reels</span>
         <button type="button" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 flex items-center justify-center transition-colors" onclick="window.Dizozet.closeProductDetail()">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
@@ -1363,16 +1365,16 @@
           <label class="block text-xs font-extrabold text-[#162048] uppercase">Select License</label>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             
-            <label class="p-3 rounded-2xl border border-purple-200 bg-purple-50/40 flex items-center justify-between cursor-pointer hover:bg-purple-50 transition-colors">
+            <label class="p-3 rounded-2xl border border-orange-200 bg-orange-50/40 flex items-center justify-between cursor-pointer hover:bg-orange-50 transition-colors">
               <div class="flex items-center gap-2.5">
-                <input type="radio" name="detail-license" value="personal" checked class="text-[#7c3aed] focus:ring-[#7c3aed]" />
+                <input type="radio" name="detail-license" value="personal" checked class="text-[#ff5a1f] focus:ring-[#ff5a1f]" />
                 <div>
                   <div class="text-xs font-extrabold text-slate-800">Personal License</div>
                   <div class="text-[10px] text-slate-500 font-medium">For your own social accounts</div>
                 </div>
               </div>
               <div class="text-right">
-                <span id="detail-personal-price" class="text-sm font-black text-[#7c3aed]">₹59.00</span>
+                <span id="detail-personal-price" class="text-sm font-black text-[#ff5a1f]">₹59.00</span>
                 <span id="detail-personal-reg" class="text-[10px] text-slate-400 line-through block">₹499.00</span>
               </div>
             </label>
@@ -1408,7 +1410,7 @@
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span>Add to Cart</span>
         </button>
-        <button type="button" id="detail-buy-now-btn" class="flex-1 py-3 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5">
+        <button type="button" id="detail-buy-now-btn" class="flex-1 py-3 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5">
           <span>Buy Now</span>
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
         </button>

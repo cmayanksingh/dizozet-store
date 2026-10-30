@@ -30,17 +30,17 @@
     }
   </style>
 </head>
-<body class="h-full text-slate-200 antialiased selection:bg-purple-500 selection:text-white">
+<body class="h-full text-slate-200 antialiased selection:bg-[#ff5a1f] selection:text-white">
 
   <!-- ================= AUTH GATE (LOGIN SCREEN) ================= -->
-  <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#060a14] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,50,220,0.25),rgba(255,255,255,0))]">
+  <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#060a14] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,90,31,0.25),rgba(255,255,255,0))]">
     <div class="w-full max-w-md bg-[#0d1424] border border-slate-800/80 rounded-3xl p-7 sm:p-9 shadow-2xl relative overflow-hidden">
       <!-- Glow effect -->
-      <div class="absolute -top-24 -left-24 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="text-center space-y-4">
-        <div class="inline-flex p-2 rounded-2xl bg-black border border-slate-800 shadow-xl shadow-purple-500/20">
+        <div class="inline-flex p-2 rounded-2xl bg-black border border-slate-800 shadow-xl shadow-orange-500/20">
           <img src="images/dizozet-logo.png" alt="Dizozet" class="w-14 h-14 object-contain" onerror="this.src='images/dizozet-logo.jpg'" />
         </div>
         <div>
@@ -53,7 +53,7 @@
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1.5">Admin Password</label>
           <div class="relative">
-            <input id="admin-pass-input" type="password" placeholder="Enter admin password..." class="w-full py-3 px-4 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" required autofocus />
+            <input id="admin-pass-input" type="password" placeholder="Enter admin password..." class="w-full py-3 px-4 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all" required autofocus />
             <button type="button" onclick="togglePassVisibility()" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-white text-xs">👁️</button>
           </div>
           <p id="login-error" class="hidden text-xs text-rose-400 font-semibold mt-1.5 flex items-center gap-1">
@@ -63,18 +63,18 @@
 
         <div class="flex items-center justify-between text-xs text-slate-400">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="remember-me" checked class="rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500" />
+            <input type="checkbox" id="remember-me" checked class="rounded border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-500" />
             <span>Remember login</span>
           </label>
           <span class="text-slate-600 text-[10px]">🔒 Secret Gate</span>
         </div>
 
-        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-sm shadow-lg shadow-purple-500/25 transition-all transform hover:scale-[1.01] active:scale-[0.99]">
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#e04812] hover:to-[#c2410c] text-white font-extrabold text-sm shadow-lg shadow-orange-500/25 transition-all transform hover:scale-[1.01] active:scale-[0.99]">
           Unlock Dashboard →
         </button>
 
         <div class="text-center pt-2">
-          <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-purple-400 transition-colors">← Return to Live Store</a>
+          <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-orange-400 transition-colors">← Return to Live Store</a>
         </div>
       </form>
     </div>
@@ -94,7 +94,7 @@
           </div>
           <div>
             <span class="font-extrabold text-base text-white tracking-tight block">Dizozet</span>
-            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest block">Admin Portal</span>
+            <span class="text-[10px] font-bold text-orange-400 uppercase tracking-widest block">Admin Portal</span>
           </div>
         </a>
         <a href="index.html" target="_blank" title="View Live Store" class="p-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
@@ -104,7 +104,7 @@
 
       <!-- Navigation Links -->
       <nav class="flex-1 p-3.5 space-y-1.5 overflow-y-auto">
-        <button onclick="switchTab('dashboard')" class="admin-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-white bg-purple-600/20 border border-purple-500/30 shadow-xs" data-tab="dashboard">
+        <button onclick="switchTab('dashboard')" class="admin-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-white bg-orange-600/20 border border-orange-500/30 shadow-xs shadow-orange-500/10" data-tab="dashboard">
           <span class="text-base">📊</span>
           <span>Dashboard Overview</span>
         </button>
@@ -163,7 +163,7 @@
           <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Store Live</span>
         </div>
         <div class="flex items-center gap-3">
-          <a href="index.html" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md transition-all flex items-center gap-1.5">
+          <a href="index.html" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all flex items-center gap-1.5">
             <span>Live Store</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
@@ -181,7 +181,7 @@
             <div class="p-5 rounded-2xl bg-[#0d1424] border border-slate-800/80 shadow-md relative overflow-hidden">
               <span class="text-xs font-bold text-slate-400 block">Total Bundles</span>
               <span id="stat-products" class="text-2xl sm:text-3xl font-black text-white mt-1 block">0</span>
-              <span class="text-[10px] text-purple-400 font-semibold mt-1 block">Active in catalog</span>
+              <span class="text-[10px] text-orange-400 font-semibold mt-1 block">Active in catalog</span>
             </div>
 
             <div class="p-5 rounded-2xl bg-[#0d1424] border border-slate-800/80 shadow-md relative overflow-hidden">
@@ -210,7 +210,7 @@
             <div class="p-6 rounded-2xl bg-[#0d1424] border border-slate-800/80 space-y-4">
               <h3 class="font-extrabold text-sm text-white">⚡ Quick Actions</h3>
               <div class="space-y-2.5">
-                <button onclick="switchTab('add-product')" class="w-full py-2.5 px-4 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 font-bold text-xs flex items-center justify-between transition-colors">
+                <button onclick="switchTab('add-product')" class="w-full py-2.5 px-4 rounded-xl bg-orange-600/15 hover:bg-orange-600/25 border border-orange-500/30 text-orange-300 font-bold text-xs flex items-center justify-between transition-colors">
                   <span>➕ Add New Reels Bundle</span>
                   <span>→</span>
                 </button>
@@ -233,7 +233,7 @@
             <div class="lg:col-span-2 p-6 rounded-2xl bg-[#0d1424] border border-slate-800/80 space-y-4">
               <div class="flex items-center justify-between">
                 <h3 class="font-extrabold text-sm text-white">🛍️ Recent Customer Orders</h3>
-                <button onclick="switchTab('orders')" class="text-xs font-bold text-purple-400 hover:text-purple-300">View All →</button>
+                <button onclick="switchTab('orders')" class="text-xs font-bold text-orange-400 hover:text-orange-300">View All →</button>
               </div>
               <div id="dashboard-recent-orders" class="space-y-2">
                 <!-- Injected via JS -->
@@ -252,32 +252,32 @@
             <div class="flex flex-1 w-full sm:w-auto items-center gap-3">
               <!-- Search -->
               <div class="relative flex-1">
-                <input id="product-search-input" type="text" placeholder="Search bundles by title, category, tags..." class="w-full py-2 pl-9 pr-4 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" oninput="filterProductTable()" />
+                <input id="product-search-input" type="text" placeholder="Search bundles by title, category, tags..." class="w-full py-2 pl-9 pr-4 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" oninput="filterProductTable()" />
                 <span class="absolute left-3 top-2.5 text-slate-500 text-xs">🔍</span>
               </div>
               <!-- Category Filter -->
-              <select id="product-cat-filter" class="py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" onchange="filterProductTable()">
+              <select id="product-cat-filter" class="py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" onchange="filterProductTable()">
                 <option value="All">All Categories</option>
               </select>
             </div>
-            <button onclick="switchTab('add-product')" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-2">
+            <button onclick="switchTab('add-product')" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md shadow-orange-500/20 flex items-center justify-center gap-2 transition-all">
               <span>➕ Add Bundle</span>
             </button>
           </div>
 
           <!-- Tip Banner -->
-          <div class="px-4 py-3 rounded-2xl bg-purple-900/30 border border-purple-500/40 text-purple-200 text-xs flex items-center justify-between gap-3 shadow-md">
+          <div class="px-4 py-3 rounded-2xl bg-orange-950/40 border border-orange-500/40 text-orange-200 text-xs flex items-center justify-between gap-3 shadow-md">
             <div class="flex items-center gap-2.5">
               <span class="text-base">💡</span>
-              <span><b>Kaise Edit Karein:</b> Kisi bhi bundle ke <b>Naam</b> ya right side ke <span class="bg-purple-600 text-white px-2 py-0.5 rounded font-extrabold text-[11px]">✏️ Edit</span> button par click karke aap price, video link aur Google Drive link badal sakte hain!</span>
+              <span><b>Kaise Edit Karein:</b> Kisi bhi bundle ke <b>Naam</b> ya right side ke <span class="bg-[#ff5a1f] text-white px-2 py-0.5 rounded font-extrabold text-[11px] shadow-xs">✏️ Edit</span> button par click karke aap price, video link aur Google Drive link badal sakte hain!</span>
             </div>
-            <span class="text-[11px] text-purple-300 font-bold shrink-0 hidden sm:inline">Auto Cloud Sync ☁️</span>
+            <span class="text-[11px] text-orange-300 font-bold shrink-0 hidden sm:inline">Auto Cloud Sync ☁️</span>
           </div>
 
           <!-- Products Table -->
           <div class="rounded-2xl bg-[#0d1424] border border-slate-800/80 overflow-hidden shadow-xl">
             <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs">
+              <table class="w-full text-left text-xs min-w-[760px]">
                 <thead class="bg-[#090e1c] text-slate-400 font-extrabold uppercase border-b border-slate-800/80 text-[10px] tracking-wider">
                   <tr>
                     <th class="py-3.5 px-4">Bundle</th>
@@ -285,7 +285,7 @@
                     <th class="py-3.5 px-3">Reels</th>
                     <th class="py-3.5 px-3">Price</th>
                     <th class="py-3.5 px-3">Badges</th>
-                    <th class="py-3.5 px-4 text-right sticky right-0 bg-[#090e1c] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] z-10 min-w-[130px]">Actions</th>
+                    <th class="py-3.5 px-4 text-right sticky right-0 bg-[#090e1c] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] border-l border-slate-800/80 z-10 min-w-[140px]">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="products-table-body" class="divide-y divide-slate-800/60 font-medium">
@@ -306,72 +306,72 @@
             <form id="add-product-form" class="space-y-5" onsubmit="event.preventDefault(); handleAddProduct();">
               <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1.5">Bundle Title *</label>
-                <input id="add-title" type="text" placeholder="e.g. 2000+ AI Luxury Cars & Supercars Reels Bundle" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" required />
+                <input id="add-title" type="text" placeholder="e.g. 2000+ AI Luxury Cars & Supercars Reels Bundle" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" required />
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Category *</label>
-                  <input id="add-category" type="text" placeholder="e.g. AI Reels, Motivation, Cars, Anime" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="add-category" type="text" placeholder="e.g. AI Reels, Motivation, Cars, Anime" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Reels Count *</label>
-                  <input id="add-reel-count" type="number" placeholder="e.g. 1500" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="add-reel-count" type="number" placeholder="e.g. 1500" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
               </div>
 
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Personal Price (₹) *</label>
-                  <input id="add-personal-price" type="number" value="59" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="add-personal-price" type="number" value="59" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Personal Orig (₹)</label>
-                  <input id="add-personal-orig" type="number" value="499" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="add-personal-orig" type="number" value="499" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Reseller Price (₹)</label>
-                  <input id="add-reseller-price" type="number" value="129" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="add-reseller-price" type="number" value="129" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Reseller Orig (₹)</label>
-                  <input id="add-reseller-orig" type="number" value="998" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="add-reseller-orig" type="number" value="998" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Thumbnail Image URL / Path *</label>
-                  <input id="add-thumb" type="text" placeholder="images/... or https://..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="add-thumb" type="text" placeholder="images/... or https://..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1.5">Preview Video MP4 URL (Optional)</label>
-                  <input id="add-video" type="text" placeholder="https://... (mp4 link)" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="add-video" type="text" placeholder="https://... (mp4 link)" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" />
                 </div>
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1.5">Google Drive Download Link *</label>
-                <input id="add-drive-link" type="text" placeholder="https://drive.google.com/..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" />
+                <input id="add-drive-link" type="text" placeholder="https://drive.google.com/..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" />
               </div>
 
               <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1.5">Short Description</label>
-                <textarea id="add-desc" rows="2" placeholder="Brief bundle description..." class="w-full py-2 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500"></textarea>
+                <textarea id="add-desc" rows="2" placeholder="Brief bundle description..." class="w-full py-2 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500"></textarea>
               </div>
 
               <div class="flex items-center gap-6 pt-2">
                 <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
-                  <input id="add-is-hot" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500" />
+                  <input id="add-is-hot" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-500" />
                   <span>Mark as Hot / Bestseller 🔥</span>
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
-                  <input id="add-is-trending" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500" />
+                  <input id="add-is-trending" type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-500" />
                   <span>Mark as Trending ⭐</span>
                 </label>
               </div>
 
-              <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-sm shadow-lg shadow-purple-500/25 transition-all mt-4">
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#e04812] hover:to-[#c2410c] text-white font-extrabold text-sm shadow-lg shadow-orange-500/25 transition-all mt-4">
                 Publish Bundle to Store 🚀
               </button>
             </form>
@@ -427,13 +427,13 @@
               <form id="add-coupon-form" class="space-y-3.5" onsubmit="event.preventDefault(); handleAddCoupon();">
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1">Coupon Code *</label>
-                  <input id="coupon-code-in" type="text" placeholder="e.g. FLASH20" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white uppercase text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="coupon-code-in" type="text" placeholder="e.g. FLASH20" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white uppercase text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1">Discount Percentage (%) *</label>
-                  <input id="coupon-pct-in" type="number" min="1" max="100" placeholder="e.g. 20" value="15" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                  <input id="coupon-pct-in" type="number" min="1" max="100" placeholder="e.g. 20" value="15" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                 </div>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md transition-colors">
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-colors">
                   Create Coupon
                 </button>
               </form>
@@ -459,111 +459,111 @@
                 <h3 class="text-lg font-black text-white">⚙️ Store Settings &amp; Live Customizer</h3>
                 <p class="text-xs text-slate-400 mt-0.5">Customize everything on your live website: banners, prices, hero text, and WhatsApp number.</p>
               </div>
-              <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-purple-500/15 text-purple-400 border border-purple-500/30">Auto Cloud Sync ☁️</span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-orange-500/15 text-orange-400 border border-orange-500/30">Auto Cloud Sync ☁️</span>
             </div>
 
             <form id="settings-form" class="space-y-6" onsubmit="event.preventDefault(); handleSaveSettings();">
               
               <!-- Card 1: Store & Contact Info -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">1. Store &amp; Contact Details</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">1. Store &amp; Contact Details</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Store Name</label>
-                    <input id="set-store-name" type="text" value="Dizozet" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                    <input id="set-store-name" type="text" value="Dizozet" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Official WhatsApp Number (With Country Code)</label>
-                    <input id="set-whatsapp" type="text" value="917895768118" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                    <input id="set-whatsapp" type="text" value="917895768118" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                     <span class="text-[10px] text-slate-500">e.g. 917895768118 (Changes all WhatsApp buttons on website)</span>
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">UPI ID for Direct Payments</label>
-                    <input id="set-upi" type="text" value="7895768118@ptsbi" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-upi" type="text" value="7895768118@ptsbi" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Master Google Drive Link (Automatic delivery)</label>
-                    <input id="set-drive-link" type="text" placeholder="https://drive.google.com/drive/folders/..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-drive-link" type="text" placeholder="https://drive.google.com/drive/folders/..." class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                 </div>
               </div>
 
               <!-- Card 2: Announcement Bar -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">2. Top Announcement Bar</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">2. Top Announcement Bar</h4>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1">Banner Announcement Message (Supports HTML / bold)</label>
-                  <input id="set-banner" type="text" value="FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS FOR ₹199 | USE CODE: DIZO85" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="set-banner" type="text" value="FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS FOR ₹199 | USE CODE: DIZO85" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                 </div>
               </div>
 
               <!-- Card 3: Hero Section Customizer -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">3. Homepage Hero Section</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">3. Homepage Hero Section</h4>
                 <div class="space-y-3.5">
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Hero Badge Text</label>
-                    <input id="set-hero-badge" type="text" value="India's #1 Viral Reels Bundle Platform" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-hero-badge" type="text" value="India's #1 Viral Reels Bundle Platform" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Hero Main Headline (HTML allowed)</label>
-                    <textarea id="set-hero-title" rows="2" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500">Viral Reels. &lt;span class=&quot;bg-clip-text text-transparent bg-gradient-to-r from-[#6d36e8] via-[#4f46e5] to-[#06b6d4]&quot;&gt;10x Faster Growth.&lt;/span&gt; Instant Download.</textarea>
+                    <textarea id="set-hero-title" rows="2" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500">Viral Reels. &lt;span class=&quot;bg-clip-text text-transparent bg-gradient-to-r from-[#ff5a1f] via-[#ea580c] to-[#f59e0b]&quot;&gt;10x Faster Growth.&lt;/span&gt; Instant Download.</textarea>
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Hero Subtitle / Description</label>
-                    <textarea id="set-hero-subtitle" rows="2" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500">Get instant access to 222,000+ high-retention, ready-to-post viral reels bundles in Hindi &amp; English from Dizozet. No watermarks. 1080P FHD. Ready for Instagram, YouTube Shorts &amp; TikTok.</textarea>
+                    <textarea id="set-hero-subtitle" rows="2" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500">Get instant access to 222,000+ high-retention, ready-to-post viral reels bundles in Hindi &amp; English from Dizozet. No watermarks. 1080P FHD. Ready for Instagram, YouTube Shorts &amp; TikTok.</textarea>
                   </div>
                 </div>
               </div>
 
               <!-- Card 4: VIP All-Access Mega Pack Pricing -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">4. All-Access VIP Mega Pack Pricing</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">4. All-Access VIP Mega Pack Pricing</h4>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Personal (₹)</label>
-                    <input id="set-plan-personal-price" type="number" value="199" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                    <input id="set-plan-personal-price" type="number" value="199" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Personal Orig (₹)</label>
-                    <input id="set-plan-personal-orig" type="number" value="999" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-plan-personal-orig" type="number" value="999" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Reseller (₹)</label>
-                    <input id="set-plan-reseller-price" type="number" value="399" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" required />
+                    <input id="set-plan-reseller-price" type="number" value="399" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" required />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Reseller Orig (₹)</label>
-                    <input id="set-plan-reseller-orig" type="number" value="1999" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-plan-reseller-orig" type="number" value="1999" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                 </div>
               </div>
 
               <!-- Card 5: Checkout Order Bump -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">5. Checkout Order Bump (Special Add-on)</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">5. Checkout Order Bump (Special Add-on)</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div class="sm:col-span-2">
                     <label class="block text-xs font-bold text-slate-300 mb-1">Add-on Title</label>
-                    <input id="set-bump-title" type="text" value="Add VIP 10,000+ Canva Editable Templates" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-bump-title" type="text" value="Add VIP 10,000+ Canva Editable Templates" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Add-on Price (₹)</label>
-                    <input id="set-bump-price" type="number" value="99" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500" />
+                    <input id="set-bump-price" type="number" value="99" class="w-full py-2.5 px-3 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white text-xs focus:outline-none focus:border-orange-500" />
                   </div>
                 </div>
               </div>
 
               <!-- Card 6: Admin Security -->
               <div class="p-6 rounded-3xl bg-[#0d1424] border border-slate-800/80 space-y-4">
-                <h4 class="text-xs font-black uppercase tracking-wider text-purple-400">6. Admin Password</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-orange-400">6. Admin Password</h4>
                 <div>
                   <label class="block text-xs font-bold text-slate-300 mb-1">Change Admin Password</label>
-                  <input id="set-password" type="text" placeholder="Leave blank to keep current password" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-purple-500" />
+                  <input id="set-password" type="text" placeholder="Leave blank to keep current password" class="w-full py-2.5 px-3.5 rounded-xl bg-[#080d1a] border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-orange-500" />
                 </div>
               </div>
 
-              <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-sm shadow-xl shadow-purple-500/25 transition-all">
+              <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] hover:from-[#e04812] hover:to-[#c2410c] text-white font-black text-sm shadow-xl shadow-orange-500/25 transition-all">
                 💾 Save All Changes (Syncs to Cloud Live Store Instantly)
               </button>
             </form>
@@ -579,7 +579,7 @@
             </div>
 
             <div class="space-y-4">
-              <div class="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 to-indigo-950/40 border border-purple-500/40 flex items-center justify-between">
+              <div class="p-4 rounded-2xl bg-gradient-to-r from-orange-950/40 to-amber-950/40 border border-orange-500/40 flex items-center justify-between">
                 <div>
                   <h4 class="text-xs font-extrabold text-white flex items-center gap-1.5">
                     <span>☁️ Sync All 125 Bundles to Firebase Cloud</span>
@@ -587,7 +587,7 @@
                   </h4>
                   <p class="text-[11px] text-slate-400">Upload all products to Firebase Firestore cloud database so all devices stay in sync.</p>
                 </div>
-                <button id="sync-cloud-btn" onclick="syncAllToCloud()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md transition-all">
+                <button id="sync-cloud-btn" onclick="syncAllToCloud()" class="px-4 py-2 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md shadow-orange-500/20 transition-all">
                   Sync to Cloud ☁️
                 </button>
               </div>
@@ -597,7 +597,7 @@
                   <h4 class="text-xs font-extrabold text-white">Download Updated catalog_data.js</h4>
                   <p class="text-[11px] text-slate-400">Download the complete ready-to-use JS file containing all added/edited bundles.</p>
                 </div>
-                <button onclick="exportCatalogDataJS()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md">
+                <button onclick="exportCatalogDataJS()" class="px-4 py-2 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs shadow-md shadow-orange-500/20">
                   Download JS
                 </button>
               </div>
@@ -643,73 +643,73 @@
         
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Title</label>
-          <input id="edit-title" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" required />
+          <input id="edit-title" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" required />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Category</label>
-            <input id="edit-category" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" required />
+            <input id="edit-category" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" required />
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Reels Count</label>
-            <input id="edit-reel-count" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" required />
+            <input id="edit-reel-count" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" required />
           </div>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Personal (₹)</label>
-            <input id="edit-personal-price" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" required />
+            <input id="edit-personal-price" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" required />
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Personal Orig</label>
-            <input id="edit-personal-orig" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" />
+            <input id="edit-personal-orig" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" />
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Reseller (₹)</label>
-            <input id="edit-reseller-price" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" />
+            <input id="edit-reseller-price" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" />
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1">Reseller Orig</label>
-            <input id="edit-reseller-orig" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" />
+            <input id="edit-reseller-orig" type="number" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" />
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Thumbnail Path / URL</label>
-          <input id="edit-thumb" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" required />
+          <input id="edit-thumb" type="text" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" required />
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Google Drive Download Link</label>
-          <input id="edit-drive-link" type="text" placeholder="https://drive.google.com/..." class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" />
+          <input id="edit-drive-link" type="text" placeholder="https://drive.google.com/..." class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" />
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Preview Video URL (MP4 / WebM)</label>
-          <input id="edit-video" type="text" placeholder="https://...mp4 or videos/preview.mp4" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500" />
+          <input id="edit-video" type="text" placeholder="https://...mp4 or videos/preview.mp4" class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500" />
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Short Description</label>
-          <textarea id="edit-desc" rows="2" placeholder="Brief summary of bundle..." class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-purple-500"></textarea>
+          <textarea id="edit-desc" rows="2" placeholder="Brief summary of bundle..." class="w-full py-2 px-3 rounded-xl bg-[#080d1a] border border-slate-700 text-white text-xs focus:outline-none focus:border-orange-500"></textarea>
         </div>
 
         <div class="flex items-center gap-6 pt-1">
           <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
-            <input id="edit-is-hot" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500" />
+            <input id="edit-is-hot" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-500" />
             <span>Hot / Bestseller 🔥</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-300">
-            <input id="edit-is-trending" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-purple-500" />
+            <input id="edit-is-trending" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-500" />
             <span>Trending ⭐</span>
           </label>
         </div>
 
         <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
           <button type="button" onclick="closeEditModal()" class="py-2 px-4 rounded-xl text-slate-400 hover:text-white text-xs font-bold">Cancel</button>
-          <button type="submit" class="py-2.5 px-5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold shadow-md">Save Changes</button>
+          <button type="submit" class="py-2.5 px-5 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white text-xs font-extrabold shadow-md shadow-orange-500/20">Save Changes</button>
         </div>
       </form>
     </div>
@@ -788,7 +788,7 @@
         upi: '7895768118@ptsbi',
         banner: 'FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS FOR ₹199 | USE CODE: DIZO85',
         heroBadge: "India's #1 Viral Reels Bundle Platform",
-        heroTitle: 'Viral Reels. <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#6d36e8] via-[#4f46e5] to-[#06b6d4]">10x Faster Growth.</span> Instant Download.',
+        heroTitle: 'Viral Reels. <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#ff5a1f] via-[#ea580c] to-[#f59e0b]">10x Faster Growth.</span> Instant Download.',
         heroSubtitle: 'Get instant access to 222,000+ high-retention, ready-to-post viral reels bundles in Hindi & English from Dizozet. No watermarks. 1080P FHD. Ready for Instagram, YouTube Shorts & TikTok.',
         personalPlanPrice: 199,
         personalPlanOrig: 999,
@@ -869,7 +869,7 @@
 
       document.querySelectorAll('.admin-nav-btn').forEach(btn => {
         if (btn.dataset.tab === tabId) {
-          btn.className = 'admin-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-white bg-purple-600/20 border border-purple-500/30 shadow-xs';
+          btn.className = 'admin-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-white bg-orange-600/20 border border-orange-500/40 shadow-xs shadow-orange-500/10';
         } else {
           btn.className = 'admin-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-800/50';
         }
@@ -973,10 +973,10 @@
             <td class="py-3 px-4 flex items-center gap-3">
               <img src="${thumb}" alt="${p.title}" class="w-10 h-10 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0 cursor-pointer hover:opacity-80" onclick="openEditModal('${p.id}')" onerror="this.src='images/dizozet-logo.png'" />
               <div class="min-w-0 max-w-[220px] sm:max-w-xs md:max-w-sm cursor-pointer" onclick="openEditModal('${p.id}')">
-                <span class="font-bold text-white block truncate hover:text-purple-400 transition-colors" title="${p.title}">${p.title}</span>
+                <span class="font-bold text-white block truncate hover:text-orange-400 transition-colors" title="${p.title}">${p.title}</span>
                 <span class="text-[10px] text-slate-500 block truncate flex items-center gap-1.5 mt-0.5">
-                  <span class="font-mono">${p.id}</span>
-                  <span class="text-purple-400 font-bold bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">✏️ Click to Edit</span>
+                  <span class="font-mono text-slate-400">${p.id}</span>
+                  <span class="text-orange-400 font-bold bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">✏️ Click to Edit</span>
                 </span>
               </div>
             </td>
@@ -985,15 +985,15 @@
             </td>
             <td class="py-3 px-3 text-slate-300 font-bold">${p.reelCount || 500}+</td>
             <td class="py-3 px-3">
-              <span class="font-extrabold text-cyan-400">₹${p.personalPrice}</span>
+              <span class="font-extrabold text-orange-400">₹${p.personalPrice}</span>
               <span class="text-[10px] text-slate-500 line-through ml-1">₹${p.personalOriginalPrice}</span>
             </td>
             <td class="py-3 px-3">
               ${p.isHot ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-rose-500/20 text-rose-400 border border-rose-500/30 mr-1">HOT</span>' : ''}
               ${p.isTrending ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-amber-500/20 text-amber-400 border border-amber-500/30">TRENDING</span>' : ''}
             </td>
-            <td class="py-3 px-4 text-right space-x-1.5 sticky right-0 bg-[#0d1424] group-hover:bg-[#11192e] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] z-10 min-w-[130px] transition-colors">
-              <button onclick="openEditModal('${p.id}')" class="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-black shadow-md shadow-purple-500/25 transition-all hover:scale-105 inline-flex items-center gap-1">
+            <td class="py-3 px-4 text-right space-x-1.5 sticky right-0 bg-[#0d1424] group-hover:bg-[#11192e] shadow-[-12px_0_16px_rgba(0,0,0,0.7)] border-l border-slate-800/80 z-10 min-w-[140px] transition-colors">
+              <button onclick="openEditModal('${p.id}')" class="px-3.5 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black shadow-md shadow-orange-500/25 transition-all hover:scale-105 inline-flex items-center gap-1.5">
                 <span>✏️</span><span>Edit</span>
               </button>
               <button onclick="deleteProduct('${p.id}')" title="Delete bundle" class="px-2 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 text-xs font-bold transition-colors">
@@ -1174,7 +1174,7 @@
 
         return `
           <tr class="hover:bg-slate-800/40 transition-colors">
-            <td class="py-3 px-4 font-mono font-bold text-purple-400">${o.orderId || 'DZ-000000'}</td>
+            <td class="py-3 px-4 font-mono font-bold text-orange-400">${o.orderId || 'DZ-000000'}</td>
             <td class="py-3 px-3">
               <span class="font-bold text-white block">${o.name || 'Customer'}</span>
               <span class="text-[10px] text-slate-400 block truncate max-w-[160px]">${o.email || ''}</span>
@@ -1260,7 +1260,7 @@
           </div>
           <div class="flex items-center gap-3">
             <label class="flex items-center gap-1.5 cursor-pointer text-[11px] font-bold ${c.active ? 'text-emerald-400' : 'text-slate-500'}">
-              <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCoupon(${idx})" class="rounded border-slate-700 bg-slate-900 text-purple-600" />
+              <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCoupon(${idx})" class="rounded border-slate-700 bg-slate-900 text-orange-500" />
               <span>${c.active ? 'Active' : 'Disabled'}</span>
             </label>
             <button onclick="deleteCoupon(${idx})" class="text-rose-400 hover:text-rose-300 font-bold ml-2">✕</button>
@@ -1320,7 +1320,7 @@
       document.getElementById('set-drive-link').value = s.masterDriveLink || '';
 
       if (document.getElementById('set-hero-badge')) document.getElementById('set-hero-badge').value = s.heroBadge || "India's #1 Viral Reels Bundle Platform";
-      if (document.getElementById('set-hero-title')) document.getElementById('set-hero-title').value = s.heroTitle || 'Viral Reels. <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#6d36e8] via-[#4f46e5] to-[#06b6d4]">10x Faster Growth.</span> Instant Download.';
+      if (document.getElementById('set-hero-title')) document.getElementById('set-hero-title').value = s.heroTitle || 'Viral Reels. <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#ff5a1f] via-[#ea580c] to-[#f59e0b]">10x Faster Growth.</span> Instant Download.';
       if (document.getElementById('set-hero-subtitle')) document.getElementById('set-hero-subtitle').value = s.heroSubtitle || 'Get instant access to 222,000+ high-retention, ready-to-post viral reels bundles in Hindi & English from Dizozet. No watermarks. 1080P FHD. Ready for Instagram, YouTube Shorts & TikTok.';
 
       if (document.getElementById('set-plan-personal-price')) document.getElementById('set-plan-personal-price').value = s.personalPlanPrice || 199;

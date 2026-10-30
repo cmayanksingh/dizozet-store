@@ -95,7 +95,7 @@
     }
 
     const toast = document.createElement('div');
-    toast.className = 'pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0f172a] text-white shadow-2xl border border-purple-500/30 text-xs sm:text-sm font-bold';
+    toast.className = 'pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0f172a] text-white shadow-2xl border border-orange-500/30 text-xs sm:text-sm font-bold';
     toast.innerHTML = `
       <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
@@ -259,7 +259,7 @@
           <div class="flex-1 min-w-0">
             <h4 class="text-xs sm:text-[13px] font-extrabold text-[#162048] line-clamp-2 leading-snug">${p.title}</h4>
             <div class="flex items-center gap-2 mt-1">
-              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md ${item.license === 'reseller' ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'bg-purple-50 text-[#7c3aed]'}">${item.license === 'reseller' ? 'Reseller Rights' : 'Personal'}</span>
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md ${item.license === 'reseller' ? 'bg-amber-100 text-amber-900 border border-amber-200' : 'bg-orange-50 text-[#ea580c]'}">${item.license === 'reseller' ? 'Reseller Rights' : 'Personal'}</span>
               <span class="text-[11px] font-semibold text-slate-400">${p.reelCount || '1000+'}+ Reels</span>
             </div>
             <div class="flex items-center justify-between mt-2.5">
@@ -350,7 +350,7 @@
         itemsHtml += `
           <div class="flex items-center justify-between text-xs py-1.5 border-b border-slate-100 last:border-0">
             <div class="flex items-center gap-2 truncate max-w-[220px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#7c3aed]"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#ff5a1f]"></span>
               <span class="font-bold text-slate-800 truncate">${item.product.title}</span>
               <span class="text-slate-400">×${item.quantity}</span>
             </div>
@@ -684,14 +684,14 @@
             </div>
           ` : p.isTrending ? `
             <div class="absolute top-0 right-0 overflow-hidden w-24 h-24 pointer-events-none">
-              <div class="absolute transform rotate-45 bg-gradient-to-r from-purple-700 to-indigo-700 text-white font-black text-[9px] py-1 right-[-32px] top-[18px] w-[120px] text-center shadow-md flex items-center justify-center gap-1">
+              <div class="absolute transform rotate-45 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-black text-[9px] py-1 right-[-32px] top-[18px] w-[120px] text-center shadow-md flex items-center justify-center gap-1">
                 <span>⚡</span><span>TRENDING</span>
               </div>
             </div>
           ` : ''}
 
           <div class="absolute top-2.5 left-2.5 flex items-center gap-1">
-            <button type="button" aria-label="Play video preview" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#7c3aed] transition-colors" onclick="event.stopPropagation(); window.Dizozet.openReelPreview('${p.id}')">
+            <button type="button" aria-label="Play video preview" class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#ff5a1f] transition-colors" onclick="event.stopPropagation(); window.Dizozet.openReelPreview('${p.id}')">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
             </button>
           </div>
@@ -704,7 +704,7 @@
 
         <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-3">
           <div class="space-y-1.5">
-            <h3 class="font-extrabold text-xs sm:text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
+            <h3 class="font-extrabold text-xs sm:text-[14px] text-[#162048] hover:text-[#ff5a1f] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
               ${p.title}
             </h3>
             <div class="flex items-center gap-1.5 pt-0.5 flex-wrap">
@@ -726,11 +726,11 @@
             </div>
 
             <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
-              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
+              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#ea580c] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                 <span>Add</span>
               </button>
-              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
+              <button type="button" class="py-2 px-1.5 sm:px-2 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md shadow-orange-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                 <span>Buy Now</span>
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </button>
@@ -765,15 +765,15 @@
             </div>
             <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded-md text-[10px] font-black bg-black/85 text-white border border-white/20">1080P</span>
             <button type="button" aria-label="Preview" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30" onclick="event.stopPropagation(); window.Dizozet.openReelPreview('${p.id}')">
-              <span class="w-12 h-12 rounded-full bg-white/95 text-[#6533e4] shadow-xl flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform">
-                <svg class="w-5 h-5 ml-0.5 fill-[#6533e4]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <span class="w-12 h-12 rounded-full bg-white/95 text-[#ff5a1f] shadow-xl flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform">
+                <svg class="w-5 h-5 ml-0.5 fill-[#ff5a1f]" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
               </span>
             </button>
           </div>
 
           <div class="p-4 flex-1 flex flex-col justify-between space-y-3.5">
             <div class="space-y-2">
-              <h3 class="font-extrabold text-[14px] text-[#162048] hover:text-[#6d36e8] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
+              <h3 class="font-extrabold text-[14px] text-[#162048] hover:text-[#ff5a1f] transition-colors line-clamp-2 leading-snug cursor-pointer" onclick="window.Dizozet.openProductDetail('${p.id}')">
                 ${p.title}
               </h3>
               <div class="flex items-center gap-2 pt-0.5">
@@ -795,11 +795,11 @@
               </div>
 
               <div class="grid grid-cols-2 gap-2">
-                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#f5f1fd] hover:bg-[#ece4fc] text-[#6533e4] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
+                <button type="button" class="py-2.5 px-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#ea580c] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors" onclick="window.Dizozet.addToCart('${p.id}', 'personal')">
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                   <span>Add to Cart</span>
                 </button>
-                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#6533e4] hover:bg-[#5326c9] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md shadow-purple-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
+                <button type="button" class="py-2.5 px-2 rounded-xl bg-[#ff5a1f] hover:bg-[#e04812] text-white font-extrabold text-xs flex items-center justify-center gap-1 shadow-md shadow-orange-500/20" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                   <span>Buy Now</span>
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
                 </button>
@@ -867,8 +867,8 @@
           <div class="space-y-2">
             <h4 class="font-extrabold text-xs sm:text-sm text-white line-clamp-2 leading-tight">${p.title}</h4>
             <div class="flex items-center justify-between pt-1">
-              <span class="text-xs font-black text-cyan-300">₹${p.personalPrice}.00</span>
-              <button type="button" class="py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] text-white font-extrabold text-[11px] hover:opacity-95 shadow-md" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
+              <span class="text-xs font-black text-amber-300">₹${p.personalPrice}.00</span>
+              <button type="button" class="py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#ff5a1f] to-[#ea580c] text-white font-extrabold text-[11px] hover:opacity-95 shadow-md shadow-orange-500/25" onclick="window.Dizozet.buyNow('${p.id}', 'personal')">
                 Get Pack
               </button>
             </div>
@@ -883,9 +883,9 @@
     state.selectedCategory = catName;
     document.querySelectorAll('.cat-pill-btn').forEach(btn => {
       if (btn.getAttribute('data-cat') === catName) {
-        btn.className = 'cat-pill-btn px-4 py-2 rounded-full text-xs font-black transition-all bg-[#6533e4] text-white shadow-md shadow-purple-500/20 shrink-0';
+        btn.className = 'cat-pill-btn px-4 py-2 rounded-full text-xs font-black transition-all bg-[#ff5a1f] text-white shadow-md shadow-orange-500/20 shrink-0';
       } else {
-        btn.className = 'cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-[#f5f1fd] hover:text-[#6533e4] border border-[#ede7fa] shrink-0';
+        btn.className = 'cat-pill-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-white text-[#4a5270] hover:bg-orange-50 hover:text-[#ff5a1f] border border-orange-100 shrink-0';
       }
     });
     renderFreshGrid();
@@ -919,7 +919,7 @@
     if (featuresList) {
       featuresList.innerHTML = plan.features.map(f => `
         <div class="py-2.5 flex items-center gap-3 first:pt-1 last:pb-1">
-          <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${type === 'reseller' ? 'bg-cyan-100 text-cyan-600' : 'bg-violet-100 text-[#7c3aed]'}">
+          <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${type === 'reseller' ? 'bg-amber-100 text-amber-700' : 'bg-orange-100 text-[#ea580c]'}">
             <svg class="w-3 h-3 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <span class="text-xs sm:text-[13px] font-bold text-slate-700">${f}</span>
@@ -983,12 +983,12 @@
     document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
       const btnTab = btn.getAttribute('data-tab');
       if (btnTab === tab) {
-        btn.className = 'mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all bg-gradient-to-br from-[#ede9fe] to-[#e0f2fe] text-[#7c3aed] font-extrabold';
+        btn.className = 'mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all bg-gradient-to-br from-orange-50 to-amber-100 text-[#ea580c] font-extrabold';
         if (!btn.querySelector('.mobile-active-bar')) {
-          btn.insertAdjacentHTML('afterbegin', '<span class="mobile-active-bar absolute -top-[5px] left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full bg-gradient-to-r from-[#7c3aed] to-[#06b6d4]"></span>');
+          btn.insertAdjacentHTML('afterbegin', '<span class="mobile-active-bar absolute -top-[5px] left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full bg-gradient-to-r from-[#ff5a1f] to-[#f59e0b]"></span>');
         }
       } else {
-        btn.className = 'mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#7c3aed] font-bold';
+        btn.className = 'mobile-nav-btn relative flex flex-col items-center justify-center py-1 px-1 rounded-[14px] transition-all text-slate-500 hover:text-[#ea580c] font-bold';
         btn.querySelector('.mobile-active-bar')?.remove();
       }
     });
