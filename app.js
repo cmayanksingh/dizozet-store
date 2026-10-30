@@ -994,10 +994,105 @@
     });
   }
 
+  
+  // Apply Live Store Settings & Customizations (Banner, WhatsApp, Hero, Plans)
+  function applyStoreCustomizations(settings) {
+    if (!settings) settings = getStoreSettings();
+
+    // 1. Top Announcement Bar
+    if (settings.banner) {
+      const bannerEl = document.getElementById('announcement-banner-text');
+      if (bannerEl) {
+        bannerEl.innerHTML = settings.banner;
+      }
+    }
+
+    // 2. WhatsApp Number across all buttons and links
+    if (settings.whatsapp) {
+      const cleanPhone = settings.whatsapp.replace(/\D/g, '');
+      const waLinks = document.querySelectorAll('a[href*="wa.me"], a.site-whatsapp-link');
+      waLinks.forEach(link => {
+        const currentHref = link.getAttribute('href') || '';
+        // If it had custom prefilled text, preserve text param
+        const textParam = currentHref.includes('text=') ? currentHref.substring(currentHref.indexOf('text=')) : '';
+        const newHref = 'https://wa.me/' + cleanPhone + (textParam ? '?' + textParam : '');
+        link.setAttribute('href', newHref);
+      });
+      // Also update text if displayed
+      const waTextEl = document.getElementById('header-wa-text');
+      if (waTextEl) {
+        waTextEl.textContent = 'WhatsApp: +' + cleanPhone;
+      }
+    }
+
+    // 3. Hero Section Headline & Subtitle
+    if (settings.heroTitle) {
+      const heroTitleEl = document.getElementById('hero-main-title');
+      if (heroTitleEl) heroTitleEl.innerHTML = settings.heroTitle;
+    }
+    if (settings.heroSubtitle) {
+      const heroSubEl = document.getElementById('hero-main-subtitle');
+      if (heroSubEl) heroSubEl.textContent = settings.heroSubtitle;
+    }
+    if (settings.heroBadge) {
+      const heroBadgeEl = document.getElementById('hero-badge-text');
+      if (heroBadgeEl) heroBadgeEl.textContent = settings.heroBadge;
+    }
+
+    // 4. All-Access Plans Pricing
+    if (settings.personalPlanPrice && typeof PLANS_DATA !== 'undefined' && PLANS_DATA[0]) {
+      PLANS_DATA[0].price = Number(settings.personalPlanPrice);
+      if (settings.personalPlanOrig) PLANS_DATA[0].originalPrice = Number(settings.personalPlanOrig);
+    }
+    if (settings.resellerPlanPrice && typeof PLANS_DATA !== 'undefined' && PLANS_DATA[1]) {
+      PLANS_DATA[1].price = Number(settings.resellerPlanPrice);
+      if (settings.resellerPlanOrig) PLANS_DATA[1].originalPrice = Number(settings.resellerPlanOrig);
+    }
+    togglePlan(state.selectedPlan || 'personal');
+
+    // 5. Order Bump Special
+    if (settings.bumpPrice && typeof BUMP_SPECIAL !== 'undefined') {
+      BUMP_SPECIAL.discountPrice = Number(settings.bumpPrice);
+      if (settings.bumpTitle) BUMP_SPECIAL.title = settings.bumpTitle;
+      const bumpPriceEl = document.getElementById('cart-bump-price');
+      if (bumpPriceEl) bumpPriceEl.textContent = '₹' + BUMP_SPECIAL.discountPrice;
+    }
+  }
+
+  // Load Cloud Data (Firestore) asynchronously for all visitors
+  async function loadCloudData() {
+    try {
+      if (window.DizozetDB) {
+        // Fetch Cloud Settings
+        if (window.DizozetDB.getSettings) {
+          const cloudSettings = await window.DizozetDB.getSettings();
+          if (cloudSettings) {
+            localStorage.setItem('dizozet_settings', JSON.stringify(cloudSettings));
+            applyStoreCustomizations(cloudSettings);
+          }
+        }
+
+        // Fetch Cloud Products
+        if (window.DizozetDB.getProducts) {
+          const cloudProducts = await window.DizozetDB.getProducts();
+          if (cloudProducts && Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+            localStorage.setItem('dizozet_catalog', JSON.stringify(cloudProducts));
+            renderTrendingCarousel();
+            renderFreshGrid();
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Cloud sync note:', e.message);
+    }
+  }
+
   // --- Initialize App ---
   function init() {
+    applyStoreCustomizations();
     renderTrendingCarousel();
     renderFreshGrid();
+    loadCloudData();
     renderPreviewFeedSection();
     updateCartUI();
 
