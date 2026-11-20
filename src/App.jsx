@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import SearchModal from './components/SearchModal';
 import WhatsAppButton from './components/WhatsAppButton';
+import RecentSalesToast from './components/RecentSalesToast';
 
 import HomePage from './pages/HomePage';
 import SubscriptionsPage from './pages/SubscriptionsPage';
@@ -66,6 +67,7 @@ function AppContent() {
       <CartDrawer />
       <SearchModal />
       <WhatsAppButton />
+      <RecentSalesToast />
     </div>
   );
 }

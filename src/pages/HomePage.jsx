@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
@@ -24,8 +24,13 @@ export default function HomePage() {
 
   // Subscriptions: 4 main and popular
   const featuredSubscriptions = subscriptions.slice(0, 4);
-  // Reels Bundles: 4 popular bundles
-  const featuredReelsBundles = reelsBundles.slice(0, 4);
+  
+  // Reels Bundles: Featured Trending Bundles (#1 is GTA 6 Viral Reels)
+  const featuredReelsBundles = useMemo(() => {
+    const gtaBundle = reelsBundles.find(b => b.id === 'rb-2000-gta-6-viral-reels' || b.title.toLowerCase().includes('gta 6'));
+    const others = reelsBundles.filter(b => b.id !== gtaBundle?.id);
+    return gtaBundle ? [gtaBundle, ...others.slice(0, 3)] : reelsBundles.slice(0, 4);
+  }, [reelsBundles]);
 
   const [faqOpenIndex, setFaqOpenIndex] = useState(0);
 
