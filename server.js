@@ -1,61 +1,41 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PORT = process.env.PORT || 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const MIME_TYPES = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'application/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.webp': 'image/webp',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.mp4': 'video/mp4',
-  '.woff2': 'font/woff2'
-};
+const app = express();
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3001;
 
-const server = http.createServer((req, res) => {
-  let reqPath = decodeURI(req.url.split('?')[0]);
-  if (reqPath === '/' || reqPath === '') {
-    reqPath = '/index.html';
-  }
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'dist')));
 
-  // Support internal routes like /shop, /reels, etc. by serving index.html
-  let filePath = path.join(__dirname, reqPath);
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', store: 'Dizo Pulse', timestamp: new Date() });
+});
 
-  if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    if (fs.existsSync(filePath + '.html')) {
-      filePath = filePath + '.html';
+// Catch-all route to serve index.html for SPA routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+function startServer(port) {
+  const server = app.listen(port, () => {
+    console.log(`\n======================================================`);
+    console.log(`🚀 Dizo Pulse Digital Store is live at: http://localhost:${port}`);
+    console.log(`======================================================\n`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`Port ${port} in use, trying port ${port + 1}...`);
+      startServer(port + 1);
     } else {
-      filePath = path.join(__dirname, 'index.html');
-    }
-  }
-
-  const ext = path.extname(filePath).toLowerCase();
-  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('500 Server Error: ' + err.message);
-    } else {
-      res.writeHead(200, {
-        'Content-Type': contentType,
-        'Access-Control-Allow-Origin': '*'
-      });
-      res.end(content);
+      console.error('Server error:', err);
     }
   });
-});
+}
 
-server.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`🚀 Dizozet Recreated Website is running!`);
-  console.log(`🔗 Local URL: http://localhost:${PORT}`);
-  console.log(`======================================================\n`);
-});
+startServer(DEFAULT_PORT);
