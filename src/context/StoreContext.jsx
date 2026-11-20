@@ -226,9 +226,9 @@ export const StoreProvider = ({ children }) => {
   // 9. Admin Password & Security
   const [adminPassword, setAdminPassword] = useState(() => {
     try {
-      return localStorage.getItem('digivault_admin_pwd') || 'dizo2026';
+      return localStorage.getItem('digivault_admin_pwd') || 'dizozet2448';
     } catch {
-      return 'dizo2026';
+      return 'dizozet2448';
     }
   });
 
@@ -520,31 +520,40 @@ export const StoreProvider = ({ children }) => {
     }
 
     // 1. Fetch authoritative password directly from Cloud Firestore first
+    let verifiedCloud = false;
+    let cloudValidPass = null;
     try {
       const cloudSettings = await fetchSettingsFromFirestore();
-      const cloudPass = cloudSettings?.adminPass;
-      if (cloudPass) {
-        setAdminPassword(cloudPass);
+      if (cloudSettings?.adminPass && typeof cloudSettings.adminPass === 'string' && cloudSettings.adminPass.trim()) {
+        cloudValidPass = cloudSettings.adminPass.trim();
+        verifiedCloud = true;
+        setAdminPassword(cloudValidPass);
+        setStoreConfig(prev => ({ ...prev, adminPass: cloudValidPass }));
         try {
-          localStorage.setItem('digivault_admin_pwd', cloudPass);
+          localStorage.setItem('digivault_admin_pwd', cloudValidPass);
         } catch {}
-        if (trimmed === cloudPass) {
-          setIsAdminAuthenticated(true);
-          try { sessionStorage.setItem('digivault_admin_auth', 'true'); } catch {}
-          return { success: true };
-        }
       }
     } catch (e) {
       console.warn('Cloud admin auth check notice:', e);
     }
 
-    // 2. Check current in-memory adminPassword or master fallback 'dizo2026'
-    if (trimmed === adminPassword || trimmed === 'dizo2026') {
+    // STRICT AUTHENTICATION:
+    // If Cloud returned the master password, ONLY that exact password is valid!
+    if (verifiedCloud && cloudValidPass) {
+      if (trimmed === cloudValidPass) {
+        setIsAdminAuthenticated(true);
+        try { sessionStorage.setItem('digivault_admin_auth', 'true'); } catch {}
+        return { success: true };
+      } else {
+        return { success: false, message: 'Incorrect Admin Password. Please try again.' };
+      }
+    }
+
+    // 2. Offline fallback ONLY if Cloud Firestore was completely unreachable
+    const fallbackPass = (adminPassword || '').trim();
+    if (fallbackPass && trimmed === fallbackPass) {
       setIsAdminAuthenticated(true);
-      try {
-        localStorage.setItem('digivault_admin_pwd', 'dizo2026');
-        sessionStorage.setItem('digivault_admin_auth', 'true');
-      } catch {}
+      try { sessionStorage.setItem('digivault_admin_auth', 'true'); } catch {}
       return { success: true };
     }
 
@@ -559,15 +568,16 @@ export const StoreProvider = ({ children }) => {
   };
 
   const changeAdminPassword = async (oldPwd, newPwd) => {
-    let currentValidPwd = adminPassword;
+    let currentValidPwd = (adminPassword || '').trim();
     try {
       const cloudSettings = await fetchSettingsFromFirestore();
-      if (cloudSettings?.adminPass) {
-        currentValidPwd = cloudSettings.adminPass;
+      if (cloudSettings?.adminPass && typeof cloudSettings.adminPass === 'string' && cloudSettings.adminPass.trim()) {
+        currentValidPwd = cloudSettings.adminPass.trim();
       }
     } catch {}
 
-    if (oldPwd !== currentValidPwd && oldPwd !== adminPassword) {
+    const trimmedOld = (oldPwd || '').trim();
+    if (trimmedOld !== currentValidPwd && trimmedOld !== adminPassword.trim()) {
       return { success: false, message: 'Current password does not match.' };
     }
     if (!newPwd || newPwd.trim().length < 4) {
@@ -575,6 +585,7 @@ export const StoreProvider = ({ children }) => {
     }
     const cleanPwd = newPwd.trim();
     setAdminPassword(cleanPwd);
+    setStoreConfig(prev => ({ ...prev, adminPass: cleanPwd }));
     try {
       localStorage.setItem('digivault_admin_pwd', cleanPwd);
     } catch {}
@@ -755,7 +766,7 @@ export const StoreProvider = ({ children }) => {
     setStoreConfig(initialStoreConfig);
     setCoupons(defaultCoupons);
     setReviews(initialCustomerReviews);
-    setAdminPassword('admin123');
+    setAdminPassword('dizozet2448');
     localStorage.removeItem('digivault_subscriptions_v2');
     localStorage.removeItem('digivault_reels_bundles_v3');
     localStorage.removeItem('digivault_digital_products');

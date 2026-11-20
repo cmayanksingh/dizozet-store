@@ -137,39 +137,83 @@ export async function deleteProductFromFirestore(productId) {
 // SETTINGS SYNC
 // ------------------------------------------
 export async function syncSettingsToFirestore(settings) {
+  if (!settings) return;
+  const toSave = { ...settings, updatedAt: new Date().toISOString() };
+  // CRITICAL: Protect telegram credentials - never overwrite non-empty credentials with empty strings
+  if (!toSave.telegramBotToken || typeof toSave.telegramBotToken !== 'string' || !toSave.telegramBotToken.trim()) {
+    delete toSave.telegramBotToken;
+  }
+  if (!toSave.telegramChatId || !String(toSave.telegramChatId).trim()) {
+    delete toSave.telegramChatId;
+  }
+  // Protect admin password - never overwrite existing password with empty string
+  if (!toSave.adminPass || typeof toSave.adminPass !== 'string' || !toSave.adminPass.trim()) {
+    delete toSave.adminPass;
+  }
+
   const db = getFirestoreDB();
-  if (!db || !settings) return;
+  if (db) {
+    try {
+      await db.collection('settings').doc('store_config').set(toSave, { merge: true });
+      console.log('✅ Store settings synced to Firebase Firestore.');
+      return;
+    } catch (e) {
+      console.warn('Firestore settings sync warning, trying REST fallback:', e.message);
+    }
+  }
+
+  // REST API Fallback
   try {
-    const toSave = { ...settings, updatedAt: new Date().toISOString() };
-    // CRITICAL: Protect telegram credentials - never overwrite non-empty credentials with empty strings
-    if (!toSave.telegramBotToken || typeof toSave.telegramBotToken !== 'string' || !toSave.telegramBotToken.trim()) {
-      delete toSave.telegramBotToken;
+    const fields = {};
+    for (const [k, v] of Object.entries(toSave)) {
+      if (typeof v === 'string') fields[k] = { stringValue: v };
+      else if (typeof v === 'number') fields[k] = { integerValue: String(v) };
+      else if (typeof v === 'boolean') fields[k] = { booleanValue: v };
     }
-    if (!toSave.telegramChatId || !String(toSave.telegramChatId).trim()) {
-      delete toSave.telegramChatId;
-    }
-    // Protect admin password - never overwrite existing password with empty string
-    if (!toSave.adminPass || typeof toSave.adminPass !== 'string' || !toSave.adminPass.trim()) {
-      delete toSave.adminPass;
-    }
-    await db.collection('settings').doc('store_config').set(toSave, { merge: true });
-    console.log('✅ Store settings synced to Firebase Firestore.');
-  } catch (e) {
-    console.warn('Firestore settings sync error:', e.message);
+    const updateMask = Object.keys(fields).map(k => `updateMask.fieldPaths=${encodeURIComponent(k)}`).join('&');
+    await fetch(`https://firestore.googleapis.com/v1/projects/dizozet-store/databases/(default)/documents/settings/store_config?${updateMask}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields })
+    });
+    console.log('✅ Store settings synced via REST API.');
+  } catch (err) {
+    console.warn('REST fallback sync settings error:', err.message);
   }
 }
 
 export async function fetchSettingsFromFirestore() {
   const db = getFirestoreDB();
-  if (!db) return null;
-  try {
-    const doc = await db.collection('settings').doc('store_config').get();
-    if (doc.exists) {
-      return doc.data();
+  if (db) {
+    try {
+      const doc = await db.collection('settings').doc('store_config').get();
+      if (doc.exists) {
+        return doc.data();
+      }
+    } catch (e) {
+      console.warn('Firestore fetch settings warning, trying REST fallback:', e.message);
     }
-  } catch (e) {
-    console.warn('Firestore fetch settings error:', e.message);
   }
+
+  // REST API Fallback (Guaranteed to work in any browser without requiring Firebase SDK loaded)
+  try {
+    const res = await fetch('https://firestore.googleapis.com/v1/projects/dizozet-store/databases/(default)/documents/settings/store_config');
+    if (res.ok) {
+      const data = await res.json();
+      const fields = data.fields || {};
+      const result = {};
+      for (const key of Object.keys(fields)) {
+        const val = fields[key];
+        if (val.stringValue !== undefined) result[key] = val.stringValue;
+        else if (val.integerValue !== undefined) result[key] = Number(val.integerValue);
+        else if (val.booleanValue !== undefined) result[key] = val.booleanValue;
+      }
+      return result;
+    }
+  } catch (err) {
+    console.warn('REST fallback fetch settings error:', err.message);
+  }
+
   return null;
 }
 

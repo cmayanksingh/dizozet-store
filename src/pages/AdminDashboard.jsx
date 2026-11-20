@@ -542,6 +542,7 @@ export default function AdminDashboard() {
     e?.preventDefault();
     const cleanBotToken = settingsForm.telegramBotToken ? settingsForm.telegramBotToken.trim() : (storeConfig.telegramBotToken || '');
     const cleanChatId = settingsForm.telegramChatId ? String(settingsForm.telegramChatId).trim() : (storeConfig.telegramChatId || '');
+    const currentAdminPass = (adminPassword || storeConfig.adminPass || 'dizozet2448').trim();
     const updated = {
       ...storeConfig,
       ...settingsForm,
@@ -551,7 +552,8 @@ export default function AdminDashboard() {
       announcementText: bannerForm.announcementText,
       isBannerActive: bannerForm.isBannerActive,
       bannerBg: bannerForm.bannerBg,
-      bannerTextCol: bannerForm.bannerTextCol
+      bannerTextCol: bannerForm.bannerTextCol,
+      adminPass: currentAdminPass
     };
     if (cleanBotToken) localStorage.setItem('digivault_telegram_bot_token', cleanBotToken);
     if (cleanChatId) localStorage.setItem('digivault_telegram_chat_id', cleanChatId);
