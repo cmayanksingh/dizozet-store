@@ -107,12 +107,23 @@ export default function OrderConfirmationPage() {
 
   const order = confirmedOrder || location.state?.order || orders.find(o => o.orderId === orderId || o.transactionId === orderId) || (orders.length > 0 ? orders[0] : null);
 
-  // Guaranteed Telegram Notification Trigger (Runs exactly once per unique order ID)
+  // Telegram Notification Fallback Trigger (Ensures notification was sent, skips if placeOrder already notified)
   useEffect(() => {
-    if (!order || !order.orderId) return;
-    const notificationKey = 'dizozet_tg_notified_' + order.orderId;
-    if (sessionStorage.getItem(notificationKey)) return;
-    sessionStorage.setItem(notificationKey, 'true');
+    if (!order || (!order.orderId && !order.transactionId)) return;
+    const orderKey = order.orderId || order.transactionId;
+    const sentKey = 'dizozet_tg_sent_' + orderKey;
+    let alreadySent = false;
+    try {
+      alreadySent = sessionStorage.getItem(sentKey) === 'true';
+      if (!alreadySent) {
+        sessionStorage.setItem(sentKey, 'true');
+      }
+    } catch (e) {}
+
+    if (alreadySent) {
+      // Already sent by placeOrder, do not send duplicate!
+      return;
+    }
 
     const activeToken = storeConfig?.telegramBotToken || localStorage.getItem('digivault_telegram_bot_token') || undefined;
     const activeChatId = storeConfig?.telegramChatId || localStorage.getItem('digivault_telegram_chat_id') || undefined;
@@ -127,12 +138,12 @@ export default function OrderConfirmationPage() {
       })
     }).then(res => res.json()).then(data => {
       if (data.success) {
-        console.log('✅ Telegram order notification dispatched for', order.orderId);
+        console.log('✅ Telegram order notification dispatched for', orderKey);
       } else {
         console.warn('⚠️ Telegram notify response:', data.error);
       }
     }).catch(err => console.warn('Telegram notify error in confirmation page:', err));
-  }, [order?.orderId, storeConfig?.telegramBotToken, storeConfig?.telegramChatId]);
+  }, [order?.orderId, order?.transactionId, storeConfig?.telegramBotToken, storeConfig?.telegramChatId]);
 
   if (!order) {
     return (

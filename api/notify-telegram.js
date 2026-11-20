@@ -1,3 +1,6 @@
+// Serverless memory deduplication cache (prevents duplicate triggers within 5 minutes)
+const recentNotifiedOrders = new Set();
+
 export default async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,6 +21,22 @@ export default async function handler(req, res) {
       try { body = JSON.parse(body); } catch (e) {}
     }
     const { order, botToken: paramToken, chatId: paramChatId, isTest } = body || {};
+
+    // Deduplication check: drop duplicate notifications for the exact same order
+    if (!isTest && order) {
+      const orderKey = order.orderId || order.transactionId;
+      if (orderKey) {
+        if (recentNotifiedOrders.has(orderKey)) {
+          return res.status(200).json({
+            success: true,
+            deduplicated: true,
+            message: `Notification for order ${orderKey} was already sent recently.`
+          });
+        }
+        recentNotifiedOrders.add(orderKey);
+        setTimeout(() => recentNotifiedOrders.delete(orderKey), 5 * 60 * 1000);
+      }
+    }
 
     let botToken = (paramToken && typeof paramToken === 'string' && paramToken.trim()) || process.env.TELEGRAM_BOT_TOKEN;
     let chatId = (paramChatId && String(paramChatId).trim()) || process.env.TELEGRAM_CHAT_ID;

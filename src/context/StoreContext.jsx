@@ -583,21 +583,33 @@ export const StoreProvider = ({ children }) => {
     // Sync to Cloud Firestore
     syncOrderToFirestore(newOrder);
 
-    // Send instant Telegram notification to store owner
+    // Send instant Telegram notification to store owner (with strict deduplication)
     if (storeConfig?.isTelegramNotificationActive !== false) {
-      const activeToken = storeConfig?.telegramBotToken || localStorage.getItem('digivault_telegram_bot_token') || undefined;
-      const activeChatId = storeConfig?.telegramChatId || localStorage.getItem('digivault_telegram_chat_id') || undefined;
+      const orderKey = newOrder.orderId || newOrder.transactionId;
+      const sentKey = 'dizozet_tg_sent_' + orderKey;
+      let alreadySent = false;
       try {
-        fetch('/api/notify-telegram', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            order: newOrder,
-            botToken: activeToken,
-            chatId: activeChatId
-          })
-        }).catch(err => console.warn('Telegram notification notice:', err));
+        alreadySent = sessionStorage.getItem(sentKey) === 'true';
+        if (!alreadySent) {
+          sessionStorage.setItem(sentKey, 'true');
+        }
       } catch (e) {}
+
+      if (!alreadySent) {
+        const activeToken = storeConfig?.telegramBotToken || localStorage.getItem('digivault_telegram_bot_token') || undefined;
+        const activeChatId = storeConfig?.telegramChatId || localStorage.getItem('digivault_telegram_chat_id') || undefined;
+        try {
+          fetch('/api/notify-telegram', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              order: newOrder,
+              botToken: activeToken,
+              chatId: activeChatId
+            })
+          }).catch(err => console.warn('Telegram notification notice:', err));
+        } catch (e) {}
+      }
     }
 
     return newOrder;
