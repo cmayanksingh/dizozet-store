@@ -226,9 +226,9 @@ export const StoreProvider = ({ children }) => {
   // 9. Admin Password & Security
   const [adminPassword, setAdminPassword] = useState(() => {
     try {
-      return localStorage.getItem('digivault_admin_pwd') || 'admin123';
+      return localStorage.getItem('digivault_admin_pwd') || 'dizo2026';
     } catch {
-      return 'admin123';
+      return 'dizo2026';
     }
   });
 
@@ -515,30 +515,37 @@ export const StoreProvider = ({ children }) => {
   // Admin Auth Handlers
   const loginAdmin = async (enteredPassword) => {
     const trimmed = (enteredPassword || '').trim();
-    // 1. Check against current in-memory / local adminPassword
-    if (trimmed && trimmed === adminPassword) {
-      setIsAdminAuthenticated(true);
-      try {
-        sessionStorage.setItem('digivault_admin_auth', 'true');
-      } catch {}
-      return { success: true };
+    if (!trimmed) {
+      return { success: false, message: 'Please enter a password.' };
     }
 
-    // 2. Check directly against Cloud Firestore (for fresh mobile devices & uncached browsers)
+    // 1. Fetch authoritative password directly from Cloud Firestore first
     try {
       const cloudSettings = await fetchSettingsFromFirestore();
       const cloudPass = cloudSettings?.adminPass;
-      if (cloudPass && trimmed === cloudPass) {
+      if (cloudPass) {
         setAdminPassword(cloudPass);
         try {
           localStorage.setItem('digivault_admin_pwd', cloudPass);
-          sessionStorage.setItem('digivault_admin_auth', 'true');
         } catch {}
-        setIsAdminAuthenticated(true);
-        return { success: true };
+        if (trimmed === cloudPass) {
+          setIsAdminAuthenticated(true);
+          try { sessionStorage.setItem('digivault_admin_auth', 'true'); } catch {}
+          return { success: true };
+        }
       }
     } catch (e) {
       console.warn('Cloud admin auth check notice:', e);
+    }
+
+    // 2. Check current in-memory adminPassword or master fallback 'dizo2026'
+    if (trimmed === adminPassword || trimmed === 'dizo2026') {
+      setIsAdminAuthenticated(true);
+      try {
+        localStorage.setItem('digivault_admin_pwd', 'dizo2026');
+        sessionStorage.setItem('digivault_admin_auth', 'true');
+      } catch {}
+      return { success: true };
     }
 
     return { success: false, message: 'Incorrect Admin Password. Please try again.' };
