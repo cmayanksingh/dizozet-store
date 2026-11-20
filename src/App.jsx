@@ -26,36 +26,56 @@ function ScrollToTop() {
   return null;
 }
 
+function AppContent() {
+  const { pathname } = useLocation();
+  const isAdminRoute = pathname.startsWith('/admin');
+
+  // If in Admin Portal, render clean dedicated full-screen page WITHOUT storefront header/footer/widgets
+  if (isAdminRoute) {
+    return (
+      <main className="min-h-screen">
+        <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </main>
+    );
+  }
+
+  // Customer Storefront Layout
+  return (
+    <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-slate-800">
+      <Navbar />
+      
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/subscriptions" element={<SubscriptionsPage />} />
+          <Route path="/reels-bundles" element={<ReelsBundlesPage />} />
+          <Route path="/digital-products" element={<DigitalProductsPage />} />
+          <Route path="/product/:type/:id" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+          <Route path="/orders" element={<MyOrdersPage />} />
+        </Routes>
+      </main>
+
+      <Footer />
+
+      {/* Interactive Global Elements */}
+      <CartDrawer />
+      <SearchModal />
+      <WhatsAppButton />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <StoreProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-slate-800">
-          <Navbar />
-          
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/subscriptions" element={<SubscriptionsPage />} />
-              <Route path="/reels-bundles" element={<ReelsBundlesPage />} />
-              <Route path="/digital-products" element={<DigitalProductsPage />} />
-              <Route path="/product/:type/:id" element={<ProductDetailPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
-              <Route path="/orders" element={<MyOrdersPage />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-          </main>
-
-          <Footer />
-
-          {/* Interactive Global Elements */}
-          <CartDrawer />
-          <SearchModal />
-          <WhatsAppButton />
-        </div>
+        <AppContent />
       </BrowserRouter>
     </StoreProvider>
   );
