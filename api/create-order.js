@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         customer_phone: cleanPhone
       },
       order_meta: {
-        return_url: 'https://www.dizozet.shop/?order_id={order_id}'
+        return_url: 'https://www.dizozet.shop/order-confirmation/{order_id}'
       },
       order_note: 'Dizozet Order'
     };
