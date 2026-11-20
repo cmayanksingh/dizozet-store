@@ -1,13 +1,11 @@
-const https = require('https');
-
 const APP_ID = process.env.CASHFREE_APP_ID || '1495948439669a2ddbdd5af37fc8495941';
 const SECRET_KEY = process.env.CASHFREE_SECRET_KEY || Buffer.from('Y2Zza19tYV9wcm9kXzk4N2EwZWIzYWY1NjM1MDFlZDRlYTkwZjJkYjliYzg5X2M1OWU4OGFm', 'base64').toString('utf-8');
 const API_VERSION = '2023-08-01';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
@@ -19,7 +17,7 @@ module.exports = async (req, res) => {
   }
 
   if (!APP_ID || !SECRET_KEY) {
-    return res.status(500).json({ error: 'Cashfree credentials not configured in environment variables' });
+    return res.status(500).json({ error: 'Cashfree credentials not configured' });
   }
 
   try {
@@ -37,7 +35,7 @@ module.exports = async (req, res) => {
     const orderId = 'DZ_' + Date.now() + '_' + Math.floor(100 + Math.random() * 900);
     const orderAmount = Number(Number(amount).toFixed(2));
 
-    const postData = JSON.stringify({
+    const postData = {
       order_id: orderId,
       order_amount: orderAmount,
       order_currency: 'INR',
@@ -50,56 +48,38 @@ module.exports = async (req, res) => {
       order_meta: {
         return_url: 'https://www.dizozet.shop/?order_id={order_id}'
       },
-      order_note: 'Dizozet Reels Bundle Order'
-    });
+      order_note: 'Dizozet Order'
+    };
 
-    const options = {
-      hostname: 'api.cashfree.com',
-      port: 443,
-      path: '/pg/orders',
+    const cashfreeRes = await fetch('https://api.cashfree.com/pg/orders', {
       method: 'POST',
       headers: {
         'x-client-id': APP_ID,
         'x-client-secret': SECRET_KEY,
         'x-api-version': API_VERSION,
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData)
-      }
-    };
-
-    const response = await new Promise((resolve, reject) => {
-      const request = https.request(options, (resp) => {
-        let data = '';
-        resp.on('data', chunk => data += chunk);
-        resp.on('end', () => {
-          try {
-            resolve({ statusCode: resp.statusCode, data: JSON.parse(data) });
-          } catch (e) {
-            resolve({ statusCode: resp.statusCode, data });
-          }
-        });
-      });
-      request.on('error', reject);
-      request.write(postData);
-      request.end();
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
     });
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
+    const responseData = await cashfreeRes.json();
+
+    if (cashfreeRes.ok && responseData.payment_session_id) {
       return res.status(200).json({
         success: true,
-        order_id: response.data.order_id,
-        payment_session_id: response.data.payment_session_id,
-        order_amount: response.data.order_amount
+        order_id: responseData.order_id,
+        payment_session_id: responseData.payment_session_id,
+        order_amount: responseData.order_amount
       });
     } else {
-      return res.status(response.statusCode).json({
+      return res.status(cashfreeRes.status || 400).json({
         success: false,
-        error: response.data.message || 'Cashfree order creation failed',
-        details: response.data
+        error: responseData.message || 'Cashfree order creation failed',
+        details: responseData
       });
     }
   } catch (error) {
     console.error('Serverless error:', error);
     return res.status(500).json({ error: error.message });
   }
-};
+}
