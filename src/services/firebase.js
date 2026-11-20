@@ -99,9 +99,28 @@ export async function syncProductToFirestore(categoryType, product) {
       categoryType,
       updatedAt: new Date().toISOString()
     }, { merge: true });
+    console.log(`✅ Product ${product.id} synced to Firestore Cloud.`);
   } catch (e) {
     console.warn('Firestore product save error:', e.message);
   }
+}
+
+export async function fetchProductsFromFirestore() {
+  const db = getFirestoreDB();
+  if (!db) return null;
+  try {
+    const snapshot = await db.collection('products').get();
+    if (!snapshot.empty) {
+      const list = [];
+      snapshot.forEach(doc => {
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      return list;
+    }
+  } catch (e) {
+    console.warn('Firestore fetch products error:', e.message);
+  }
+  return null;
 }
 
 export async function deleteProductFromFirestore(productId) {

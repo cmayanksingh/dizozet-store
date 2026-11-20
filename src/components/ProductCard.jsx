@@ -132,7 +132,7 @@ export default function ProductCard({ product, type }) {
   // 2. Reels Bundle Card (Reels Bundle Specific Flow)
   if (type === 'reels-bundle' || product.type === 'reels-bundle') {
     const reelCount = product.reelCount || 1000;
-    const price = product.personalPrice || 99;
+    const price = product.personalPrice || product.price || 99;
 
     const handleBuyNow = (e) => {
       e.preventDefault();

@@ -10,6 +10,7 @@ import {
   updateOrderStatusInFirestore,
   deleteOrderFromFirestore,
   syncProductToFirestore,
+  fetchProductsFromFirestore,
   deleteProductFromFirestore,
   syncSettingsToFirestore,
   syncCouponToFirestore,
@@ -273,7 +274,9 @@ export const StoreProvider = ({ children }) => {
   // Connect & Sync with Firebase Firestore on Mount
   useEffect(() => {
     try {
-      getFirestoreDB();
+      const db = getFirestoreDB();
+
+      // 1. Fetch Orders from Cloud
       fetchOrdersFromFirestore().then((cloudOrders) => {
         if (cloudOrders && Array.isArray(cloudOrders) && cloudOrders.length > 0) {
           setOrders(prev => {
@@ -283,7 +286,79 @@ export const StoreProvider = ({ children }) => {
             return Array.from(map.values());
           });
         }
-      }).catch(err => console.warn('Firestore initial fetch notice:', err));
+      }).catch(err => console.warn('Firestore initial fetch orders notice:', err));
+
+      // 2. Fetch Products & Bundles from Cloud (so Admin edits appear instantly for all visitors)
+      fetchProductsFromFirestore().then((cloudProducts) => {
+        if (cloudProducts && Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+          const cloudReels = cloudProducts.filter(p => p.categoryType === 'reels-bundle' || p.type === 'reels-bundle');
+          const cloudSubs = cloudProducts.filter(p => p.categoryType === 'subscription' || p.type === 'subscription');
+          const cloudDigi = cloudProducts.filter(p => p.categoryType === 'digital-product' || p.type === 'digital-product');
+
+          if (cloudReels.length > 0) {
+            setReelsBundles(prev => {
+              const map = new Map(prev.map(p => [p.id, p]));
+              cloudReels.forEach(cp => {
+                const ex = map.get(cp.id) || {};
+                map.set(cp.id, { ...ex, ...cp });
+              });
+              return Array.from(map.values());
+            });
+          }
+
+          if (cloudSubs.length > 0) {
+            setSubscriptions(prev => {
+              const map = new Map(prev.map(p => [p.id, p]));
+              cloudSubs.forEach(cp => {
+                const ex = map.get(cp.id) || {};
+                map.set(cp.id, { ...ex, ...cp });
+              });
+              return Array.from(map.values());
+            });
+          }
+
+          if (cloudDigi.length > 0) {
+            setDigitalProducts(prev => {
+              const map = new Map(prev.map(p => [p.id, p]));
+              cloudDigi.forEach(cp => {
+                const ex = map.get(cp.id) || {};
+                map.set(cp.id, { ...ex, ...cp });
+              });
+              return Array.from(map.values());
+            });
+          }
+        }
+      }).catch(err => console.warn('Firestore initial products fetch notice:', err));
+
+      // 3. Real-time Listener: Live Sync whenever Admin edits or deletes
+      if (db) {
+        const unsubscribe = db.collection('products').onSnapshot(snapshot => {
+          if (!snapshot.empty) {
+            snapshot.docChanges().forEach(change => {
+              const prod = { id: change.doc.id, ...change.doc.data() };
+              const cType = prod.categoryType || prod.type;
+              if (change.type === 'added' || change.type === 'modified') {
+                if (cType === 'reels-bundle') {
+                  setReelsBundles(prev => prev.map(p => p.id === prod.id ? { ...p, ...prod } : p));
+                } else if (cType === 'subscription') {
+                  setSubscriptions(prev => prev.map(p => p.id === prod.id ? { ...p, ...prod } : p));
+                } else if (cType === 'digital-product') {
+                  setDigitalProducts(prev => prev.map(p => p.id === prod.id ? { ...p, ...prod } : p));
+                }
+              } else if (change.type === 'removed') {
+                const rId = change.doc.id;
+                setReelsBundles(prev => prev.filter(p => p.id !== rId));
+                setSubscriptions(prev => prev.filter(p => p.id !== rId));
+                setDigitalProducts(prev => prev.filter(p => p.id !== rId));
+              }
+            });
+          }
+        }, err => console.warn('Firestore real-time sync notice:', err.message));
+
+        return () => {
+          if (typeof unsubscribe === 'function') unsubscribe();
+        };
+      }
     } catch (e) {
       console.warn('Firebase init error:', e);
     }

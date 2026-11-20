@@ -423,9 +423,9 @@ export default function AdminDashboard() {
       rating: Number(data.rating) || 5.0,
       reviewCount: Number(data.reviewCount) || 10,
       reelCount: Number(data.reelCount) || 1000,
-      personalPrice: Number(data.personalPrice) || 99,
+      personalPrice: Number(data.personalPrice) || Number(data.price) || 99,
       resellerPrice: Number(data.resellerPrice) || 199,
-      price: Number(data.price) || 99,
+      price: Number(data.personalPrice) || Number(data.price) || 99,
       regularPrice: Number(data.regularPrice) || 499
     });
     showNotification('Product details saved successfully!');
