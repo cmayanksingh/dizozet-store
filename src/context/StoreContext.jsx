@@ -181,14 +181,21 @@ export const StoreProvider = ({ children }) => {
   const [storeConfig, setStoreConfig] = useState(() => {
     try {
       const saved = localStorage.getItem('digivault_config_v2');
+      const savedToken = localStorage.getItem('digivault_telegram_bot_token');
+      const savedChatId = localStorage.getItem('digivault_telegram_chat_id');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (!parsed.supportEmail || parsed.supportEmail.includes('@dizozet.shop') || parsed.supportEmail.includes('dizopulse')) {
           parsed.supportEmail = 'dizozet.org@gmail.com';
         }
+        if (savedToken && !parsed.telegramBotToken) parsed.telegramBotToken = savedToken;
+        if (savedChatId && !parsed.telegramChatId) parsed.telegramChatId = savedChatId;
         return parsed;
       }
-      return initialStoreConfig;
+      const initial = { ...initialStoreConfig };
+      if (savedToken) initial.telegramBotToken = savedToken;
+      if (savedChatId) initial.telegramChatId = savedChatId;
+      return initial;
     } catch {
       return initialStoreConfig;
     }
@@ -258,7 +265,12 @@ export const StoreProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('digivault_config_v2', JSON.stringify(storeConfig));
-    syncSettingsToFirestore(storeConfig);
+    if (storeConfig?.telegramBotToken) {
+      localStorage.setItem('digivault_telegram_bot_token', storeConfig.telegramBotToken);
+    }
+    if (storeConfig?.telegramChatId) {
+      localStorage.setItem('digivault_telegram_chat_id', String(storeConfig.telegramChatId));
+    }
   }, [storeConfig]);
 
   useEffect(() => {
@@ -335,7 +347,16 @@ export const StoreProvider = ({ children }) => {
       // 3. Fetch Settings (Telegram, UPI, Brand) from Cloud
       fetchSettingsFromFirestore().then((cloudSettings) => {
         if (cloudSettings) {
-          setStoreConfig(prev => ({ ...prev, ...cloudSettings }));
+          setStoreConfig(prev => {
+            const merged = { ...prev, ...cloudSettings };
+            if (cloudSettings.telegramBotToken) {
+              localStorage.setItem('digivault_telegram_bot_token', cloudSettings.telegramBotToken);
+            }
+            if (cloudSettings.telegramChatId) {
+              localStorage.setItem('digivault_telegram_chat_id', String(cloudSettings.telegramChatId));
+            }
+            return merged;
+          });
         }
       }).catch(err => console.warn('Firestore initial settings fetch notice:', err));
 
@@ -517,16 +538,20 @@ export const StoreProvider = ({ children }) => {
   };
 
   // Order Placement
-  const placeOrder = ({ customer, paymentMethod, paymentDetails }) => {
+  const placeOrder = ({ customer, paymentMethod, paymentDetails, items: customItems, subtotal: customSubtotal, discount: customDiscount, total: customTotal, couponCode: customCoupon }) => {
     const orderId = 'ORD-' + Math.floor(10000 + Math.random() * 90000);
-    const total = finalTotal;
+    const orderItems = (customItems && Array.isArray(customItems) && customItems.length > 0) ? customItems : cart;
+    const finalAmount = customTotal !== undefined ? customTotal : finalTotal;
+    const subtotalAmount = customSubtotal !== undefined ? customSubtotal : cartSubtotal;
+    const discountAmt = customDiscount !== undefined ? customDiscount : discountAmount;
+    const coupon = customCoupon !== undefined ? customCoupon : (appliedCoupon ? appliedCoupon.code : null);
 
-    const deliveredItems = cart.map(item => {
+    const deliveredItems = orderItems.map(item => {
       let downloadLink = item.googleDriveLink || item.downloadUrl || 'https://drive.google.com';
       let credentials = item.deliveryInfo || 'Credentials will be sent to your Gmail & WhatsApp.';
       
       if (item.type === 'subscription') {
-        credentials = `Service: ${item.title} (${item.planName || 'Standard'})\nWhatsApp Support: 7895768118\nEmail: ${customer.email}\nStatus: Activation Requested via WhatsApp`;
+        credentials = `Service: ${item.title} (${item.planName || 'Standard'})\nWhatsApp Support: 7895768118\nEmail: ${customer?.email || ''}\nStatus: Activation Requested via WhatsApp`;
       }
 
       return {
@@ -543,10 +568,10 @@ export const StoreProvider = ({ children }) => {
       date: new Date().toISOString(),
       customer,
       items: deliveredItems,
-      subtotal: cartSubtotal,
-      discount: discountAmount,
-      couponCode: appliedCoupon ? appliedCoupon.code : null,
-      total,
+      subtotal: subtotalAmount,
+      discount: discountAmt,
+      couponCode: coupon,
+      total: finalAmount,
       paymentMethod,
       paymentStatus: 'Paid',
       orderStatus: 'Delivered',
@@ -560,14 +585,16 @@ export const StoreProvider = ({ children }) => {
 
     // Send instant Telegram notification to store owner
     if (storeConfig?.isTelegramNotificationActive !== false) {
+      const activeToken = storeConfig?.telegramBotToken || localStorage.getItem('digivault_telegram_bot_token') || undefined;
+      const activeChatId = storeConfig?.telegramChatId || localStorage.getItem('digivault_telegram_chat_id') || undefined;
       try {
         fetch('/api/notify-telegram', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             order: newOrder,
-            botToken: storeConfig?.telegramBotToken,
-            chatId: storeConfig?.telegramChatId
+            botToken: activeToken,
+            chatId: activeChatId
           })
         }).catch(err => console.warn('Telegram notification notice:', err));
       } catch (e) {}

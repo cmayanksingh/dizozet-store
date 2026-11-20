@@ -121,6 +121,11 @@ export default function CheckoutPage() {
             try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }); } catch (e) {}
             const order = placeOrder({
               customer,
+              items: cart,
+              subtotal: cartSubtotal,
+              discount: discountAmount,
+              couponCode: appliedCoupon ? appliedCoupon.code : null,
+              total: finalTotal,
               paymentMethod: 'Cashfree Gateway (Auto-Verified)',
               paymentDetails: {
                 txnId: data.order_id || 'CF-' + Date.now(),

@@ -140,7 +140,15 @@ export async function syncSettingsToFirestore(settings) {
   const db = getFirestoreDB();
   if (!db || !settings) return;
   try {
-    await db.collection('settings').doc('store_config').set(settings, { merge: true });
+    const toSave = { ...settings, updatedAt: new Date().toISOString() };
+    // CRITICAL: Protect telegram credentials - never overwrite non-empty credentials with empty strings
+    if (!toSave.telegramBotToken || typeof toSave.telegramBotToken !== 'string' || !toSave.telegramBotToken.trim()) {
+      delete toSave.telegramBotToken;
+    }
+    if (!toSave.telegramChatId || !String(toSave.telegramChatId).trim()) {
+      delete toSave.telegramChatId;
+    }
+    await db.collection('settings').doc('store_config').set(toSave, { merge: true });
     console.log('✅ Store settings synced to Firebase Firestore.');
   } catch (e) {
     console.warn('Firestore settings sync error:', e.message);

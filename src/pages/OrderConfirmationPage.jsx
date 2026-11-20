@@ -64,10 +64,15 @@ export default function OrderConfirmationPage() {
         fetch(`/api/verify-order?order_id=${encodeURIComponent(orderId)}`)
           .then(res => res.json())
           .then(verifyData => {
-            // Finalize order
+            // Finalize order with full items and pricing details
             const finalOrder = placeOrder({
               customer: pending.customer,
-              paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+              items: pending.items,
+              subtotal: pending.subtotal,
+              discount: pending.discount,
+              couponCode: pending.couponCode,
+              total: pending.total,
+              paymentMethod: pending.paymentMethod || 'Cashfree Gateway (Auto-Verified)',
               paymentDetails: {
                 txnId: orderId,
                 method: 'cashfree'
@@ -75,13 +80,6 @@ export default function OrderConfirmationPage() {
             });
 
             setConfirmedOrder(finalOrder);
-
-            // Notify Telegram directly
-            fetch('/api/notify-telegram', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ order: finalOrder })
-            }).catch(e => console.warn('Telegram notify error:', e));
 
             // Clean up
             try {
@@ -93,22 +91,48 @@ export default function OrderConfirmationPage() {
             console.warn('Verify order error, placing order directly:', err);
             const fallbackOrder = placeOrder({
               customer: pending.customer,
-              paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+              items: pending.items,
+              subtotal: pending.subtotal,
+              discount: pending.discount,
+              couponCode: pending.couponCode,
+              total: pending.total,
+              paymentMethod: pending.paymentMethod || 'Cashfree Gateway (Auto-Verified)',
               paymentDetails: { txnId: orderId, method: 'cashfree' }
             });
             setConfirmedOrder(fallbackOrder);
-
-            fetch('/api/notify-telegram', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ order: fallbackOrder })
-            }).catch(e => console.warn('Telegram notify error:', e));
           });
       } catch (e) {}
     }
   }, [orderId, orders, confirmedOrder, placeOrder]);
 
-  const order = confirmedOrder || location.state?.order || orders.find(o => o.orderId === orderId) || orders[0];
+  const order = confirmedOrder || location.state?.order || orders.find(o => o.orderId === orderId || o.transactionId === orderId) || (orders.length > 0 ? orders[0] : null);
+
+  // Guaranteed Telegram Notification Trigger (Runs exactly once per unique order ID)
+  useEffect(() => {
+    if (!order || !order.orderId) return;
+    const notificationKey = 'dizozet_tg_notified_' + order.orderId;
+    if (sessionStorage.getItem(notificationKey)) return;
+    sessionStorage.setItem(notificationKey, 'true');
+
+    const activeToken = storeConfig?.telegramBotToken || localStorage.getItem('digivault_telegram_bot_token') || undefined;
+    const activeChatId = storeConfig?.telegramChatId || localStorage.getItem('digivault_telegram_chat_id') || undefined;
+
+    fetch('/api/notify-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order,
+        botToken: activeToken,
+        chatId: activeChatId
+      })
+    }).then(res => res.json()).then(data => {
+      if (data.success) {
+        console.log('✅ Telegram order notification dispatched for', order.orderId);
+      } else {
+        console.warn('⚠️ Telegram notify response:', data.error);
+      }
+    }).catch(err => console.warn('Telegram notify error in confirmation page:', err));
+  }, [order?.orderId, storeConfig?.telegramBotToken, storeConfig?.telegramChatId]);
 
   if (!order) {
     return (

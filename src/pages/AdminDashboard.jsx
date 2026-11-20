@@ -153,13 +153,24 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           isTest: true,
-          botToken: settingsForm.telegramBotToken,
-          chatId: settingsForm.telegramChatId
+          botToken: settingsForm.telegramBotToken.trim(),
+          chatId: String(settingsForm.telegramChatId).trim()
         })
       });
       const data = await res.json();
       if (data.success) {
         setTelegramTestStatus('✅ Success: Test message received on Telegram! Check your app.');
+        const updated = {
+          ...storeConfig,
+          ...settingsForm,
+          telegramBotToken: settingsForm.telegramBotToken.trim(),
+          telegramChatId: String(settingsForm.telegramChatId).trim(),
+          isTelegramNotificationActive: settingsForm.isTelegramNotificationActive !== false
+        };
+        setStoreConfig(updated);
+        localStorage.setItem('digivault_telegram_bot_token', updated.telegramBotToken);
+        localStorage.setItem('digivault_telegram_chat_id', updated.telegramChatId);
+        syncSettingsToFirestore(updated);
       } else {
         setTelegramTestStatus(`❌ Error: ${data.error || 'Failed to send message.'}`);
       }
@@ -529,15 +540,21 @@ export default function AdminDashboard() {
   // Save Settings & Appearance
   const handleSaveAllSettings = (e) => {
     e?.preventDefault();
+    const cleanBotToken = settingsForm.telegramBotToken ? settingsForm.telegramBotToken.trim() : (storeConfig.telegramBotToken || '');
+    const cleanChatId = settingsForm.telegramChatId ? String(settingsForm.telegramChatId).trim() : (storeConfig.telegramChatId || '');
     const updated = {
       ...storeConfig,
       ...settingsForm,
+      telegramBotToken: cleanBotToken,
+      telegramChatId: cleanChatId,
       ...appearanceForm,
       announcementText: bannerForm.announcementText,
       isBannerActive: bannerForm.isBannerActive,
       bannerBg: bannerForm.bannerBg,
       bannerTextCol: bannerForm.bannerTextCol
     };
+    if (cleanBotToken) localStorage.setItem('digivault_telegram_bot_token', cleanBotToken);
+    if (cleanChatId) localStorage.setItem('digivault_telegram_chat_id', cleanChatId);
     setStoreConfig(updated);
     syncSettingsToFirestore(updated);
     showNotification('Store branding, settings & banner saved successfully!');
