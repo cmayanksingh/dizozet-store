@@ -42,7 +42,7 @@ export default function HomePage() {
           {/* Top Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#a1e3d8]/40 border border-[#a1e3d8] text-teal-900 text-xs font-bold tracking-wide shadow-sm">
             <Sparkles className="w-4 h-4 text-teal-700" />
-            <span>Dizo Pulse • Premium Digital Store</span>
+            <span>Dizozet • Premium Digital Store</span>
           </div>
 
           {/* Headline */}
@@ -271,7 +271,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs font-extrabold text-teal-900 uppercase tracking-wider bg-[#a1e3d8] px-3 py-1 rounded-full">
-            Why Dizo Pulse?
+            Why Dizozet?
           </span>
           <h2 className="text-3xl font-black text-slate-900 mt-3">
             Built for Modern Creators & Professionals

@@ -48,14 +48,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo: Dizo Pulse */}
+          {/* Logo: Dizozet */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-[#a1e3d8] border border-[#a1e3d8]/40 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 fill-[#a1e3d8]/20" />
+            <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 p-1 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+              <img src="/images/dizozet-logo.png" alt="Dizozet Logo" className="w-full h-full object-contain" onError={(e) => { e.target.src = '/images/dizozet-logo.jpg'; }} />
             </div>
             <div className="flex flex-col">
               <span className="text-2xl font-black tracking-tight text-slate-900 group-hover:text-teal-700 transition-colors">
-                Dizo <span className="text-teal-600">Pulse</span>
+                Dizo<span className="text-teal-600">zet</span>
               </span>
               <span className="text-[10px] tracking-wider uppercase font-semibold text-slate-400 -mt-1">
                 Digital Store

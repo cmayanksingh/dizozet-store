@@ -38,7 +38,7 @@ export default function CheckoutPage() {
     state: ''
   });
 
-  const [paymentMethod, setPaymentMethod] = useState('upi-qr'); // 'upi-qr', 'razorpay', 'stripe'
+  const [paymentMethod, setPaymentMethod] = useState('cashfree'); // 'cashfree' or 'upi-qr'
   const [utrNumber, setUtrNumber] = useState('');
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -62,16 +62,16 @@ export default function CheckoutPage() {
   }
 
   // Dynamic UPI URL & QR
-  const upiPayUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=${encodeURIComponent(storeConfig.storeName)}&am=${finalTotal}&cu=INR&tn=${encodeURIComponent('DigiVault Order')}`;
+  const upiPayUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId || '7895768118@ptsbi')}&pn=${encodeURIComponent(storeConfig.storeName || 'Dizozet')}&am=${finalTotal}&cu=INR&tn=${encodeURIComponent('Dizozet Order')}`;
   const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPayUrl)}`;
 
   const handleCopyUpi = () => {
-    navigator.clipboard.writeText(storeConfig.upiId);
+    navigator.clipboard.writeText(storeConfig.upiId || '7895768118@ptsbi');
     setCopiedUpi(true);
     setTimeout(() => setCopiedUpi(false), 2000);
   };
 
-  const handleSubmitOrder = (e) => {
+  const handleSubmitOrder = async (e) => {
     e.preventDefault();
     setFormError('');
 
@@ -87,6 +87,61 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
+    // 1. CASHFREE GATEWAY FLOW
+    if (paymentMethod === 'cashfree') {
+      try {
+        const res = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: finalTotal,
+            name: customer.name,
+            email: customer.email,
+            phone: customer.phone
+          })
+        });
+        const data = await res.json();
+
+        if (!data.success || !data.payment_session_id) {
+          throw new Error(data.error || 'Failed to initialize Cashfree gateway session.');
+        }
+
+        if (typeof window !== 'undefined' && window.Cashfree) {
+          const cashfree = window.Cashfree({ mode: "production" });
+          cashfree.checkout({
+            paymentSessionId: data.payment_session_id,
+            redirectTarget: "_modal"
+          }).then((result) => {
+            setIsProcessing(false);
+            if (result.error) {
+              console.warn("Cashfree checkout error:", result.error);
+              setFormError(result.error.message || 'Cashfree payment was cancelled or interrupted.');
+            }
+            if (result.paymentDetails) {
+              try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }); } catch (e) {}
+              const order = placeOrder({
+                customer,
+                paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+                paymentDetails: {
+                  txnId: data.order_id || 'CF-' + Date.now(),
+                  method: 'cashfree'
+                }
+              });
+              navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
+            }
+          });
+        } else {
+          // Fallback direct payment URL if modal SDK is blocked
+          window.location.href = `https://api.cashfree.com/pg/orders/${data.order_id}`;
+        }
+      } catch (err) {
+        setIsProcessing(false);
+        setFormError('Cashfree Gateway Notice: ' + err.message + '. You can also use the UPI QR option below.');
+      }
+      return;
+    }
+
+    // 2. MANUAL UPI QR CODE FLOW
     setTimeout(() => {
       try {
         confetti({
@@ -94,22 +149,20 @@ export default function CheckoutPage() {
           spread: 70,
           origin: { y: 0.6 }
         });
-      } catch (err) {
-        // ignore
-      }
+      } catch (err) {}
 
       const order = placeOrder({
         customer,
-        paymentMethod: paymentMethod === 'upi-qr' ? 'UPI QR Code / Apps' : paymentMethod === 'razorpay' ? 'Razorpay (Cards/NetBanking)' : 'Stripe / International Cards',
+        paymentMethod: 'UPI QR Code / Apps',
         paymentDetails: {
           txnId: utrNumber || 'TXN-' + Math.floor(10000000 + Math.random() * 90000000),
-          method: paymentMethod
+          method: 'upi-qr'
         }
       });
 
       setIsProcessing(false);
       navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
-    }, 1500);
+    }, 1200);
   };
 
   return (
@@ -230,70 +283,71 @@ export default function CheckoutPage() {
             </div>
 
             {/* Methods Tabs */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod('cashfree')}
+                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                  paymentMethod === 'cashfree'
+                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm ring-2 ring-teal-500/20'
+                    : 'border-slate-200 bg-white hover:border-slate-300'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <CreditCard className="w-5 h-5 text-teal-700" />
+                  <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-2 py-0.5 rounded-full">
+                    Auto-Verified Instant
+                  </span>
+                </div>
+                <div>
+                  <div className="text-sm font-extrabold text-slate-900">Cashfree Gateway</div>
+                  <div className="text-[11px] text-slate-500 font-medium">UPI Apps, Cards, NetBanking & Paytm</div>
+                </div>
+              </button>
+
               <button
                 type="button"
                 onClick={() => setPaymentMethod('upi-qr')}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
                   paymentMethod === 'upi-qr'
-                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm'
+                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm ring-2 ring-teal-500/20'
                     : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <QrCode className="w-5 h-5 text-teal-700" />
-                  <span className="text-[10px] bg-slate-900 text-white font-extrabold px-1.5 py-0.5 rounded">
-                    Instant 0% Fee
+                  <QrCode className="w-5 h-5 text-slate-700" />
+                  <span className="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">
+                    Direct Scan
                   </span>
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-900">UPI QR / GPay</div>
-                  <div className="text-[10px] text-slate-500">PhonePe, Paytm, BHIM</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('razorpay')}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                  paymentMethod === 'razorpay'
-                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm'
-                    : 'border-slate-200 bg-white hover:border-slate-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <CreditCard className="w-5 h-5 text-slate-700" />
-                  <span className="text-[10px] bg-slate-100 text-slate-600 font-bold px-1.5 py-0.5 rounded">
-                    Cards & NetBanking
-                  </span>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Razorpay Gateway</div>
-                  <div className="text-[10px] text-slate-500">Debit/Credit cards</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('stripe')}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                  paymentMethod === 'stripe'
-                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm'
-                    : 'border-slate-200 bg-white hover:border-slate-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <Smartphone className="w-5 h-5 text-slate-700" />
-                  <span className="text-[10px] bg-slate-100 text-slate-600 font-bold px-1.5 py-0.5 rounded">
-                    International
-                  </span>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Stripe / Global</div>
-                  <div className="text-[10px] text-slate-500">USD & Global Cards</div>
+                  <div className="text-sm font-extrabold text-slate-900">UPI QR Code</div>
+                  <div className="text-[11px] text-slate-500 font-medium">Google Pay, PhonePe, Paytm scanner</div>
                 </div>
               </button>
             </div>
+
+            {/* Content for Cashfree Gateway */}
+            {paymentMethod === 'cashfree' && (
+              <div className="p-5 bg-gradient-to-r from-teal-50/60 to-emerald-50/40 border border-teal-200 rounded-2xl space-y-3 text-xs text-slate-700">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <h4 className="font-extrabold text-slate-900 text-sm">
+                    Official Cashfree Automated Gateway
+                  </h4>
+                </div>
+                <p className="leading-relaxed text-slate-600">
+                  Click <strong>"Pay with Cashfree"</strong> below to securely complete your payment. All UPI apps (Google Pay, PhonePe, Paytm), Credit/Debit cards, and Net Banking are supported with zero convenience fees.
+                </p>
+                <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-bold text-slate-500">
+                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">GPay</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">PhonePe</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">Paytm</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">Visa / Mastercard</span>
+                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">NetBanking</span>
+                </div>
+              </div>
+            )}
 
             {/* Content for UPI QR */}
             {paymentMethod === 'upi-qr' && (
@@ -505,12 +559,14 @@ export default function CheckoutPage() {
             {isProcessing ? (
               <span className="flex items-center gap-2">
                 <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                Verifying & Generating Links...
+                Connecting Cashfree Gateway...
               </span>
             ) : (
               <>
                 <Zap className="w-5 h-5 fill-slate-900" />
-                <span>Verify & Complete Order ({storeConfig.currencySymbol}{finalTotal})</span>
+                <span>
+                  {paymentMethod === 'cashfree' ? `Pay via Cashfree (${storeConfig.currencySymbol}${finalTotal})` : `Verify & Place Order (${storeConfig.currencySymbol}${finalTotal})`}
+                </span>
               </>
             )}
           </button>

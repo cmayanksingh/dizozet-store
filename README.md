@@ -1,4 +1,4 @@
-# Dizo Pulse - Premium Subscriptions & Viral Reels Bundles E-Commerce Platform
+# Dizozet - Premium Subscriptions & Viral Reels Bundles E-Commerce Platform
 
 A complete, modern, digital e-commerce web application with a signature **White + Mint (`#a1e3d8`)** design theme, built for selling **Subscriptions** (with direct WhatsApp order flow to **7895768118**), **130+ Viral Reels Bundles**, and **Digital Products**.
 
@@ -7,7 +7,7 @@ A complete, modern, digital e-commerce web application with a signature **White 
 ## 🌟 Key Features
 
 ### 1. Branding & Design
-- **Name**: **Dizo Pulse**
+- **Name**: **Dizozet**
 - **Theme Color**: `#a1e3d8` (Mint / Soft Cyan) paired with clean white backgrounds and deep slate/teal typography.
 - **Top Bar**: Clean header without cluttered announcement bars.
 - **Navigation Bar**: Clean search icon button (no Ctrl+K badge), Home, Subscriptions, Reels Bundles (no extra badges), Digital Products, Cart, and My Orders.

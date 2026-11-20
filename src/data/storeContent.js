@@ -1,22 +1,25 @@
 export const initialStoreConfig = {
-  storeName: "Dizo Pulse",
+  storeName: "Dizozet",
   storeTagline: "Premium Subscriptions & Viral Reels Bundles",
   currencySymbol: "₹",
-  supportEmail: "support@dizopulse.com",
+  supportEmail: "support@dizozet.shop",
   supportWhatsApp: "+91 78957 68118",
   whatsappNumber: "7895768118",
-  whatsappLink: "https://wa.me/917895768118?text=Hi%2C%20I%20want%20to%20order%20from%20Dizo%20Pulse",
-  upiId: "dizopulse@upi",
-  upiQrImage: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=dizopulse@upi&pn=Dizo%20Pulse&cu=INR",
+  whatsappLink: "https://wa.me/917895768118?text=Hi%2C%20I%20want%20to%20order%20from%20Dizozet",
+  upiId: "7895768118@ptsbi",
+  upiQrImage: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=7895768118@ptsbi&pn=Dizozet&cu=INR",
+  cashfreeAppId: "1495948439669a2ddbdd5af37fc8495941",
   razorpayKeyId: "rzp_test_dizopulse12345",
   stripePublishableKey: "pk_test_dizopulse_mock",
   paymentMethods: {
+    cashfree: true,
     upiQr: true,
     cardRazorpay: true,
     stripe: true,
     netBanking: true
   },
-  announcementText: "",
+  announcementText: "⚡ FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS | USE CODE: DIZO85",
+  isBannerActive: true,
   guaranteeText: "100% Genuine Licenses • 24/7 WhatsApp Support: 7895768118 • Instant Replacement Guarantee"
 };
 

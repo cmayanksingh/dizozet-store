@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', store: 'Dizo Pulse', timestamp: new Date() });
+  res.json({ status: 'ok', store: 'Dizozet', timestamp: new Date() });
 });
 
 // Catch-all route to serve index.html for SPA routing
@@ -24,7 +24,7 @@ app.get('*', (req, res) => {
 function startServer(port) {
   const server = app.listen(port, () => {
     console.log(`\n======================================================`);
-    console.log(`🚀 Dizo Pulse Digital Store is live at: http://localhost:${port}`);
+    console.log(`🚀 Dizozet Digital Store is live at: http://localhost:${port}`);
     console.log(`======================================================\n`);
   });
 

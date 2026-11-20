@@ -3,6 +3,18 @@ import initialBundlesData from '../data/reelsBundles.json';
 import { initialSubscriptions } from '../data/subscriptionsData';
 import { initialDigitalProducts } from '../data/digitalProductsData';
 import { initialStoreConfig, customerReviews as initialCustomerReviews } from '../data/storeContent';
+import {
+  getFirestoreDB,
+  syncOrderToFirestore,
+  fetchOrdersFromFirestore,
+  updateOrderStatusInFirestore,
+  deleteOrderFromFirestore,
+  syncProductToFirestore,
+  deleteProductFromFirestore,
+  syncSettingsToFirestore,
+  syncCouponToFirestore,
+  deleteCouponFromFirestore
+} from '../services/firebase';
 
 const StoreContext = createContext(null);
 
@@ -249,6 +261,25 @@ export const StoreProvider = ({ children }) => {
     localStorage.setItem('digivault_admin_pwd', adminPassword);
   }, [adminPassword]);
 
+  // Connect & Sync with Firebase Firestore on Mount
+  useEffect(() => {
+    try {
+      getFirestoreDB();
+      fetchOrdersFromFirestore().then((cloudOrders) => {
+        if (cloudOrders && Array.isArray(cloudOrders) && cloudOrders.length > 0) {
+          setOrders(prev => {
+            const map = new Map();
+            cloudOrders.forEach(o => map.set(o.orderId, o));
+            prev.forEach(o => { if (!map.has(o.orderId)) map.set(o.orderId, o); });
+            return Array.from(map.values());
+          });
+        }
+      }).catch(err => console.warn('Firestore initial fetch notice:', err));
+    } catch (e) {
+      console.warn('Firebase init error:', e);
+    }
+  }, []);
+
   // Cart Calculations
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
@@ -430,20 +461,25 @@ export const StoreProvider = ({ children }) => {
 
     setOrders(prev => [newOrder, ...prev]);
     clearCart();
+    // Sync to Cloud Firestore
+    syncOrderToFirestore(newOrder);
     return newOrder;
   };
 
   // Orders Management
   const updateOrderStatus = (orderId, newStatus) => {
     setOrders(prev => prev.map(o => o.orderId === orderId ? { ...o, orderStatus: newStatus } : o));
+    updateOrderStatusInFirestore(orderId, newStatus);
   };
 
   const deleteOrder = (orderId) => {
     setOrders(prev => prev.filter(o => o.orderId !== orderId));
+    deleteOrderFromFirestore(orderId);
   };
 
   const addManualOrder = (orderObj) => {
     setOrders(prev => [orderObj, ...prev]);
+    syncOrderToFirestore(orderObj);
   };
 
   // Admin CRUD for Products
@@ -455,6 +491,7 @@ export const StoreProvider = ({ children }) => {
     } else if (categoryType === 'digital-product') {
       setDigitalProducts(prev => [product, ...prev]);
     }
+    syncProductToFirestore(categoryType, product);
   };
 
   const updateProduct = (categoryType, id, updatedFields) => {
@@ -465,6 +502,7 @@ export const StoreProvider = ({ children }) => {
     } else if (categoryType === 'digital-product') {
       setDigitalProducts(prev => prev.map(p => p.id === id ? { ...p, ...updatedFields } : p));
     }
+    syncProductToFirestore(categoryType, { id, ...updatedFields });
   };
 
   const deleteProduct = (categoryType, id) => {
@@ -475,6 +513,7 @@ export const StoreProvider = ({ children }) => {
     } else if (categoryType === 'digital-product') {
       setDigitalProducts(prev => prev.filter(p => p.id !== id));
     }
+    deleteProductFromFirestore(id);
   };
 
   // Backup & Restore

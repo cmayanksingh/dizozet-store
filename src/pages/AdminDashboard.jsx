@@ -136,7 +136,7 @@ export default function AdminDashboard() {
   // Settings & Appearance Forms
   const [settingsForm, setSettingsForm] = useState({ ...storeConfig });
   const [appearanceForm, setAppearanceForm] = useState({
-    storeName: storeConfig.storeName || 'Dizo Pulse',
+    storeName: storeConfig.storeName || 'Dizozet',
     storeTagline: storeConfig.storeTagline || 'Premium Subscriptions & Viral Reels Bundles',
     primaryColor: storeConfig.primaryColor || '#a1e3d8',
     logoUrl: storeConfig.logoUrl || 'images/dizozet-logo.png'
@@ -304,7 +304,7 @@ export default function AdminDashboard() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Dizo_Pulse_Sales_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', `Dizozet_Sales_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Dizo_Pulse_Store_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `Dizozet_Store_Backup_${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
     showNotification('Complete store backup JSON downloaded!');
@@ -580,7 +580,7 @@ export default function AdminDashboard() {
               <Lock className="w-8 h-8" />
             </div>
             <h1 className="text-2xl font-black tracking-tight">
-              {storeConfig.storeName || 'Dizo Pulse'} Control Center
+              {storeConfig.storeName || 'Dizozet'} Control Center
             </h1>
             <p className={`text-xs ${textMuted}`}>
               Isolated secure master dashboard. Enter master password to access full store control.
@@ -691,7 +691,7 @@ export default function AdminDashboard() {
               </div>
               <div>
                 <h2 className="font-black text-base tracking-tight leading-none">
-                  {storeConfig.storeName || 'Dizo Pulse'}
+                  {storeConfig.storeName || 'Dizozet'}
                 </h2>
                 <span className="text-[10px] font-black uppercase text-teal-400 tracking-wider">
                   Admin OS • Pro v3.0
@@ -1383,22 +1383,22 @@ export default function AdminDashboard() {
                           </td>
 
                           <td className="p-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-1.5">
+                            <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setEditingProduct({ type: 'subscription', data: { ...sub } })}
-                                className={`p-1.5 rounded-lg transition-colors ${
-                                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                                }`}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all shadow-sm"
                                 title="Edit Subscription"
                               >
-                                <Edit3 className="w-4 h-4" />
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
                               </button>
                               <button
                                 onClick={() => handleDeleteProduct('subscription', sub.id, sub.title)}
-                                className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 transition-all"
                                 title="Delete Subscription"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>Delete</span>
                               </button>
                             </div>
                           </td>
@@ -1445,8 +1445,8 @@ export default function AdminDashboard() {
               </div>
 
               <div className={`rounded-3xl border shadow-sm overflow-hidden ${bgCard}`}>
-                <div className="max-h-[680px] overflow-y-auto">
-                  <table className="w-full text-left text-xs">
+                <div className="max-h-[680px] overflow-x-auto overflow-y-auto">
+                  <table className="w-full text-left text-xs min-w-[700px]">
                     <thead className={`font-black uppercase sticky top-0 border-b z-10 ${isDark ? 'bg-[#0f172a] text-slate-300 border-slate-800' : 'bg-slate-50 text-slate-700 border-slate-200'}`}>
                       <tr>
                         <th className="p-4">Reels Bundle</th>
@@ -1505,22 +1505,22 @@ export default function AdminDashboard() {
                           </td>
 
                           <td className="p-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-1.5">
+                            <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setEditingProduct({ type: 'reels-bundle', data: { ...reel } })}
-                                className={`p-1.5 rounded-lg transition-colors ${
-                                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                                }`}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all shadow-sm"
                                 title="Edit Bundle"
                               >
-                                <Edit3 className="w-4 h-4" />
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
                               </button>
                               <button
                                 onClick={() => handleDeleteProduct('reels-bundle', reel.id, reel.title)}
-                                className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 transition-all"
                                 title="Delete Bundle"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>Delete</span>
                               </button>
                             </div>
                           </td>
@@ -1614,22 +1614,22 @@ export default function AdminDashboard() {
                           </td>
 
                           <td className="p-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-1.5">
+                            <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setEditingProduct({ type: 'digital-product', data: { ...item } })}
-                                className={`p-1.5 rounded-lg transition-colors ${
-                                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                                }`}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all shadow-sm"
                                 title="Edit Product"
                               >
-                                <Edit3 className="w-4 h-4" />
+                                <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
                               </button>
                               <button
                                 onClick={() => handleDeleteProduct('digital-product', item.id, item.title)}
-                                className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 transition-all"
                                 title="Delete Product"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>Delete</span>
                               </button>
                             </div>
                           </td>
@@ -1708,15 +1708,14 @@ export default function AdminDashboard() {
                         {rev.purchasedItem || 'Verified Buyer'}
                       </span>
 
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2">
                         <button
                           onClick={() => setEditingReview({ ...rev })}
-                          className={`p-1.5 rounded-lg transition-colors ${
-                            isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                          }`}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all"
                           title="Edit Review"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
+                          <span>Edit</span>
                         </button>
                         <button
                           onClick={() => {
@@ -1725,10 +1724,11 @@ export default function AdminDashboard() {
                               showNotification('Review deleted.');
                             }
                           }}
-                          className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-red-500/10 hover:bg-red-500 hover:text-white text-red-400 border border-red-500/20 transition-all"
                           title="Delete Review"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </div>
@@ -1800,15 +1800,14 @@ export default function AdminDashboard() {
                             </span>
                           </td>
                           <td className="p-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-1.5">
+                            <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => setEditingCoupon({ ...c })}
-                                className={`p-1.5 rounded-lg transition-colors ${
-                                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-                                }`}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all shadow-sm"
                                 title="Edit Coupon"
                               >
                                 <Edit3 className="w-3.5 h-3.5" />
+                                <span>Edit</span>
                               </button>
                               <button
                                 onClick={() => {
@@ -1817,10 +1816,11 @@ export default function AdminDashboard() {
                                     showNotification('Coupon removed.');
                                   }
                                 }}
-                                className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 transition-all"
                                 title="Delete Coupon"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
+                                <span>Delete</span>
                               </button>
                             </div>
                           </td>
@@ -2049,7 +2049,7 @@ export default function AdminDashboard() {
                   <label className="block text-xs font-extrabold uppercase mb-1">Support Email</label>
                   <input
                     type="email"
-                    value={settingsForm.supportEmail || 'support@dizopulse.com'}
+                    value={settingsForm.supportEmail || 'support@dizozet.shop'}
                     onChange={(e) => setSettingsForm(prev => ({ ...prev, supportEmail: e.target.value }))}
                     className={`w-full px-4 py-2.5 text-xs rounded-xl border ${inputBg}`}
                   />
@@ -2059,7 +2059,7 @@ export default function AdminDashboard() {
                   <label className="block text-xs font-extrabold uppercase mb-1">Store UPI ID</label>
                   <input
                     type="text"
-                    value={settingsForm.upiId || 'dizopulse@upi'}
+                    value={settingsForm.upiId || '7895768118@ptsbi'}
                     onChange={(e) => setSettingsForm(prev => ({ ...prev, upiId: e.target.value }))}
                     className={`w-full px-4 py-2.5 text-xs rounded-xl border font-mono ${inputBg}`}
                   />

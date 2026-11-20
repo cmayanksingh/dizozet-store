@@ -67,11 +67,11 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-slate-800 text-[#a1e3d8] border border-[#a1e3d8]/40 flex items-center justify-center shadow-sm">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 p-1 flex items-center justify-center shadow-sm overflow-hidden">
+                <img src="/images/dizozet-logo.png" alt="Dizozet Logo" className="w-full h-full object-contain" onError={(e) => { e.target.src = '/images/dizozet-logo.jpg'; }} />
               </div>
               <span className="text-2xl font-black text-white tracking-tight">
-                Dizo <span className="text-[#a1e3d8]">Pulse</span>
+                Dizo<span className="text-[#a1e3d8]">zet</span>
               </span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed pr-4">
@@ -162,7 +162,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 mt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
-            © {new Date().getFullYear()} Dizo Pulse. All rights reserved.
+            © {new Date().getFullYear()} Dizozet. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <span>Accepted: UPI • PhonePe • Google Pay • Paytm • Cards</span>
