@@ -177,7 +177,14 @@ export const StoreProvider = ({ children }) => {
   const [storeConfig, setStoreConfig] = useState(() => {
     try {
       const saved = localStorage.getItem('digivault_config_v2');
-      return saved ? JSON.parse(saved) : initialStoreConfig;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (!parsed.supportEmail || parsed.supportEmail.includes('@dizozet.shop') || parsed.supportEmail.includes('dizopulse')) {
+          parsed.supportEmail = 'dizozet.org@gmail.com';
+        }
+        return parsed;
+      }
+      return initialStoreConfig;
     } catch {
       return initialStoreConfig;
     }

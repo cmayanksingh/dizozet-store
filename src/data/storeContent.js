@@ -2,7 +2,7 @@ export const initialStoreConfig = {
   storeName: "Dizozet",
   storeTagline: "Premium Subscriptions & Viral Reels Bundles",
   currencySymbol: "₹",
-  supportEmail: "support@dizozet.shop",
+  supportEmail: "dizozet.org@gmail.com",
   supportWhatsApp: "+91 78957 68118",
   whatsappNumber: "7895768118",
   whatsappLink: "https://wa.me/917895768118?text=Hi%2C%20I%20want%20to%20order%20from%20Dizozet",

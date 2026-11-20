@@ -2049,7 +2049,7 @@ export default function AdminDashboard() {
                   <label className="block text-xs font-extrabold uppercase mb-1">Support Email</label>
                   <input
                     type="email"
-                    value={settingsForm.supportEmail || 'support@dizozet.shop'}
+                    value={settingsForm.supportEmail || 'dizozet.org@gmail.com'}
                     onChange={(e) => setSettingsForm(prev => ({ ...prev, supportEmail: e.target.value }))}
                     className={`w-full px-4 py-2.5 text-xs rounded-xl border ${inputBg}`}
                   />

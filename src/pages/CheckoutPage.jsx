@@ -4,17 +4,15 @@ import {
   ShieldCheck, 
   Lock, 
   CreditCard, 
-  QrCode, 
   Zap, 
   ArrowLeft, 
   Check, 
-  Copy, 
-  Smartphone,
-  AlertCircle
+  AlertCircle,
+  Tag,
+  Trash2
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import confetti from 'canvas-confetti';
-import { Tag } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { 
@@ -26,7 +24,8 @@ export default function CheckoutPage() {
     applyCoupon, 
     removeCoupon, 
     discountAmount, 
-    finalTotal 
+    finalTotal,
+    removeFromCart
   } = useStore();
   const navigate = useNavigate();
 
@@ -34,13 +33,9 @@ export default function CheckoutPage() {
     name: '',
     email: '',
     phone: '',
-    city: '',
-    state: ''
+    city: ''
   });
 
-  const [paymentMethod, setPaymentMethod] = useState('cashfree'); // 'cashfree' or 'upi-qr'
-  const [utrNumber, setUtrNumber] = useState('');
-  const [copiedUpi, setCopiedUpi] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formError, setFormError] = useState('');
   const [couponCodeInput, setCouponCodeInput] = useState('');
@@ -61,108 +56,71 @@ export default function CheckoutPage() {
     );
   }
 
-  // Dynamic UPI URL & QR
-  const upiPayUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId || '7895768118@ptsbi')}&pn=${encodeURIComponent(storeConfig.storeName || 'Dizozet')}&am=${finalTotal}&cu=INR&tn=${encodeURIComponent('Dizozet Order')}`;
-  const qrImageSrc = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPayUrl)}`;
-
-  const handleCopyUpi = () => {
-    navigator.clipboard.writeText(storeConfig.upiId || '7895768118@ptsbi');
-    setCopiedUpi(true);
-    setTimeout(() => setCopiedUpi(false), 2000);
-  };
-
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
     setFormError('');
 
     if (!customer.name.trim() || !customer.email.trim() || !customer.phone.trim()) {
-      setFormError('Please fill in your Name, Email, and Phone / WhatsApp number.');
+      setFormError('Please fill in your Name, Email, and WhatsApp phone number.');
       return;
     }
 
     if (!customer.email.includes('@') || !customer.email.includes('.')) {
-      setFormError('Please enter a valid email address for digital delivery.');
+      setFormError('Please enter a valid email address for instant digital delivery.');
       return;
     }
 
     setIsProcessing(true);
 
-    // 1. CASHFREE GATEWAY FLOW
-    if (paymentMethod === 'cashfree') {
-      try {
-        const res = await fetch('/api/create-order', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: finalTotal,
-            name: customer.name,
-            email: customer.email,
-            phone: customer.phone
-          })
-        });
-        const data = await res.json();
-
-        if (!data.success || !data.payment_session_id) {
-          throw new Error(data.error || 'Failed to initialize Cashfree gateway session.');
-        }
-
-        if (typeof window !== 'undefined' && window.Cashfree) {
-          const cashfree = window.Cashfree({ mode: "production" });
-          cashfree.checkout({
-            paymentSessionId: data.payment_session_id,
-            redirectTarget: "_modal"
-          }).then((result) => {
-            setIsProcessing(false);
-            if (result.error) {
-              console.warn("Cashfree checkout error:", result.error);
-              setFormError(result.error.message || 'Cashfree payment was cancelled or interrupted.');
-            }
-            if (result.paymentDetails) {
-              try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }); } catch (e) {}
-              const order = placeOrder({
-                customer,
-                paymentMethod: 'Cashfree Gateway (Auto-Verified)',
-                paymentDetails: {
-                  txnId: data.order_id || 'CF-' + Date.now(),
-                  method: 'cashfree'
-                }
-              });
-              navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
-            }
-          });
-        } else {
-          // Fallback direct payment URL if modal SDK is blocked
-          window.location.href = `https://api.cashfree.com/pg/orders/${data.order_id}`;
-        }
-      } catch (err) {
-        setIsProcessing(false);
-        setFormError('Cashfree Gateway Notice: ' + err.message + '. You can also use the UPI QR option below.');
-      }
-      return;
-    }
-
-    // 2. MANUAL UPI QR CODE FLOW
-    setTimeout(() => {
-      try {
-        confetti({
-          particleCount: 120,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-      } catch (err) {}
-
-      const order = placeOrder({
-        customer,
-        paymentMethod: 'UPI QR Code / Apps',
-        paymentDetails: {
-          txnId: utrNumber || 'TXN-' + Math.floor(10000000 + Math.random() * 90000000),
-          method: 'upi-qr'
-        }
+    try {
+      const res = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: finalTotal,
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone
+        })
       });
+      const data = await res.json();
 
+      if (!data.success || !data.payment_session_id) {
+        throw new Error(data.error || 'Failed to initialize payment gateway session.');
+      }
+
+      if (typeof window !== 'undefined' && window.Cashfree) {
+        const cashfree = window.Cashfree({ mode: "production" });
+        cashfree.checkout({
+          paymentSessionId: data.payment_session_id,
+          redirectTarget: "_modal"
+        }).then((result) => {
+          setIsProcessing(false);
+          if (result.error) {
+            console.warn("Cashfree checkout error:", result.error);
+            setFormError(result.error.message || 'Payment was cancelled or interrupted.');
+          }
+          if (result.paymentDetails) {
+            try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }); } catch (e) {}
+            const order = placeOrder({
+              customer,
+              paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+              paymentDetails: {
+                txnId: data.order_id || 'CF-' + Date.now(),
+                method: 'cashfree'
+              }
+            });
+            navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
+          }
+        });
+      } else {
+        // Fallback direct payment URL if modal SDK is blocked
+        window.location.href = `https://api.cashfree.com/pg/orders/${data.order_id}`;
+      }
+    } catch (err) {
       setIsProcessing(false);
-      navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
-    }, 1200);
+      setFormError('Payment Notice: ' + err.message + '. Please try again or reach our WhatsApp support.');
+    }
   };
 
   return (
@@ -177,24 +135,29 @@ export default function CheckoutPage() {
           Secure Checkout & Instant Delivery
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-          Complete your purchase to receive your instant Google Drive links & digital delivery.
+          Enter your delivery details to receive your instant Google Drive download links.
         </p>
       </div>
 
       <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: Customer Details & Payment Options */}
+        {/* Left Column: Customer Details & Gateway Security */}
         <div className="lg:col-span-7 space-y-6">
           
-          {/* Step 1: Customer Info */}
+          {/* Customer Info Card */}
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center gap-2.5 pb-2 border-b border-slate-100">
-              <span className="w-7 h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-sm flex items-center justify-center">
-                1
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <span className="w-7 h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-sm flex items-center justify-center">
+                  1
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-slate-900">
+                  Customer & Delivery Information
+                </h2>
+              </div>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+                <Lock className="w-3 h-3" /> 256-Bit SSL
               </span>
-              <h2 className="text-base sm:text-lg font-black text-slate-900">
-                Customer & Delivery Information
-              </h2>
             </div>
 
             {formError && (
@@ -221,7 +184,7 @@ export default function CheckoutPage() {
 
               <div>
                 <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Email Address (For Instant Delivery) <span className="text-red-500">*</span>
+                  Email Address (For Drive Delivery) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -266,188 +229,65 @@ export default function CheckoutPage() {
             </p>
           </div>
 
-          {/* Step 2: Payment Method */}
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+          {/* Clean Payment Gateway Assurance Box */}
+          <div className="bg-gradient-to-r from-teal-50/80 via-emerald-50/50 to-teal-50/80 rounded-3xl p-6 border border-teal-200/80 shadow-sm space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-teal-100">
               <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-sm flex items-center justify-center">
-                  2
-                </span>
-                <h2 className="text-base sm:text-lg font-black text-slate-900">
-                  Select Payment Method
-                </h2>
+                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-800 flex items-center justify-center font-bold">
+                  <CreditCard className="w-4 h-4 text-teal-700" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-black text-slate-900">
+                    Auto-Verified Instant Payment Gateway
+                  </h3>
+                  <p className="text-[11px] text-slate-500 font-medium">
+                    Google Pay • PhonePe • Paytm UPI • Cards • NetBanking
+                  </p>
+                </div>
               </div>
-              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
-                <Lock className="w-3 h-3" /> 256-Bit SSL
+              <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100/70 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+                <Check className="w-3 h-3 text-emerald-600" /> Verified
               </span>
             </div>
 
-            {/* Methods Tabs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('cashfree')}
-                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                  paymentMethod === 'cashfree'
-                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm ring-2 ring-teal-500/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <CreditCard className="w-5 h-5 text-teal-700" />
-                  <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-2 py-0.5 rounded-full">
-                    Auto-Verified Instant
-                  </span>
-                </div>
-                <div>
-                  <div className="text-sm font-extrabold text-slate-900">Cashfree Gateway</div>
-                  <div className="text-[11px] text-slate-500 font-medium">UPI Apps, Cards, NetBanking & Paytm</div>
-                </div>
-              </button>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Click <strong>"Pay Securely"</strong> to complete payment via official Cashfree Gateway. No manual screenshot or UTR number required — instant automated access to Google Drive folders right after payment.
+            </p>
 
-              <button
-                type="button"
-                onClick={() => setPaymentMethod('upi-qr')}
-                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                  paymentMethod === 'upi-qr'
-                    ? 'border-slate-900 bg-[#a1e3d8]/25 shadow-sm ring-2 ring-teal-500/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <QrCode className="w-5 h-5 text-slate-700" />
-                  <span className="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded">
-                    Direct Scan
-                  </span>
-                </div>
-                <div>
-                  <div className="text-sm font-extrabold text-slate-900">UPI QR Code</div>
-                  <div className="text-[11px] text-slate-500 font-medium">Google Pay, PhonePe, Paytm scanner</div>
-                </div>
-              </button>
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-bold text-slate-700">
+              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
+                📱 Google Pay
+              </span>
+              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
+                📱 PhonePe
+              </span>
+              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
+                📱 Paytm UPI
+              </span>
+              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
+                💳 All Cards & NetBanking
+              </span>
             </div>
-
-            {/* Content for Cashfree Gateway */}
-            {paymentMethod === 'cashfree' && (
-              <div className="p-5 bg-gradient-to-r from-teal-50/60 to-emerald-50/40 border border-teal-200 rounded-2xl space-y-3 text-xs text-slate-700">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-                  <h4 className="font-extrabold text-slate-900 text-sm">
-                    Official Cashfree Automated Gateway
-                  </h4>
-                </div>
-                <p className="leading-relaxed text-slate-600">
-                  Click <strong>"Pay with Cashfree"</strong> below to securely complete your payment. All UPI apps (Google Pay, PhonePe, Paytm), Credit/Debit cards, and Net Banking are supported with zero convenience fees.
-                </p>
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-bold text-slate-500">
-                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">GPay</span>
-                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">PhonePe</span>
-                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">Paytm</span>
-                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">Visa / Mastercard</span>
-                  <span className="bg-white px-2 py-0.5 rounded border border-slate-200">NetBanking</span>
-                </div>
-              </div>
-            )}
-
-            {/* Content for UPI QR */}
-            {paymentMethod === 'upi-qr' && (
-              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 text-center sm:text-left">
-                <div className="flex flex-col sm:flex-row items-center gap-6">
-                  {/* QR Code Container */}
-                  <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm shrink-0">
-                    <img
-                      src={qrImageSrc}
-                      alt="UPI Payment QR Code"
-                      className="w-40 h-40 object-contain mx-auto"
-                    />
-                    <div className="text-[10px] font-bold text-center text-slate-500 mt-1">
-                      Scan with any UPI App
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 flex-1 text-xs text-slate-600">
-                    <h4 className="text-sm font-extrabold text-slate-900">
-                      Scan QR & Pay {storeConfig.currencySymbol}{finalTotal}
-                    </h4>
-                    <p className="leading-relaxed">
-                      1. Open Google Pay, PhonePe, Paytm, or BHIM.<br />
-                      2. Scan this QR code or pay directly to the UPI ID below.<br />
-                      3. Click <strong>Verify & Complete Order</strong> below.
-                    </p>
-
-                    <div className="flex items-center justify-between bg-white border border-slate-200 rounded-xl p-2.5 max-w-sm">
-                      <span className="font-mono font-bold text-teal-800">{storeConfig.upiId}</span>
-                      <button
-                        type="button"
-                        onClick={handleCopyUpi}
-                        className="px-2.5 py-1 bg-slate-900 text-white text-[11px] font-bold rounded-lg hover:bg-slate-800 flex items-center gap-1"
-                      >
-                        {copiedUpi ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                        {copiedUpi ? 'Copied' : 'Copy UPI'}
-                      </button>
-                    </div>
-
-                    <div>
-                      <label className="text-[11px] font-bold text-slate-700 block mb-1">
-                        UTR / Transaction Ref No. (Optional)
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. 412984029102"
-                        value={utrNumber}
-                        onChange={(e) => setUtrNumber(e.target.value)}
-                        className="w-full max-w-sm px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-teal-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Content for Razorpay */}
-            {paymentMethod === 'razorpay' && (
-              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 text-xs text-slate-600">
-                <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
-                  <CreditCard className="w-4 h-4 text-teal-600" />
-                  <span>Razorpay Seamless Checkout</span>
-                </div>
-                <p>
-                  Pay via Debit Card, Credit Card, Net Banking (SBI, HDFC, ICICI, Axis), or Wallet.
-                </p>
-                <div className="p-2.5 bg-white border border-slate-200 rounded-xl text-[11px] flex items-center justify-between text-slate-500">
-                  <span>Merchant Key Configured: <code>{storeConfig.razorpayKeyId}</code></span>
-                  <span className="text-emerald-600 font-bold">Ready</span>
-                </div>
-              </div>
-            )}
-
-            {/* Content for Stripe */}
-            {paymentMethod === 'stripe' && (
-              <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3 text-xs text-slate-600">
-                <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
-                  <Smartphone className="w-4 h-4 text-teal-600" />
-                  <span>Stripe Global Payments</span>
-                </div>
-                <p>
-                  Supports Visa, MasterCard, American Express, and Apple Pay for international customers.
-                </p>
-              </div>
-            )}
-
           </div>
 
         </div>
 
         {/* Right Column: Order Items & Pay Button */}
         <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
-          <h3 className="text-lg font-black text-slate-900 border-b border-slate-100 pb-3">
-            Review Items ({cart.length})
-          </h3>
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h3 className="text-lg font-black text-slate-900">
+              Review Items ({cart.length})
+            </h3>
+            <span className="text-[11px] text-slate-400 font-medium">
+              Click 🗑️ to remove
+            </span>
+          </div>
 
+          {/* Cart Items List with Cut / Remove Button */}
           <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto pr-1">
             {cart.map((item) => (
-              <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
+              <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3 group">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <img
                     src={item.thumbnail}
                     alt={item.title}
@@ -456,8 +296,8 @@ export default function CheckoutPage() {
                       e.target.src = 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=100&q=80';
                     }}
                   />
-                  <div className="min-w-0">
-                    <h4 className="text-xs font-bold text-slate-800 truncate">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs font-bold text-slate-800 truncate" title={item.title}>
                       {item.title}
                     </h4>
                     {item.planName && (
@@ -471,10 +311,18 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="text-right shrink-0">
+                <div className="flex items-center gap-2.5 shrink-0">
                   <span className="text-xs font-black text-slate-900">
                     {storeConfig.currencySymbol}{item.price * (item.quantity || 1)}
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => removeFromCart(item.id)}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-all"
+                    title="Remove item"
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </button>
                 </div>
               </div>
             ))}
@@ -554,31 +402,29 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={isProcessing}
-            className="w-full py-4 px-6 bg-[#a1e3d8] hover:bg-[#7be0d2] text-slate-900 font-black text-base rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+            className="w-full py-4 px-6 bg-[#a1e3d8] hover:bg-[#7be0d2] text-slate-900 font-black text-base rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {isProcessing ? (
               <span className="flex items-center gap-2">
                 <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                Connecting Cashfree Gateway...
+                Connecting Secure Gateway...
               </span>
             ) : (
               <>
                 <Zap className="w-5 h-5 fill-slate-900" />
-                <span>
-                  {paymentMethod === 'cashfree' ? `Pay via Cashfree (${storeConfig.currencySymbol}${finalTotal})` : `Verify & Place Order (${storeConfig.currencySymbol}${finalTotal})`}
-                </span>
+                <span>Pay {storeConfig.currencySymbol}{finalTotal} Securely (UPI / Cards)</span>
               </>
             )}
           </button>
 
-          {/* Security & Warranty Notice */}
+          {/* Security & Support Notice */}
           <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1.5 text-[11px] text-slate-500 text-center">
             <div className="font-bold text-slate-700 flex items-center justify-center gap-1">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Instant Delivery & Replacement Warranty
+              Instant Drive Delivery & Replacement Warranty
             </div>
             <p>
-              Your Google Drive links will be generated on screen immediately after payment verification.
+              Need help? Email: <a href="mailto:dizozet.org@gmail.com" className="text-teal-700 font-bold hover:underline">dizozet.org@gmail.com</a> • WhatsApp: +91 78957 68118
             </p>
           </div>
 

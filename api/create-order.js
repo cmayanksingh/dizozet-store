@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       customer_details: {
         customer_id: 'cust_' + cleanPhone,
         customer_name: (name || 'Customer').slice(0, 50),
-        customer_email: (email || 'customer@dizozet.shop').slice(0, 50),
+        customer_email: (email || 'dizozet.org@gmail.com').slice(0, 50),
         customer_phone: cleanPhone
       },
       order_meta: {
