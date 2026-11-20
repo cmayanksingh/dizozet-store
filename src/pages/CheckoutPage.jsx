@@ -149,12 +149,14 @@ export default function CheckoutPage() {
     }
   };
 
+  const cleanPhoneDigits = (customer.phone || '').replace(/\D/g, '').replace(/^91/, '').slice(0, 10);
+
   return (
-    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
+    <div className="pb-28 lg:pb-16 pt-4 sm:pt-8 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
       
       {/* Header */}
       <div>
-        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-teal-700 mb-1.5 sm:mb-2">
+        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-red-600 mb-1.5 sm:mb-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Cart
         </Link>
         <h1 className="text-xl sm:text-3xl font-black text-slate-900">
@@ -167,22 +169,23 @@ export default function CheckoutPage() {
 
       <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start">
         
-        {/* Left Column: Customer Details & Gateway Security */}
+        {/* Left Column: Delivery Information Form */}
         <div className="lg:col-span-7 space-y-4 sm:space-y-6">
           
-          {/* Customer Info Card */}
-          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs sm:shadow-sm space-y-3 sm:space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <div className="flex items-center gap-2 sm:gap-2.5">
-                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-xs sm:text-sm flex items-center justify-center">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-red-200/80 shadow-xs sm:shadow-sm space-y-4">
+            
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <span className="w-7 h-7 rounded-full bg-slate-900 text-white font-black text-xs flex items-center justify-center">
                   1
                 </span>
-                <h2 className="text-sm sm:text-lg font-black text-slate-900">
-                  Customer & Delivery Information
+                <h2 className="text-base sm:text-lg font-black text-slate-900">
+                  Delivery Information
                 </h2>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-emerald-200 flex items-center gap-1">
-                <Lock className="w-3 h-3" /> 256-Bit SSL
+              <span className="text-[11px] font-semibold text-slate-400">
+                Strict Verification Active
               </span>
             </div>
 
@@ -193,111 +196,121 @@ export default function CheckoutPage() {
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Full Name <span className="text-red-500">*</span>
+            <div className="space-y-4">
+              
+              {/* Field 1: Your Full Name */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700 block">
+                  Your Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Rahul Sharma"
+                  placeholder="Enter your real full name"
                   value={customer.name}
                   onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-slate-400"
                 />
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Email Address (For Drive Delivery) <span className="text-red-500">*</span>
-                </label>
+              {/* Field 2: Email Address */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-700">
+                    Email Address (For Instant Bundle Delivery) <span className="text-red-500">*</span>
+                  </label>
+                  <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+                    Instant Delivery
+                  </span>
+                </div>
                 <input
                   type="email"
                   required
-                  placeholder="e.g. rahul@gmail.com"
+                  placeholder="you@example.com"
                   value={customer.email}
                   onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-slate-400"
                 />
+                <p className="text-[11px] text-slate-400">
+                  Google Drive bundle link & order details will be sent immediately to this email.
+                </p>
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  WhatsApp / Phone Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. +91 78957 68118"
-                  value={customer.phone}
-                  onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  City / State (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Mumbai, Maharashtra"
-                  value={customer.city}
-                  onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
-                />
-              </div>
-            </div>
-
-            {/* Pay Button Directly Under Form Fields (Zero Scroll on Mobile & Desktop) */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={isProcessing}
-                className="w-full py-3.5 sm:py-4 px-6 bg-[#a1e3d8] hover:bg-[#7be0d2] text-slate-900 font-black text-sm sm:text-base rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
-              >
-                {isProcessing ? (
-                  <span className="flex items-center gap-2">
-                    <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                    Connecting Secure Gateway...
+              {/* Field 3: WhatsApp / Phone Number */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-700">
+                    WhatsApp / Phone Number (10 Digits) <span className="text-red-500">*</span>
+                  </label>
+                  <span className={`text-[10px] font-semibold ${cleanPhoneDigits.length === 10 ? 'text-emerald-600' : 'text-slate-400'}`}>
+                    {cleanPhoneDigits.length}/10 Digits
                   </span>
-                ) : (
-                  <>
-                    <Zap className="w-5 h-5 fill-slate-900" />
-                    <span>Pay {storeConfig.currencySymbol}{finalTotal} Securely (UPI / Cards)</span>
-                  </>
-                )}
-              </button>
-
-              <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-2.5 text-[10.5px] text-slate-500 font-semibold text-center">
-                <span className="flex items-center gap-1 text-emerald-700">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Instant Google Drive Access
-                </span>
-                <span>•</span>
-                <span>Google Pay • PhonePe • Paytm • Cards • NetBanking</span>
+                </div>
+                <div className="flex rounded-xl border border-slate-200 overflow-hidden focus-within:border-red-500 focus-within:ring-1 focus-within:ring-red-500 transition-all bg-white">
+                  <span className="inline-flex items-center px-3.5 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm border-r border-slate-200 select-none">
+                    +91
+                  </span>
+                  <input
+                    type="tel"
+                    required
+                    maxLength={10}
+                    placeholder="9876543210 (10 digits only)"
+                    value={cleanPhoneDigits}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setCustomer({ ...customer, phone: val ? '+91 ' + val : '' });
+                    }}
+                    className="flex-1 px-4 py-3 text-xs sm:text-sm bg-white focus:outline-none placeholder:text-slate-400"
+                  />
+                </div>
               </div>
+
+              {/* Pay Button Directly Under Form */}
+              <div className="pt-2 space-y-2.5">
+                <button
+                  type="submit"
+                  disabled={isProcessing}
+                  className="w-full py-4 px-6 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg shadow-red-500/25 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+                >
+                  {isProcessing ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Connecting Cashfree Gateway...
+                    </span>
+                  ) : (
+                    <>
+                      <Lock className="w-4 h-4 text-white" />
+                      <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
+                    </>
+                  )}
+                </button>
+
+                <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 font-medium text-center">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Instant Google Drive Delivery</span>
+                  <span>•</span>
+                  <span>256-bit SSL Security</span>
+                </div>
+              </div>
+
             </div>
 
-            <p className="text-[11px] text-slate-400 pt-1">
-              🔒 Your details are strictly confidential and used only to deliver your digital access links.
-            </p>
           </div>
 
         </div>
 
-        {/* Right Column: Order Items & Pay Button */}
+        {/* Right Column: Order Summary */}
         <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h3 className="text-lg font-black text-slate-900">
-              Review Items ({cart.length})
+              Order Summary ({cart.length} item{cart.length > 1 ? 's' : ''})
             </h3>
             <span className="text-[11px] text-slate-400 font-medium">
               Click 🗑️ to remove
             </span>
           </div>
 
-          {/* Cart Items List with Cut / Remove Button */}
+          {/* Cart Items List */}
           <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto pr-1">
             {cart.map((item) => (
               <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3 group">
@@ -315,19 +328,16 @@ export default function CheckoutPage() {
                       {item.title}
                     </h4>
                     {item.planName && (
-                      <span className="text-[10px] text-teal-800 font-semibold block">
+                      <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-md">
                         {item.planName}
                       </span>
                     )}
-                    <span className="text-[11px] text-slate-400">
-                      Qty: {item.quantity || 1}
-                    </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2.5 shrink-0">
                   <span className="text-xs font-black text-slate-900">
-                    {storeConfig.currencySymbol}{item.price * (item.quantity || 1)}
+                    {storeConfig.currencySymbol}{Number(item.price * (item.quantity || 1)).toFixed(2)}
                   </span>
                   <button
                     type="button"
@@ -342,12 +352,15 @@ export default function CheckoutPage() {
             ))}
           </div>
 
-          {/* Coupon Code Section */}
-          <div className="pt-2 border-t border-slate-100">
+          {/* Promo / Discount Code Section */}
+          <div className="pt-2 border-t border-slate-100 space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+              <Tag className="w-3.5 h-3.5 text-red-500" />
+              <span>Promo / Discount Code</span>
+            </div>
             {appliedCoupon ? (
               <div className="flex items-center justify-between p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs">
                 <div className="flex items-center gap-1.5 font-bold text-emerald-800">
-                  <Tag className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Coupon: <strong>{appliedCoupon.code}</strong> ({appliedCoupon.discountPercent}% OFF)</span>
                 </div>
                 <button
@@ -362,10 +375,10 @@ export default function CheckoutPage() {
               <div className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="Coupon code (e.g. DIZO85)"
+                  placeholder="ENTER COUPON CODE"
                   value={couponCodeInput}
                   onChange={(e) => setCouponCodeInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-teal-500"
+                  className="flex-1 px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-red-500"
                 />
                 <button
                   type="button"
@@ -375,14 +388,14 @@ export default function CheckoutPage() {
                     setCouponMsg(res.message);
                     if (res.success) setCouponCodeInput('');
                   }}
-                  className="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition-colors"
+                  className="px-5 py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
                 >
                   Apply
                 </button>
               </div>
             )}
             {couponMsg && (
-              <p className="text-[11px] font-semibold text-teal-700 mt-1">{couponMsg}</p>
+              <p className="text-[11px] font-semibold text-teal-700">{couponMsg}</p>
             )}
           </div>
 
@@ -391,57 +404,68 @@ export default function CheckoutPage() {
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span className="font-bold text-slate-900">
-                {storeConfig.currencySymbol}{cartSubtotal}
+                {storeConfig.currencySymbol}{Number(cartSubtotal).toFixed(2)}
               </span>
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-emerald-700 font-bold">
                 <span>Discount ({appliedCoupon?.code})</span>
-                <span>-{storeConfig.currencySymbol}{discountAmount}</span>
+                <span>-{storeConfig.currencySymbol}{Number(discountAmount).toFixed(2)}</span>
               </div>
             )}
-            <div className="flex justify-between">
-              <span>Digital Automated Delivery</span>
-              <span className="text-emerald-700 font-bold">FREE (Instant)</span>
-            </div>
-            <div className="flex justify-between text-base sm:text-lg font-black text-slate-900 pt-2 border-t border-slate-200">
-              <span>Total Payable</span>
-              <span className="text-slate-900">
-                {storeConfig.currencySymbol}{finalTotal}
+            <div className="flex justify-between text-base sm:text-lg font-black pt-2 border-t border-slate-200">
+              <span className="text-slate-900">Final Total</span>
+              <span className="text-[#e52e2e]">
+                {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)}
               </span>
             </div>
           </div>
 
-          {/* Pay Button */}
+          {/* Desktop Right Column Pay Button */}
           <button
             type="submit"
             disabled={isProcessing}
-            className="w-full py-4 px-6 bg-[#a1e3d8] hover:bg-[#7be0d2] text-slate-900 font-black text-base rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="hidden lg:flex w-full py-4 px-6 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-base rounded-2xl shadow-lg shadow-red-500/25 transition-all items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {isProcessing ? (
               <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                Connecting Secure Gateway...
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Connecting Cashfree Gateway...
               </span>
             ) : (
               <>
-                <Zap className="w-5 h-5 fill-slate-900" />
-                <span>Pay {storeConfig.currencySymbol}{finalTotal} Securely (UPI / Cards)</span>
+                <Lock className="w-4 h-4 text-white" />
+                <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
               </>
             )}
           </button>
+        </div>
 
-          {/* Security & Support Notice */}
-          <div className="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1.5 text-[11px] text-slate-500 text-center">
-            <div className="font-bold text-slate-700 flex items-center justify-center gap-1">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Instant Drive Delivery & Replacement Warranty
+        {/* Mobile Fixed Bottom Pay Bar (Always Fixed at Phone Bottom) */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-[0_-8px_30px_rgba(0,0,0,0.15)]">
+          <div className="max-w-md mx-auto space-y-1.5">
+            <button
+              type="submit"
+              disabled={isProcessing}
+              className="w-full py-3.5 px-4 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-md shadow-red-500/30 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+            >
+              {isProcessing ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Connecting Gateway...
+                </span>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4 text-white" />
+                  <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
+                </>
+              )}
+            </button>
+            <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-slate-500 font-semibold text-center">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>Instant Google Drive Delivery • 256-bit SSL Security</span>
             </div>
-            <p>
-              Need help? Email: <a href="mailto:dizozet.org@gmail.com" className="text-teal-700 font-bold hover:underline">dizozet.org@gmail.com</a> • WhatsApp: +91 78957 68118
-            </p>
           </div>
-
         </div>
 
       </form>
