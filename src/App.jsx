@@ -7,6 +7,7 @@ import CartDrawer from './components/CartDrawer';
 import SearchModal from './components/SearchModal';
 import WhatsAppButton from './components/WhatsAppButton';
 import RecentSalesToast from './components/RecentSalesToast';
+import Gta6PromoModal from './components/Gta6PromoModal';
 
 import HomePage from './pages/HomePage';
 import SubscriptionsPage from './pages/SubscriptionsPage';
@@ -68,6 +69,7 @@ function AppContent() {
       <SearchModal />
       <WhatsAppButton />
       <RecentSalesToast />
+      <Gta6PromoModal />
     </div>
   );
 }
