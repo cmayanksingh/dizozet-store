@@ -39,8 +39,10 @@ export const StoreProvider = ({ children }) => {
   // 2. Reels Bundles
   const [reelsBundles, setReelsBundles] = useState(() => {
     try {
-      const saved = localStorage.getItem('digivault_reels_bundles');
-      return saved ? JSON.parse(saved) : initialBundlesData;
+      const saved = localStorage.getItem('digivault_reels_bundles_v3');
+      if (saved) return JSON.parse(saved);
+      localStorage.setItem('digivault_reels_bundles_v3', JSON.stringify(initialBundlesData));
+      return initialBundlesData;
     } catch {
       return initialBundlesData;
     }
@@ -237,7 +239,7 @@ export const StoreProvider = ({ children }) => {
   }, [subscriptions]);
 
   useEffect(() => {
-    localStorage.setItem('digivault_reels_bundles', JSON.stringify(reelsBundles));
+    localStorage.setItem('digivault_reels_bundles_v3', JSON.stringify(reelsBundles));
   }, [reelsBundles]);
 
   useEffect(() => {
@@ -447,6 +449,7 @@ export const StoreProvider = ({ children }) => {
         ...item,
         downloadUrl: downloadLink,
         googleDriveLink: downloadLink,
+        downloadLinks: item.downloadLinks || (downloadLink ? [{ label: 'Main Bundle Folder', url: downloadLink }] : []),
         deliveryInfo: credentials
       };
     });
@@ -563,7 +566,7 @@ export const StoreProvider = ({ children }) => {
     setReviews(initialCustomerReviews);
     setAdminPassword('admin123');
     localStorage.removeItem('digivault_subscriptions_v2');
-    localStorage.removeItem('digivault_reels_bundles');
+    localStorage.removeItem('digivault_reels_bundles_v3');
     localStorage.removeItem('digivault_digital_products');
     localStorage.removeItem('digivault_config_v2');
     localStorage.removeItem('digivault_coupons');
