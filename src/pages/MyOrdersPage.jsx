@@ -39,12 +39,12 @@ export default function MyOrdersPage() {
   };
 
   return (
-    <div className="pb-20 pt-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
       
       {/* Page Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h1 className="text-xl sm:text-3xl font-black text-slate-900">
             My Orders & Digital Downloads
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">

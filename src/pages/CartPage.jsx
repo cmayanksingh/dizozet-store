@@ -39,22 +39,22 @@ export default function CartPage() {
   }
 
   return (
-    <div className="pb-20 pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
       
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+        <h1 className="text-xl sm:text-3xl font-black text-slate-900">
           Shopping Cart ({cart.length} {cart.length === 1 ? 'item' : 'items'})
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">
           Review your items before proceeding to instant digital delivery.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start">
         
         {/* Left Column: Cart Items List */}
-        <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm divide-y divide-slate-100">
+        <div className="lg:col-span-8 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs sm:shadow-sm divide-y divide-slate-100">
           {cart.map((item) => (
             <div key={item.id} className="py-5 first:pt-0 last:pb-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4">

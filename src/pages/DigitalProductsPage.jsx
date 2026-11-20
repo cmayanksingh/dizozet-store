@@ -13,7 +13,7 @@ import {
 
 export default function DigitalProductsPage() {
   return (
-    <div className="pb-24 pt-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="pb-12 sm:pb-24 pt-4 sm:pt-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-10">
       
       {/* Breadcrumb */}
       <div>
@@ -23,30 +23,30 @@ export default function DigitalProductsPage() {
       </div>
 
       {/* Main Coming Soon Banner Card */}
-      <div className="bg-white rounded-3xl p-10 sm:p-16 border border-slate-200 text-center space-y-6 shadow-sm">
-        <div className="w-20 h-20 rounded-3xl bg-[#a1e3d8]/30 text-teal-800 flex items-center justify-center mx-auto border border-[#a1e3d8]/50 shadow-sm">
-          <Clock4 className="w-10 h-10" />
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-16 border border-slate-200 text-center space-y-4 sm:space-y-6 shadow-xs sm:shadow-sm">
+        <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-[#a1e3d8]/30 text-teal-800 flex items-center justify-center mx-auto border border-[#a1e3d8]/50 shadow-xs sm:shadow-sm">
+          <Clock4 className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
 
-        <span className="inline-block bg-[#a1e3d8] text-slate-900 font-extrabold text-xs uppercase px-3.5 py-1 rounded-full shadow-sm">
+        <span className="inline-block bg-[#a1e3d8] text-slate-900 font-extrabold text-[10px] sm:text-xs uppercase px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full shadow-xs">
           Coming Soon
         </span>
 
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
           Digital Products & Templates
         </h1>
 
-        <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
           We are currently preparing high-converting Notion Creator Workspaces, Canva Social Media Megapacks, AI Prompts Databases, and Video Editing LUTs.
         </p>
 
         {/* WhatsApp Notification CTA */}
-        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3">
           <a
             href="https://wa.me/917895768118?text=Hi%2C%20please%20notify%20me%20when%20Digital%20Products%20launch"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
           >
             <MessageCircle className="w-4 h-4 fill-white" />
             <span>Notify Me on WhatsApp (7895768118)</span>
@@ -54,7 +54,7 @@ export default function DigitalProductsPage() {
 
           <Link
             to="/subscriptions"
-            className="w-full sm:w-auto px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-3 sm:px-6 sm:py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2"
           >
             <Tv className="w-4 h-4 text-[#a1e3d8]" />
             <span>Browse Subscriptions</span>

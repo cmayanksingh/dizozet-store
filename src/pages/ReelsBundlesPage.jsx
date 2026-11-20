@@ -84,39 +84,39 @@ export default function ReelsBundlesPage() {
   };
 
   return (
-    <div className="pb-20 pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
       
       {/* Header Banner */}
-      <div className="relative rounded-3xl bg-slate-900 p-8 sm:p-12 text-white shadow-xl overflow-hidden border border-slate-800">
+      <div className="relative rounded-2xl sm:rounded-3xl bg-slate-900 p-5 sm:p-8 md:p-12 text-white shadow-xl overflow-hidden border border-slate-800">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#a1e3d8]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 bg-[#a1e3d8]/20 text-[#a1e3d8] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-[#a1e3d8]/30">
-            <Film className="w-3.5 h-3.5" /> Complete 130+ Viral Reels Catalogue
+        <div className="relative z-10 max-w-3xl space-y-2 sm:space-y-3">
+          <div className="inline-flex items-center gap-1.5 bg-[#a1e3d8]/20 text-[#a1e3d8] px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border border-[#a1e3d8]/30">
+            <Film className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Complete 130+ Viral Reels Catalogue
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight">
             Viral Reels Bundles Hub
           </h1>
-          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+          <p className="text-xs sm:text-base text-slate-300 font-normal leading-relaxed">
             Ready-to-upload 1080p vertical videos with no watermark, background music synced, and Google Drive instant download links. Available in Personal and Commercial Reseller Rights licenses.
           </p>
 
-          <div className="pt-2 flex flex-wrap gap-2 text-xs font-bold">
-            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg">✨ Zero Watermark</span>
-            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg">🚀 1080P Full HD (9:16)</span>
-            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg">⚡ Instant Google Drive Link</span>
-            <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg">💼 Reseller Rights Ready</span>
+          <div className="pt-1 sm:pt-2 flex flex-wrap gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold">
+            <span className="bg-white/10 backdrop-blur-sm px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg">✨ Zero Watermark</span>
+            <span className="bg-white/10 backdrop-blur-sm px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg">🚀 1080P Full HD (9:16)</span>
+            <span className="bg-white/10 backdrop-blur-sm px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg">⚡ Instant Google Drive Link</span>
+            <span className="bg-white/10 backdrop-blur-sm px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg">💼 Reseller Rights Ready</span>
           </div>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
+      <div className="bg-white p-3.5 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-xs sm:shadow-sm space-y-3 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-center justify-between">
           
           {/* Search box */}
           <div className="relative w-full sm:w-96">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
             <input
               type="text"
               placeholder="Search 130+ bundles (e.g. AI, Cartoon, Fitness, Anime)..."
@@ -125,18 +125,18 @@ export default function ReelsBundlesPage() {
                 setSearchQuery(e.target.value);
                 setVisibleCount(16);
               }}
-              className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500 font-medium"
+              className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500 font-medium"
             />
           </div>
 
           {/* Sort dropdown */}
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-            <SlidersHorizontal className="w-4 h-4 text-slate-400" />
+            <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />
             <span className="text-xs text-slate-500 font-medium hidden sm:inline">Sort:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="text-xs sm:text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 outline-none focus:border-teal-500"
+              className="text-xs sm:text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-2.5 sm:px-3 py-2 sm:py-2.5 outline-none focus:border-teal-500 w-full sm:w-auto"
             >
               <option value="popular">Most Popular</option>
               <option value="price-low">Price: Low to High</option>
@@ -148,7 +148,7 @@ export default function ReelsBundlesPage() {
         </div>
 
         {/* Categories scrollable pill list */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 no-scrollbar">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar">
           {allCategories.map((cat) => (
             <button
               key={cat}
@@ -156,9 +156,9 @@ export default function ReelsBundlesPage() {
                 setSelectedCategory(cat);
                 setVisibleCount(16);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+              className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-slate-900 text-white shadow-xs'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
               }`}
             >
@@ -169,23 +169,23 @@ export default function ReelsBundlesPage() {
       </div>
 
       {/* Meta Stats Row */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3 text-xs text-slate-500">
         <p className="font-semibold text-slate-700">
           Showing <span className="text-teal-800 font-bold">{displayedBundles.length}</span> of <span className="font-bold">{filteredBundles.length}</span> total bundles
         </p>
         <div className="flex items-center gap-3">
-          <span className="bg-[#a1e3d8]/40 text-teal-900 px-2 py-0.5 rounded font-bold">
+          <span className="bg-[#a1e3d8]/40 text-teal-900 px-2 py-0.5 rounded font-bold text-[10px] sm:text-xs">
             All 132 Vaultzet Bundles Included
           </span>
         </div>
       </div>
 
-      {/* Grid of Reels Bundles */}
+      {/* Grid of Reels Bundles (2 cols on mobile, 4 on desktop) */}
       {displayedBundles.length === 0 ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-3">
-          <Film className="w-12 h-12 text-slate-300 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-800">No reels bundles found</h3>
-          <p className="text-sm text-slate-500">Try searching for other keywords like "Cartoon", "AI", "Anime", or "Cars".</p>
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border border-slate-200 space-y-3">
+          <Film className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto" />
+          <h3 className="text-base sm:text-lg font-bold text-slate-800">No reels bundles found</h3>
+          <p className="text-xs sm:text-sm text-slate-500">Try searching for other keywords like "Cartoon", "AI", "Anime", or "Cars".</p>
           <button
             onClick={() => { setSelectedCategory('All'); setSearchQuery(''); setVisibleCount(16); }}
             className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl"
@@ -194,7 +194,7 @@ export default function ReelsBundlesPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-6">
           {displayedBundles.map((product) => (
             <ProductCard key={product.id} product={product} type="reels-bundle" />
           ))}

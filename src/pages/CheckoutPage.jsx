@@ -124,14 +124,14 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="pb-20 pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8">
       
       {/* Header */}
       <div>
-        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-teal-700 mb-2">
+        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-teal-700 mb-1.5 sm:mb-2">
           <ArrowLeft className="w-4 h-4" /> Back to Cart
         </Link>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+        <h1 className="text-xl sm:text-3xl font-black text-slate-900">
           Secure Checkout & Instant Delivery
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -139,23 +139,23 @@ export default function CheckoutPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start">
         
         {/* Left Column: Customer Details & Gateway Security */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6">
           
           {/* Customer Info Card */}
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs sm:shadow-sm space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-sm flex items-center justify-center">
+              <div className="flex items-center gap-2 sm:gap-2.5">
+                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#a1e3d8] text-slate-900 font-black text-xs sm:text-sm flex items-center justify-center">
                   1
                 </span>
-                <h2 className="text-base sm:text-lg font-black text-slate-900">
+                <h2 className="text-sm sm:text-lg font-black text-slate-900">
                   Customer & Delivery Information
                 </h2>
               </div>
-              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
+              <span className="text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-emerald-200 flex items-center gap-1">
                 <Lock className="w-3 h-3" /> 256-Bit SSL
               </span>
             </div>

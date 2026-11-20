@@ -115,11 +115,11 @@ export default function RecentSalesToast() {
 
   return (
     <div
-      className={`fixed bottom-4 left-4 z-40 max-w-xs sm:max-w-sm transition-all duration-500 ease-out transform ${
+      className={`fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40 max-w-[260px] sm:max-w-sm transition-all duration-500 ease-out transform ${
         isVisible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95 pointer-events-none'
       }`}
     >
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl p-3 sm:p-3.5 flex items-center gap-3 relative hover:border-teal-500/50 transition-all group">
+      <div className="bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl border border-slate-200/90 shadow-2xl p-2 sm:p-3.5 flex items-center gap-2 sm:gap-3 relative hover:border-teal-500/50 transition-all group">
         
         {/* Close Button */}
         <button
@@ -128,10 +128,10 @@ export default function RecentSalesToast() {
             setIsVisible(false);
             setTimeout(() => setIsDismissed(true), 500);
           }}
-          className="absolute -top-2 -right-2 w-5 h-5 bg-slate-900 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors shadow-sm text-xs opacity-70 group-hover:opacity-100"
+          className="absolute -top-1.5 -right-1.5 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-5 sm:h-5 bg-slate-900 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors shadow-xs text-[10px] opacity-70 group-hover:opacity-100"
           title="Dismiss notification"
         >
-          <X className="w-3 h-3" />
+          <X className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
         </button>
 
         {/* Thumbnail */}
@@ -139,33 +139,33 @@ export default function RecentSalesToast() {
           <img
             src={currentNotification.thumbnail}
             alt={currentNotification.title}
-            className="w-12 h-12 rounded-xl object-cover bg-slate-900 border border-slate-200 shadow-xs"
+            className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl object-cover bg-slate-900 border border-slate-200 shadow-xs"
             onError={(e) => {
               e.target.src = '/images/icon.png';
             }}
           />
-          <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center animate-pulse" />
+          <span className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 bg-emerald-500 rounded-full border border-white flex items-center justify-center animate-pulse" />
         </Link>
 
         {/* Info */}
-        <div className="flex-1 min-w-0 pr-2">
-          <div className="flex items-center gap-1.5 text-[11px] font-extrabold text-slate-900">
+        <div className="flex-1 min-w-0 pr-1 sm:pr-2">
+          <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-extrabold text-slate-900">
             <span className="truncate">{currentNotification.name}</span>
             <span className="text-slate-400 font-normal">•</span>
-            <span className="text-slate-500 font-semibold text-[10px] truncate">{currentNotification.city}</span>
+            <span className="text-slate-500 font-semibold text-[9px] sm:text-[10px] truncate">{currentNotification.city}</span>
           </div>
 
           <Link
             to={currentNotification.link}
-            className="text-xs font-black text-slate-800 hover:text-teal-700 truncate block transition-colors leading-tight mt-0.5"
+            className="text-[11px] sm:text-xs font-black text-slate-800 hover:text-teal-700 truncate block transition-colors leading-tight mt-0.5"
             title={currentNotification.title}
           >
-            Purchased {currentNotification.title}
+            {currentNotification.title}
           </Link>
 
-          <div className="flex items-center gap-2 mt-1 text-[10px]">
-            <span className="text-emerald-700 font-extrabold flex items-center gap-0.5 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
-              <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" /> Verified
+          <div className="flex items-center gap-1.5 mt-0.5 sm:mt-1 text-[9px] sm:text-[10px]">
+            <span className="text-emerald-700 font-extrabold flex items-center gap-0.5 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">
+              <CheckCircle2 className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-emerald-600" /> Verified
             </span>
             <span className="text-slate-400 font-medium">
               {currentNotification.timeAgo}

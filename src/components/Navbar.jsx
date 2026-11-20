@@ -46,18 +46,18 @@ export default function Navbar() {
 
       <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-14 sm:h-20">
           
           {/* Logo: Dizozet */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 p-1 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-900 border border-slate-800 p-0.5 sm:p-1 flex items-center justify-center shadow-xs sm:shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
               <img src="/images/dizozet-logo.png" alt="Dizozet Logo" className="w-full h-full object-contain" onError={(e) => { e.target.src = '/images/dizozet-logo.jpg'; }} />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tight text-slate-900 group-hover:text-teal-700 transition-colors">
+              <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 group-hover:text-teal-700 transition-colors">
                 Dizo<span className="text-teal-600">zet</span>
               </span>
-              <span className="text-[10px] tracking-wider uppercase font-semibold text-slate-400 -mt-1">
+              <span className="text-[8px] sm:text-[10px] tracking-wider uppercase font-semibold text-slate-400 -mt-0.5 sm:-mt-1">
                 Digital Store
               </span>
             </div>
@@ -83,14 +83,14 @@ export default function Navbar() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             {/* Search Trigger (Just the search logo, no Ctrl+K) */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center justify-center w-10 h-10 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg sm:rounded-xl transition-all"
               title="Search products"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* My Orders / Account */}
@@ -106,12 +106,12 @@ export default function Navbar() {
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center justify-center w-10 h-10 bg-slate-100 hover:bg-[#a1e3d8]/30 text-slate-800 rounded-xl transition-all border border-slate-200 active:scale-95"
+              className="relative flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-slate-100 hover:bg-[#a1e3d8]/30 text-slate-800 rounded-lg sm:rounded-xl transition-all border border-slate-200 active:scale-95"
               title="Shopping Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#a1e3d8] text-slate-900 text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md border border-white">
+                <span className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 bg-[#a1e3d8] text-slate-900 text-[9px] sm:text-[11px] font-extrabold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shadow-xs sm:shadow-md border border-white">
                   {cartCount}
                 </span>
               )}
@@ -120,9 +120,9 @@ export default function Navbar() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl"
+              className="lg:hidden p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>

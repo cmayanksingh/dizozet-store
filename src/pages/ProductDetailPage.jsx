@@ -145,28 +145,28 @@ export default function ProductDetailPage() {
   );
 
   return (
-    <div className="pb-20 pt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-6 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-12">
       
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+      <nav className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold text-slate-500">
         <Link to="/" className="hover:text-teal-700">Home</Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400" />
         <Link 
           to={type === 'subscription' ? '/subscriptions' : type === 'reels-bundle' ? '/reels-bundles' : '/digital-products'}
           className="hover:text-teal-700 capitalize"
         >
           {type === 'subscription' ? 'Subscriptions' : type === 'reels-bundle' ? 'Reels Bundles' : 'Digital Products'}
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400" />
         <span className="text-slate-800 truncate max-w-xs">{product.title}</span>
       </nav>
 
       {/* Main Product Showcase Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-start">
         
         {/* Left Column: Authentic Brand Photo / Visuals */}
-        <div className="lg:col-span-6 space-y-4">
-          <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 shadow-md aspect-video sm:aspect-square max-h-[500px]">
+        <div className="lg:col-span-6 space-y-3 sm:space-y-4">
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 shadow-sm aspect-video sm:aspect-square max-h-[320px] sm:max-h-[500px]">
             <img
               src={product.thumbnail}
               alt={product.title}
@@ -176,12 +176,12 @@ export default function ProductDetailPage() {
               }}
             />
             {/* Top badges */}
-            <div className="absolute top-4 left-4 flex items-center gap-2">
-              <span className="bg-[#a1e3d8] text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm border border-white">
+            <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 flex items-center gap-1.5 sm:gap-2">
+              <span className="bg-[#a1e3d8] text-slate-900 text-[10px] sm:text-xs font-extrabold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-xs border border-white">
                 {product.badge || 'Verified'}
               </span>
               {product.reelCount && (
-                <span className="bg-black/70 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full">
+                <span className="bg-black/70 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full">
                   🎬 {product.reelCount}+ Videos
                 </span>
               )}
@@ -189,71 +189,71 @@ export default function ProductDetailPage() {
 
             <button
               onClick={handleShare}
-              className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2.5 rounded-full transition-all"
+              className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white p-2 sm:p-2.5 rounded-full transition-all"
               title="Share link"
             >
-              {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+              {copiedLink ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             </button>
           </div>
 
           {/* Guarantees Box */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 text-center space-y-1">
-              <Clock className="w-5 h-5 text-teal-600 mx-auto" />
-              <div className="text-xs font-bold text-slate-800">Fast Activation</div>
-              <div className="text-[10px] text-slate-400">Within minutes</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
+            <div className="bg-white p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border border-slate-200 text-center space-y-0.5 sm:space-y-1">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600 mx-auto" />
+              <div className="text-[11px] sm:text-xs font-bold text-slate-800">Fast Activation</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400">Within minutes</div>
             </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 text-center space-y-1">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 mx-auto" />
-              <div className="text-xs font-bold text-slate-800">100% Genuine</div>
-              <div className="text-[10px] text-slate-400">Full Warranty</div>
+            <div className="bg-white p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border border-slate-200 text-center space-y-0.5 sm:space-y-1">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 mx-auto" />
+              <div className="text-[11px] sm:text-xs font-bold text-slate-800">100% Genuine</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400">Full Warranty</div>
             </div>
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 text-center space-y-1 col-span-2 sm:col-span-1">
-              <MessageCircle className="w-5 h-5 text-emerald-600 mx-auto" />
-              <div className="text-xs font-bold text-slate-800">WhatsApp Support</div>
-              <div className="text-[10px] text-slate-400">7895768118</div>
+            <div className="bg-white p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border border-slate-200 text-center space-y-0.5 sm:space-y-1 col-span-2 sm:col-span-1">
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 mx-auto" />
+              <div className="text-[11px] sm:text-xs font-bold text-slate-800">WhatsApp Support</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400">7895768118</div>
             </div>
           </div>
         </div>
 
         {/* Right Column: Details & Plan Pickers */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-4 sm:space-y-6">
           
           {/* Header & Title */}
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-900 bg-[#a1e3d8]/40 px-2.5 py-0.5 rounded-full border border-[#a1e3d8]/60">
+            <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-teal-900 bg-[#a1e3d8]/40 px-2 sm:px-2.5 py-0.5 rounded-full border border-[#a1e3d8]/60">
                 {product.category}
               </span>
-              <div className="flex items-center gap-1 text-xs font-bold text-slate-600">
-                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-slate-600">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 fill-amber-400" />
                 <span>{product.rating || 4.9}</span>
                 <span className="text-slate-400">({product.reviewCount || 120} reviews)</span>
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-3">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-2 sm:mb-3">
               {product.title}
             </h1>
 
-            <p className="text-sm text-slate-600 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
               {product.shortDescription}
             </p>
           </div>
 
           {/* Pricing Box (Clean honest price, no discount gimmick) */}
-          <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
+          <div className="p-3.5 sm:p-5 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200 flex items-center justify-between">
             <div>
-              <span className="text-xs text-slate-500 block">Price:</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl sm:text-4xl font-black text-slate-900">
+              <span className="text-[10px] sm:text-xs text-slate-500 block">Price:</span>
+              <div className="flex items-baseline gap-1.5 sm:gap-2">
+                <span className="text-2xl sm:text-4xl font-black text-slate-900">
                   {storeConfig.currencySymbol}{currentPrice}
                 </span>
-                <span className="text-sm text-slate-500 font-semibold">/ {currentPlanName}</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-semibold">/ {currentPlanName}</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-xl inline-block">
+              <span className="text-[10px] sm:text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg sm:rounded-xl inline-block">
                 ✓ Active Plan
               </span>
             </div>
@@ -475,7 +475,7 @@ export default function ProductDetailPage() {
               Explore Category →
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
             {relatedProducts.map(p => (
               <ProductCard key={p.id} product={p} type={type} />
             ))}

@@ -67,20 +67,20 @@ export default function OrderConfirmationPage() {
   };
 
   return (
-    <div className="pb-20 pt-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 print:p-0">
+    <div className="pb-12 sm:pb-20 pt-4 sm:pt-8 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-4 sm:space-y-8 print:p-0">
       
       {/* Top Success Card */}
-      <div className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 rounded-3xl p-8 sm:p-10 text-white shadow-xl text-center space-y-3 relative overflow-hidden print:bg-none print:text-black print:border">
-        <div className="w-16 h-16 rounded-full bg-white text-green-600 flex items-center justify-center mx-auto shadow-lg">
-          <CheckCircle2 className="w-10 h-10" />
+      <div className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 rounded-2xl sm:rounded-3xl p-5 sm:p-10 text-white shadow-xl text-center space-y-2.5 sm:space-y-3 relative overflow-hidden print:bg-none print:text-black print:border">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white text-green-600 flex items-center justify-center mx-auto shadow-md sm:shadow-lg">
+          <CheckCircle2 className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <span className="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+        <span className="inline-block bg-white/20 backdrop-blur-md px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
           ⚡ Payment Successful • Instant Delivery Ready
         </span>
-        <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
+        <h1 className="text-xl sm:text-4xl font-black tracking-tight">
           Thank You, {order.customer?.name || 'Customer'}!
         </h1>
-        <p className="text-sm sm:text-base text-green-50 max-w-xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-base text-green-50 max-w-xl mx-auto leading-relaxed">
           Your order has been verified and processed. Your digital access links and credentials are ready below and have also been dispatched to <strong className="underline">{order.customer?.email}</strong>.
         </p>
 
