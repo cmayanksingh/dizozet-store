@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
   Tv, 
@@ -16,6 +16,10 @@ export default function SubscriptionsPage() {
   const { subscriptions } = useStore();
   const [searchParams] = useSearchParams();
   const initialCat = searchParams.get('category') || 'All';
+
+  useEffect(() => {
+    document.title = "Premium Subscriptions (Gemini Advanced, OTT & AI Tools) | Dizozet Store";
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState(initialCat);
   const [searchQuery, setSearchQuery] = useState('');

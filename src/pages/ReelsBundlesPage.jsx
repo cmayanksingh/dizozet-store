@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
   Film, 
@@ -16,6 +16,10 @@ export default function ReelsBundlesPage() {
   const { reelsBundles } = useStore();
   const [searchParams] = useSearchParams();
   const initialCategory = searchParams.get('category') || 'All';
+
+  useEffect(() => {
+    document.title = "Viral Reels Bundles (1080P FHD, No Watermark) | Dizozet Store";
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');

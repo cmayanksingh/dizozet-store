@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Download, 
@@ -12,6 +12,9 @@ import {
 } from 'lucide-react';
 
 export default function DigitalProductsPage() {
+  useEffect(() => {
+    document.title = "Digital Toolkits, Canva Templates & Creator Assets | Dizozet Store";
+  }, []);
   return (
     <div className="pb-12 sm:pb-24 pt-4 sm:pt-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-10">
       

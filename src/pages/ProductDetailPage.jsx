@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   Star, 
@@ -40,6 +40,14 @@ export default function ProductDetailPage() {
       return digitalProducts.find(d => d.id === id || d.slug === id);
     }
   }, [type, id, subscriptions, reelsBundles, digitalProducts]);
+
+  // Dynamic SEO Page Title
+  useEffect(() => {
+    if (product && product.title) {
+      const price = product.price || product.personalPrice || (product.plans && product.plans[0]?.price) || 99;
+      document.title = `${product.title} - ₹${price} | Dizozet Store`;
+    }
+  }, [product]);
 
   if (!product) {
     return (

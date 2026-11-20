@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
@@ -21,6 +21,10 @@ import { whyChooseUsFeatures, customerReviews, generalFaqs } from '../data/store
 
 export default function HomePage() {
   const { subscriptions, reelsBundles, reviews } = useStore();
+
+  useEffect(() => {
+    document.title = "Dizozet - Buy 222,000+ Viral Reels Bundles & Premium Subscriptions in India";
+  }, []);
 
   // Subscriptions: 4 main and popular
   const featuredSubscriptions = subscriptions.slice(0, 4);
