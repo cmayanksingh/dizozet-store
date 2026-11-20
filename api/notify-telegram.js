@@ -19,8 +19,27 @@ export default async function handler(req, res) {
     }
     const { order, botToken: paramToken, chatId: paramChatId, isTest } = body || {};
 
-    const botToken = paramToken || process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = paramChatId || process.env.TELEGRAM_CHAT_ID;
+    let botToken = paramToken || process.env.TELEGRAM_BOT_TOKEN;
+    let chatId = paramChatId || process.env.TELEGRAM_CHAT_ID;
+
+    // Automatic Server-Side Fallback: Lookup from Firestore settings/store_config
+    if (!botToken || !chatId) {
+      try {
+        const firestoreRes = await fetch('https://firestore.googleapis.com/v1/projects/dizozet-store/databases/(default)/documents/settings/store_config');
+        if (firestoreRes.ok) {
+          const fsData = await firestoreRes.json();
+          const fields = fsData.fields || {};
+          if (!botToken && fields.telegramBotToken?.stringValue) {
+            botToken = fields.telegramBotToken.stringValue;
+          }
+          if (!chatId && fields.telegramChatId?.stringValue) {
+            chatId = fields.telegramChatId.stringValue;
+          }
+        }
+      } catch (fsErr) {
+        console.warn('Firestore fallback fetch settings in notify-telegram error:', fsErr);
+      }
+    }
 
     if (!botToken || !chatId) {
       return res.status(400).json({ 

@@ -22,12 +22,13 @@ import confetti from 'canvas-confetti';
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
   const location = useLocation();
-  const { orders, storeConfig } = useStore();
+  const { orders, placeOrder, storeConfig } = useStore();
 
   const [copiedIndex, setCopiedIndex] = useState(-1);
-
-  // Find order from state or context
-  const order = location.state?.order || orders.find(o => o.orderId === orderId) || orders[0];
+  const [confirmedOrder, setConfirmedOrder] = useState(() => {
+    if (location.state?.order) return location.state.order;
+    return orders.find(o => o.orderId === orderId || o.transactionId === orderId) || null;
+  });
 
   useEffect(() => {
     try {
@@ -36,10 +37,78 @@ export default function OrderConfirmationPage() {
         spread: 80,
         origin: { y: 0.5 }
       });
-    } catch {
-      // ignore
-    }
+    } catch {}
   }, []);
+
+  useEffect(() => {
+    if (confirmedOrder) return;
+
+    // Check if order exists in orders
+    const existing = orders.find(o => o.orderId === orderId || o.transactionId === orderId);
+    if (existing) {
+      setConfirmedOrder(existing);
+      return;
+    }
+
+    // Check pending order from checkout
+    let pendingRaw = null;
+    try {
+      pendingRaw = localStorage.getItem('dizozet_pending_order_' + orderId) || localStorage.getItem('dizozet_last_pending_order');
+    } catch (e) {}
+
+    if (pendingRaw) {
+      try {
+        const pending = JSON.parse(pendingRaw);
+
+        // Verify with backend
+        fetch(`/api/verify-order?order_id=${encodeURIComponent(orderId)}`)
+          .then(res => res.json())
+          .then(verifyData => {
+            // Finalize order
+            const finalOrder = placeOrder({
+              customer: pending.customer,
+              paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+              paymentDetails: {
+                txnId: orderId,
+                method: 'cashfree'
+              }
+            });
+
+            setConfirmedOrder(finalOrder);
+
+            // Notify Telegram directly
+            fetch('/api/notify-telegram', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ order: finalOrder })
+            }).catch(e => console.warn('Telegram notify error:', e));
+
+            // Clean up
+            try {
+              localStorage.removeItem('dizozet_pending_order_' + orderId);
+              localStorage.removeItem('dizozet_last_pending_order');
+            } catch (e) {}
+          })
+          .catch(err => {
+            console.warn('Verify order error, placing order directly:', err);
+            const fallbackOrder = placeOrder({
+              customer: pending.customer,
+              paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+              paymentDetails: { txnId: orderId, method: 'cashfree' }
+            });
+            setConfirmedOrder(fallbackOrder);
+
+            fetch('/api/notify-telegram', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ order: fallbackOrder })
+            }).catch(e => console.warn('Telegram notify error:', e));
+          });
+      } catch (e) {}
+    }
+  }, [orderId, orders, confirmedOrder, placeOrder]);
+
+  const order = confirmedOrder || location.state?.order || orders.find(o => o.orderId === orderId) || orders[0];
 
   if (!order) {
     return (

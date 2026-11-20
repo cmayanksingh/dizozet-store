@@ -13,6 +13,7 @@ import {
   fetchProductsFromFirestore,
   deleteProductFromFirestore,
   syncSettingsToFirestore,
+  fetchSettingsFromFirestore,
   syncCouponToFirestore,
   deleteCouponFromFirestore
 } from '../services/firebase';
@@ -257,6 +258,7 @@ export const StoreProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('digivault_config_v2', JSON.stringify(storeConfig));
+    syncSettingsToFirestore(storeConfig);
   }, [storeConfig]);
 
   useEffect(() => {
@@ -330,7 +332,14 @@ export const StoreProvider = ({ children }) => {
         }
       }).catch(err => console.warn('Firestore initial products fetch notice:', err));
 
-      // 3. Real-time Listener: Live Sync whenever Admin edits or deletes
+      // 3. Fetch Settings (Telegram, UPI, Brand) from Cloud
+      fetchSettingsFromFirestore().then((cloudSettings) => {
+        if (cloudSettings) {
+          setStoreConfig(prev => ({ ...prev, ...cloudSettings }));
+        }
+      }).catch(err => console.warn('Firestore initial settings fetch notice:', err));
+
+      // 4. Real-time Listener: Live Sync whenever Admin edits or deletes
       if (db) {
         const unsubscribe = db.collection('products').onSnapshot(snapshot => {
           if (!snapshot.empty) {

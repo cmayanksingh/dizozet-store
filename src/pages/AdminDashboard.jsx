@@ -529,15 +529,17 @@ export default function AdminDashboard() {
   // Save Settings & Appearance
   const handleSaveAllSettings = (e) => {
     e?.preventDefault();
-    setStoreConfig(prev => ({
-      ...prev,
+    const updated = {
+      ...storeConfig,
       ...settingsForm,
       ...appearanceForm,
       announcementText: bannerForm.announcementText,
       isBannerActive: bannerForm.isBannerActive,
       bannerBg: bannerForm.bannerBg,
       bannerTextCol: bannerForm.bannerTextCol
-    }));
+    };
+    setStoreConfig(updated);
+    syncSettingsToFirestore(updated);
     showNotification('Store branding, settings & banner saved successfully!');
   };
 

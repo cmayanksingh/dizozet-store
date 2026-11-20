@@ -141,9 +141,24 @@ export async function syncSettingsToFirestore(settings) {
   if (!db || !settings) return;
   try {
     await db.collection('settings').doc('store_config').set(settings, { merge: true });
+    console.log('✅ Store settings synced to Firebase Firestore.');
   } catch (e) {
     console.warn('Firestore settings sync error:', e.message);
   }
+}
+
+export async function fetchSettingsFromFirestore() {
+  const db = getFirestoreDB();
+  if (!db) return null;
+  try {
+    const doc = await db.collection('settings').doc('store_config').get();
+    if (doc.exists) {
+      return doc.data();
+    }
+  } catch (e) {
+    console.warn('Firestore fetch settings error:', e.message);
+  }
+  return null;
 }
 
 // ------------------------------------------

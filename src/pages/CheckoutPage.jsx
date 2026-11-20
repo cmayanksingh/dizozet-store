@@ -89,6 +89,23 @@ export default function CheckoutPage() {
         throw new Error(data.error || 'Failed to initialize payment gateway session.');
       }
 
+      // Save pending order so OrderConfirmationPage can finalize it on redirect!
+      const pendingOrderData = {
+        cashfreeOrderId: data.order_id,
+        customer,
+        items: cart,
+        subtotal: cartSubtotal,
+        discount: discountAmount,
+        couponCode: appliedCoupon ? appliedCoupon.code : null,
+        total: finalTotal,
+        paymentMethod: 'Cashfree Gateway (Auto-Verified)',
+        date: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem('dizozet_pending_order_' + data.order_id, JSON.stringify(pendingOrderData));
+        localStorage.setItem('dizozet_last_pending_order', JSON.stringify(pendingOrderData));
+      } catch (e) {}
+
       if (typeof window !== 'undefined' && window.Cashfree) {
         const cashfree = window.Cashfree({ mode: "production" });
         cashfree.checkout({
@@ -110,6 +127,10 @@ export default function CheckoutPage() {
                 method: 'cashfree'
               }
             });
+            try {
+              localStorage.removeItem('dizozet_pending_order_' + data.order_id);
+              localStorage.removeItem('dizozet_last_pending_order');
+            } catch (e) {}
             navigate(`/order-confirmation/${order.orderId}`, { state: { order } });
           }
         });
