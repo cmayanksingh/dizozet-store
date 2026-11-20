@@ -14,9 +14,20 @@ import {
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import confetti from 'canvas-confetti';
+import { Tag } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const { cart, cartSubtotal, storeConfig, placeOrder } = useStore();
+  const { 
+    cart, 
+    cartSubtotal, 
+    storeConfig, 
+    placeOrder,
+    appliedCoupon, 
+    applyCoupon, 
+    removeCoupon, 
+    discountAmount, 
+    finalTotal 
+  } = useStore();
   const navigate = useNavigate();
 
   const [customer, setCustomer] = useState({
@@ -32,6 +43,8 @@ export default function CheckoutPage() {
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formError, setFormError] = useState('');
+  const [couponCodeInput, setCouponCodeInput] = useState('');
+  const [couponMsg, setCouponMsg] = useState('');
 
   if (cart.length === 0) {
     return (
@@ -47,8 +60,6 @@ export default function CheckoutPage() {
       </div>
     );
   }
-
-  const finalTotal = cartSubtotal;
 
   // Dynamic UPI URL & QR
   const upiPayUrl = `upi://pay?pa=${encodeURIComponent(storeConfig.upiId)}&pn=${encodeURIComponent(storeConfig.storeName)}&am=${finalTotal}&cu=INR&tn=${encodeURIComponent('DigiVault Order')}`;
@@ -415,6 +426,50 @@ export default function CheckoutPage() {
             ))}
           </div>
 
+          {/* Coupon Code Section */}
+          <div className="pt-2 border-t border-slate-100">
+            {appliedCoupon ? (
+              <div className="flex items-center justify-between p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs">
+                <div className="flex items-center gap-1.5 font-bold text-emerald-800">
+                  <Tag className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Coupon: <strong>{appliedCoupon.code}</strong> ({appliedCoupon.discountPercent}% OFF)</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={removeCoupon}
+                  className="text-red-500 font-bold hover:underline text-[11px]"
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Coupon code (e.g. DIZO85)"
+                  value={couponCodeInput}
+                  onChange={(e) => setCouponCodeInput(e.target.value.toUpperCase())}
+                  className="flex-1 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-teal-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!couponCodeInput.trim()) return;
+                    const res = applyCoupon(couponCodeInput);
+                    setCouponMsg(res.message);
+                    if (res.success) setCouponCodeInput('');
+                  }}
+                  className="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
+            {couponMsg && (
+              <p className="text-[11px] font-semibold text-teal-700 mt-1">{couponMsg}</p>
+            )}
+          </div>
+
           {/* Pricing Totals */}
           <div className="space-y-2 pt-3 border-t border-slate-100 text-xs sm:text-sm text-slate-600">
             <div className="flex justify-between">
@@ -423,6 +478,12 @@ export default function CheckoutPage() {
                 {storeConfig.currencySymbol}{cartSubtotal}
               </span>
             </div>
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-emerald-700 font-bold">
+                <span>Discount ({appliedCoupon?.code})</span>
+                <span>-{storeConfig.currencySymbol}{discountAmount}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span>Digital Automated Delivery</span>
               <span className="text-emerald-700 font-bold">FREE (Instant)</span>

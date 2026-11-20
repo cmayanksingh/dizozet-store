@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, 
@@ -8,7 +8,8 @@ import {
   ShoppingBag, 
   ArrowRight, 
   ShieldCheck, 
-  Sparkles
+  Sparkles,
+  Tag
 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 
@@ -20,12 +21,30 @@ export default function CartDrawer() {
     removeFromCart, 
     updateCartQuantity, 
     cartSubtotal, 
-    storeConfig
+    storeConfig,
+    appliedCoupon,
+    applyCoupon,
+    removeCoupon,
+    discountAmount,
+    finalTotal
   } = useStore();
+
+  const [couponInput, setCouponInput] = useState('');
+  const [couponMsg, setCouponMsg] = useState('');
 
   const navigate = useNavigate();
 
   if (!isCartOpen) return null;
+
+  const handleApplyCoupon = (e) => {
+    e.preventDefault();
+    if (!couponInput.trim()) return;
+    const res = applyCoupon(couponInput);
+    setCouponMsg(res.message);
+    if (res.success) {
+      setCouponInput('');
+    }
+  };
 
   const handleProceedToCheckout = () => {
     setIsCartOpen(false);
@@ -150,7 +169,44 @@ export default function CartDrawer() {
           {cart.length > 0 && (
             <div className="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
               
-              {/* Price Calculation (Clean, direct) */}
+              {/* Coupon Box */}
+              <div className="space-y-1.5">
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs">
+                    <div className="flex items-center gap-1.5 font-bold text-emerald-800">
+                      <Tag className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Coupon: <strong>{appliedCoupon.code}</strong> ({appliedCoupon.discountPercent}% OFF)</span>
+                    </div>
+                    <button
+                      onClick={removeCoupon}
+                      className="text-red-500 font-bold hover:underline text-[11px]"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Coupon Code (e.g. DIZO85)"
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      className="flex-1 px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-teal-500"
+                    />
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition-colors"
+                    >
+                      Apply
+                    </button>
+                  </form>
+                )}
+                {couponMsg && (
+                  <p className="text-[11px] font-semibold text-teal-700">{couponMsg}</p>
+                )}
+              </div>
+
+              {/* Price Calculation */}
               <div className="space-y-1.5 text-xs text-slate-600">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
@@ -158,6 +214,12 @@ export default function CartDrawer() {
                     {storeConfig.currencySymbol}{cartSubtotal}
                   </span>
                 </div>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between text-emerald-700 font-bold">
+                    <span>Discount ({appliedCoupon?.code})</span>
+                    <span>-{storeConfig.currencySymbol}{discountAmount}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span>Instant Delivery Fee</span>
                   <span className="text-emerald-700 font-bold uppercase text-[11px]">FREE (Instant)</span>
@@ -165,7 +227,7 @@ export default function CartDrawer() {
                 <div className="flex justify-between text-base font-black text-slate-900 pt-2 border-t border-slate-200">
                   <span>Total Amount</span>
                   <span className="text-slate-900">
-                    {storeConfig.currencySymbol}{cartSubtotal}
+                    {storeConfig.currencySymbol}{finalTotal}
                   </span>
                 </div>
               </div>

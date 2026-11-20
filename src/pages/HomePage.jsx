@@ -20,7 +20,7 @@ import ProductCard from '../components/ProductCard';
 import { whyChooseUsFeatures, customerReviews, generalFaqs } from '../data/storeContent';
 
 export default function HomePage() {
-  const { subscriptions, reelsBundles } = useStore();
+  const { subscriptions, reelsBundles, reviews } = useStore();
 
   // Subscriptions: 4 main and popular
   const featuredSubscriptions = subscriptions.slice(0, 4);
@@ -316,7 +316,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {customerReviews.map((rev) => {
+          {(reviews || customerReviews).map((rev) => {
             const initialLetter = rev.name ? rev.name.charAt(0).toUpperCase() : 'U';
 
             return (

@@ -15,7 +15,7 @@ import {
 import { useStore } from '../context/StoreContext';
 
 export default function Navbar() {
-  const { cartCount, setIsCartOpen, setIsSearchOpen } = useStore();
+  const { cartCount, setIsCartOpen, setIsSearchOpen, storeConfig } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -25,8 +25,26 @@ export default function Navbar() {
     { name: 'Digital Products', path: '/digital-products', icon: Download },
   ];
 
+  const showBanner = storeConfig?.isBannerActive !== false && storeConfig?.announcementText;
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
+    <div className="sticky top-0 z-40">
+      {/* Dynamic Announcement Bar */}
+      {showBanner && (
+        <div className="bg-slate-900 text-white text-[11px] sm:text-xs font-bold py-1.5 px-4 text-center border-b border-slate-800 flex items-center justify-center gap-2">
+          <span>{storeConfig.announcementText}</span>
+          <a
+            href={`https://wa.me/91${(storeConfig.whatsappNumber || '7895768118').replace(/[^0-9]/g, '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#a1e3d8] hover:underline hidden sm:inline ml-2"
+          >
+            WhatsApp Support: +91 {storeConfig.whatsappNumber || '7895768118'}
+          </a>
+        </div>
+      )}
+
+      <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
@@ -152,5 +170,6 @@ export default function Navbar() {
         </div>
       )}
     </header>
+    </div>
   );
 }

@@ -2,12 +2,19 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import initialBundlesData from '../data/reelsBundles.json';
 import { initialSubscriptions } from '../data/subscriptionsData';
 import { initialDigitalProducts } from '../data/digitalProductsData';
-import { initialStoreConfig } from '../data/storeContent';
+import { initialStoreConfig, customerReviews as initialCustomerReviews } from '../data/storeContent';
 
 const StoreContext = createContext(null);
 
+export const defaultCoupons = [
+  { id: 'c-1', code: 'DIZO85', discountPercent: 85, minAmount: 99, isActive: true, description: 'Flat 85% Flash Discount' },
+  { id: 'c-2', code: 'FLAT50', discountPercent: 50, minAmount: 199, isActive: true, description: 'Flat 50% Off On Orders Above ₹199' },
+  { id: 'c-3', code: 'SAVE20', discountPercent: 20, minAmount: 49, isActive: true, description: '20% Off Storewide' },
+  { id: 'c-4', code: 'WELCOME10', discountPercent: 10, minAmount: 0, isActive: true, description: '10% Welcome Discount' }
+];
+
 export const StoreProvider = ({ children }) => {
-  // 1. Subscriptions (always fresh with Gemini Advanced)
+  // 1. Subscriptions
   const [subscriptions, setSubscriptions] = useState(() => {
     try {
       const saved = localStorage.getItem('digivault_subscriptions_v2');
@@ -27,7 +34,7 @@ export const StoreProvider = ({ children }) => {
     }
   });
 
-  // 3. Digital Products
+  // 3. Digital Products / Services
   const [digitalProducts, setDigitalProducts] = useState(() => {
     try {
       const saved = localStorage.getItem('digivault_digital_products');
@@ -47,18 +54,17 @@ export const StoreProvider = ({ children }) => {
     }
   });
 
-  // Cart Drawer open state
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // 5. Orders
+  // 5. Orders (with demo historical orders for realistic sales reports)
   const [orders, setOrders] = useState(() => {
     try {
       const saved = localStorage.getItem('digivault_orders');
       if (saved) return JSON.parse(saved);
       return [
         {
-          orderId: 'ORD-89214',
-          date: new Date(Date.now() - 3600000 * 4).toISOString(),
+          orderId: 'ORD-98214',
+          date: new Date(Date.now() - 3600000 * 2).toISOString(),
           customer: {
             name: 'Rahul Sharma',
             email: 'rahul.creator@gmail.com',
@@ -80,11 +86,74 @@ export const StoreProvider = ({ children }) => {
             }
           ],
           subtotal: 999,
+          discount: 0,
           total: 999,
-          paymentMethod: 'UPI / WhatsApp Pay',
+          paymentMethod: 'UPI QR Code / Apps',
           paymentStatus: 'Paid',
           orderStatus: 'Delivered',
           transactionId: 'UPI-TXN-9028340129'
+        },
+        {
+          orderId: 'ORD-98150',
+          date: new Date(Date.now() - 3600000 * 18).toISOString(),
+          customer: {
+            name: 'Priya Verma',
+            email: 'priya.v@outlook.com',
+            phone: '+91 98765 43210',
+            city: 'Bangalore',
+            state: 'Karnataka'
+          },
+          items: [
+            {
+              id: 'rb-4000-cartoon-bundle-reseller',
+              productId: 'rb-4000-cartoon-bundle',
+              title: '4000+ Ready-to-Upload 2D & 3D Cartoon Videos',
+              type: 'reels-bundle',
+              planName: 'Reseller Commercial License',
+              price: 199,
+              quantity: 1,
+              thumbnail: 'https://media-cdn.cosmofeed.com/chat/Neon-4000--Cartoon-Video-Bundle-2026-10-10-03-03-49.png?w=1200&q=75',
+              googleDriveLink: 'https://drive.google.com'
+            }
+          ],
+          subtotal: 199,
+          discount: 0,
+          total: 199,
+          paymentMethod: 'UPI Apps (PhonePe / GPay)',
+          paymentStatus: 'Paid',
+          orderStatus: 'Delivered',
+          transactionId: 'UPI-TXN-8841029411'
+        },
+        {
+          orderId: 'ORD-97992',
+          date: new Date(Date.now() - 3600000 * 36).toISOString(),
+          customer: {
+            name: 'Amit Patel',
+            email: 'amit.patel99@gmail.com',
+            phone: '+91 99250 11223',
+            city: 'Ahmedabad',
+            state: 'Gujarat'
+          },
+          items: [
+            {
+              id: 'sub-netflix-uhd-3-m',
+              productId: 'sub-netflix-uhd',
+              title: 'Netflix 4K Ultra HD Premium',
+              type: 'subscription',
+              planName: '3 Months Plan',
+              price: 399,
+              quantity: 1,
+              thumbnail: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&q=80',
+              deliveryInfo: 'WhatsApp Order Activation. Connect with 7895768118.'
+            }
+          ],
+          subtotal: 399,
+          discount: 0,
+          total: 399,
+          paymentMethod: 'Card / Razorpay',
+          paymentStatus: 'Paid',
+          orderStatus: 'Delivered',
+          transactionId: 'RZP-PAY-771928410'
         }
       ];
     } catch {
@@ -102,7 +171,45 @@ export const StoreProvider = ({ children }) => {
     }
   });
 
-  // Global search modal state
+  // 7. Coupons & Offers
+  const [coupons, setCoupons] = useState(() => {
+    try {
+      const saved = localStorage.getItem('digivault_coupons');
+      return saved ? JSON.parse(saved) : defaultCoupons;
+    } catch {
+      return defaultCoupons;
+    }
+  });
+
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+
+  // 8. Ratings & Customer Reviews
+  const [reviews, setReviews] = useState(() => {
+    try {
+      const saved = localStorage.getItem('digivault_reviews');
+      return saved ? JSON.parse(saved) : initialCustomerReviews;
+    } catch {
+      return initialCustomerReviews;
+    }
+  });
+
+  // 9. Admin Password & Security
+  const [adminPassword, setAdminPassword] = useState(() => {
+    try {
+      return localStorage.getItem('digivault_admin_pwd') || 'admin123';
+    } catch {
+      return 'admin123';
+    }
+  });
+
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
+    try {
+      return sessionStorage.getItem('digivault_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Sync to localStorage
@@ -129,6 +236,28 @@ export const StoreProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('digivault_config_v2', JSON.stringify(storeConfig));
   }, [storeConfig]);
+
+  useEffect(() => {
+    localStorage.setItem('digivault_coupons', JSON.stringify(coupons));
+  }, [coupons]);
+
+  useEffect(() => {
+    localStorage.setItem('digivault_reviews', JSON.stringify(reviews));
+  }, [reviews]);
+
+  useEffect(() => {
+    localStorage.setItem('digivault_admin_pwd', adminPassword);
+  }, [adminPassword]);
+
+  // Cart Calculations
+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+
+  let discountAmount = 0;
+  if (appliedCoupon && appliedCoupon.isActive && cartSubtotal >= (appliedCoupon.minAmount || 0)) {
+    discountAmount = Math.round((cartSubtotal * appliedCoupon.discountPercent) / 100);
+  }
+  const finalTotal = Math.max(0, cartSubtotal - discountAmount);
 
   // Cart Handlers
   const addToCart = (item, openCart = true) => {
@@ -158,15 +287,115 @@ export const StoreProvider = ({ children }) => {
     setCart(prev => prev.map(item => item.id === cartItemId ? { ...item, quantity: newQty } : item));
   };
 
-  const clearCart = () => setCart([]);
+  const clearCart = () => {
+    setCart([]);
+    setAppliedCoupon(null);
+  };
 
-  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  // Coupon Handlers
+  const applyCoupon = (codeStr) => {
+    const codeClean = (codeStr || '').trim().toUpperCase();
+    const found = coupons.find(c => c.code.toUpperCase() === codeClean && c.isActive);
+    if (!found) {
+      return { success: false, message: 'Invalid or expired coupon code.' };
+    }
+    if (cartSubtotal < (found.minAmount || 0)) {
+      return { 
+        success: false, 
+        message: `This coupon requires a minimum cart value of ${storeConfig.currencySymbol}${found.minAmount}.` 
+      };
+    }
+    setAppliedCoupon(found);
+    return { success: true, message: `Coupon "${found.code}" applied! ${found.discountPercent}% OFF.` };
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+  };
+
+  const addCoupon = (newCoupon) => {
+    const id = `coupon-${Date.now()}`;
+    const couponObj = { ...newCoupon, id, code: newCoupon.code.trim().toUpperCase() };
+    setCoupons(prev => [couponObj, ...prev]);
+    return couponObj;
+  };
+
+  const updateCoupon = (id, updatedFields) => {
+    setCoupons(prev => prev.map(c => c.id === id ? { 
+      ...c, 
+      ...updatedFields, 
+      code: (updatedFields.code || c.code).trim().toUpperCase() 
+    } : c));
+  };
+
+  const deleteCoupon = (id) => {
+    setCoupons(prev => prev.filter(c => c.id !== id));
+    if (appliedCoupon && appliedCoupon.id === id) {
+      setAppliedCoupon(null);
+    }
+  };
+
+  // Reviews Handlers
+  const addReview = (reviewData) => {
+    const id = `rev-${Date.now()}`;
+    const newRev = {
+      id,
+      name: reviewData.name || 'Happy Customer',
+      role: reviewData.role || 'Verified Buyer',
+      rating: Number(reviewData.rating) || 5,
+      title: reviewData.title || 'Excellent Service!',
+      comment: reviewData.comment || 'Smooth delivery and high quality.',
+      purchasedItem: reviewData.purchasedItem || 'Reels Bundle & Subscription',
+      date: reviewData.date || 'Just now',
+      verified: reviewData.verified !== undefined ? reviewData.verified : true
+    };
+    setReviews(prev => [newRev, ...prev]);
+    return newRev;
+  };
+
+  const updateReview = (id, updatedFields) => {
+    setReviews(prev => prev.map(r => r.id === id ? { ...r, ...updatedFields } : r));
+  };
+
+  const deleteReview = (id) => {
+    setReviews(prev => prev.filter(r => r.id !== id));
+  };
+
+  // Admin Auth Handlers
+  const loginAdmin = (enteredPassword) => {
+    if (enteredPassword === adminPassword) {
+      setIsAdminAuthenticated(true);
+      try {
+        sessionStorage.setItem('digivault_admin_auth', 'true');
+      } catch {}
+      return { success: true };
+    }
+    return { success: false, message: 'Incorrect Admin Password. Please try again.' };
+  };
+
+  const logoutAdmin = () => {
+    setIsAdminAuthenticated(false);
+    try {
+      sessionStorage.removeItem('digivault_admin_auth');
+    } catch {}
+  };
+
+  const changeAdminPassword = (oldPwd, newPwd) => {
+    if (oldPwd !== adminPassword) {
+      return { success: false, message: 'Current password does not match.' };
+    }
+    if (!newPwd || newPwd.trim().length < 4) {
+      return { success: false, message: 'New password must be at least 4 characters.' };
+    }
+    setAdminPassword(newPwd.trim());
+    localStorage.setItem('digivault_admin_pwd', newPwd.trim());
+    return { success: true, message: 'Admin password changed successfully!' };
+  };
 
   // Order Placement
   const placeOrder = ({ customer, paymentMethod, paymentDetails }) => {
     const orderId = 'ORD-' + Math.floor(10000 + Math.random() * 90000);
-    const total = cartSubtotal;
+    const total = finalTotal;
 
     const deliveredItems = cart.map(item => {
       let downloadLink = item.googleDriveLink || item.downloadUrl || 'https://drive.google.com';
@@ -189,7 +418,9 @@ export const StoreProvider = ({ children }) => {
       date: new Date().toISOString(),
       customer,
       items: deliveredItems,
-      subtotal: total,
+      subtotal: cartSubtotal,
+      discount: discountAmount,
+      couponCode: appliedCoupon ? appliedCoupon.code : null,
       total,
       paymentMethod,
       paymentStatus: 'Paid',
@@ -202,7 +433,20 @@ export const StoreProvider = ({ children }) => {
     return newOrder;
   };
 
-  // Admin CRUD
+  // Orders Management
+  const updateOrderStatus = (orderId, newStatus) => {
+    setOrders(prev => prev.map(o => o.orderId === orderId ? { ...o, orderStatus: newStatus } : o));
+  };
+
+  const deleteOrder = (orderId) => {
+    setOrders(prev => prev.filter(o => o.orderId !== orderId));
+  };
+
+  const addManualOrder = (orderObj) => {
+    setOrders(prev => [orderObj, ...prev]);
+  };
+
+  // Admin CRUD for Products
   const addProduct = (categoryType, product) => {
     if (categoryType === 'subscription') {
       setSubscriptions(prev => [product, ...prev]);
@@ -233,8 +477,35 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
-  const updateOrderStatus = (orderId, newStatus) => {
-    setOrders(prev => prev.map(o => o.orderId === orderId ? { ...o, orderStatus: newStatus } : o));
+  // Backup & Restore
+  const exportStoreBackup = () => {
+    return JSON.stringify({
+      version: '2.0',
+      exportedAt: new Date().toISOString(),
+      subscriptions,
+      reelsBundles,
+      digitalProducts,
+      orders,
+      coupons,
+      reviews,
+      storeConfig
+    }, null, 2);
+  };
+
+  const importStoreBackup = (jsonString) => {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (parsed.subscriptions) setSubscriptions(parsed.subscriptions);
+      if (parsed.reelsBundles) setReelsBundles(parsed.reelsBundles);
+      if (parsed.digitalProducts) setDigitalProducts(parsed.digitalProducts);
+      if (parsed.orders) setOrders(parsed.orders);
+      if (parsed.coupons) setCoupons(parsed.coupons);
+      if (parsed.reviews) setReviews(parsed.reviews);
+      if (parsed.storeConfig) setStoreConfig(parsed.storeConfig);
+      return { success: true };
+    } catch (err) {
+      return { success: false, message: 'Invalid backup JSON file: ' + err.message };
+    }
   };
 
   const resetAllDataToDefault = () => {
@@ -242,10 +513,16 @@ export const StoreProvider = ({ children }) => {
     setReelsBundles(initialBundlesData);
     setDigitalProducts(initialDigitalProducts);
     setStoreConfig(initialStoreConfig);
+    setCoupons(defaultCoupons);
+    setReviews(initialCustomerReviews);
+    setAdminPassword('admin123');
     localStorage.removeItem('digivault_subscriptions_v2');
     localStorage.removeItem('digivault_reels_bundles');
     localStorage.removeItem('digivault_digital_products');
     localStorage.removeItem('digivault_config_v2');
+    localStorage.removeItem('digivault_coupons');
+    localStorage.removeItem('digivault_reviews');
+    localStorage.removeItem('digivault_admin_pwd');
   };
 
   return (
@@ -268,11 +545,33 @@ export const StoreProvider = ({ children }) => {
         clearCart,
         cartCount,
         cartSubtotal,
+        discountAmount,
+        finalTotal,
+        coupons,
+        appliedCoupon,
+        applyCoupon,
+        removeCoupon,
+        addCoupon,
+        updateCoupon,
+        deleteCoupon,
+        reviews,
+        addReview,
+        updateReview,
+        deleteReview,
+        adminPassword,
+        isAdminAuthenticated,
+        loginAdmin,
+        logoutAdmin,
+        changeAdminPassword,
         placeOrder,
         addProduct,
         updateProduct,
         deleteProduct,
         updateOrderStatus,
+        deleteOrder,
+        addManualOrder,
+        exportStoreBackup,
+        importStoreBackup,
         resetAllDataToDefault
       }}
     >
