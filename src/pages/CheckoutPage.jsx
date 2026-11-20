@@ -250,50 +250,38 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-400">
+            {/* Pay Button Directly Under Form Fields (Zero Scroll on Mobile & Desktop) */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isProcessing}
+                className="w-full py-3.5 sm:py-4 px-6 bg-[#a1e3d8] hover:bg-[#7be0d2] text-slate-900 font-black text-sm sm:text-base rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+              >
+                {isProcessing ? (
+                  <span className="flex items-center gap-2">
+                    <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                    Connecting Secure Gateway...
+                  </span>
+                ) : (
+                  <>
+                    <Zap className="w-5 h-5 fill-slate-900" />
+                    <span>Pay {storeConfig.currencySymbol}{finalTotal} Securely (UPI / Cards)</span>
+                  </>
+                )}
+              </button>
+
+              <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pt-2.5 text-[10.5px] text-slate-500 font-semibold text-center">
+                <span className="flex items-center gap-1 text-emerald-700">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Instant Google Drive Access
+                </span>
+                <span>•</span>
+                <span>Google Pay • PhonePe • Paytm • Cards • NetBanking</span>
+              </div>
+            </div>
+
+            <p className="text-[11px] text-slate-400 pt-1">
               🔒 Your details are strictly confidential and used only to deliver your digital access links.
             </p>
-          </div>
-
-          {/* Clean Payment Gateway Assurance Box */}
-          <div className="bg-gradient-to-r from-teal-50/80 via-emerald-50/50 to-teal-50/80 rounded-3xl p-6 border border-teal-200/80 shadow-sm space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-teal-100">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-800 flex items-center justify-center font-bold">
-                  <CreditCard className="w-4 h-4 text-teal-700" />
-                </div>
-                <div>
-                  <h3 className="text-sm sm:text-base font-black text-slate-900">
-                    Auto-Verified Instant Payment Gateway
-                  </h3>
-                  <p className="text-[11px] text-slate-500 font-medium">
-                    Google Pay • PhonePe • Paytm UPI • Cards • NetBanking
-                  </p>
-                </div>
-              </div>
-              <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100/70 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
-                <Check className="w-3 h-3 text-emerald-600" /> Verified
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Click <strong>"Pay Securely"</strong> to complete payment via official Cashfree Gateway. No manual screenshot or UTR number required — instant automated access to Google Drive folders right after payment.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-bold text-slate-700">
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
-                📱 Google Pay
-              </span>
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
-                📱 PhonePe
-              </span>
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
-                📱 Paytm UPI
-              </span>
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs flex items-center gap-1">
-                💳 All Cards & NetBanking
-              </span>
-            </div>
           </div>
 
         </div>
