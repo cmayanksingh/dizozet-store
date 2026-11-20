@@ -265,10 +265,10 @@ export default function AdminDashboard() {
   // ----------------------------------------------------
   // LOGIN SUBMIT
   // ----------------------------------------------------
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoginError('');
-    const res = loginAdmin(loginPasswordInput);
+    const res = await loginAdmin(loginPasswordInput);
     if (!res.success) {
       setLoginError(res.message);
     } else {
@@ -385,19 +385,19 @@ export default function AdminDashboard() {
   };
 
   // Change Password
-  const handleChangePasswordSubmit = (e) => {
+  const handleChangePasswordSubmit = async (e) => {
     e.preventDefault();
     setPwdError('');
     if (pwdForm.newPwd !== pwdForm.confirm) {
       setPwdError('New password and confirm password do not match.');
       return;
     }
-    const res = changeAdminPassword(pwdForm.current, pwdForm.newPwd);
+    const res = await changeAdminPassword(pwdForm.current, pwdForm.newPwd);
     if (!res.success) {
       setPwdError(res.message);
     } else {
       setPwdForm({ current: '', newPwd: '', confirm: '' });
-      showNotification('Admin master password updated successfully!');
+      showNotification('Admin master password updated successfully across all devices!');
     }
   };
 
@@ -650,7 +650,7 @@ export default function AdminDashboard() {
                   type={showLoginPassword ? 'text' : 'password'}
                   value={loginPasswordInput}
                   onChange={(e) => setLoginPasswordInput(e.target.value)}
-                  placeholder="Enter password (default: admin123)"
+                  placeholder="Enter master admin password"
                   required
                   autoFocus
                   className={`w-full pl-4 pr-11 py-3 text-sm rounded-2xl border font-medium focus:outline-none focus:border-teal-500 ${inputBg}`}
@@ -674,18 +674,12 @@ export default function AdminDashboard() {
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-slate-950 font-black text-sm rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95"
+              className="w-full py-3.5 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-slate-950 font-black text-sm rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
             >
               <Key className="w-4 h-4" />
               <span>Unlock Admin Dashboard</span>
             </button>
           </form>
-
-          <div className="pt-4 border-t border-slate-800 text-center">
-            <span className="text-[11px] text-slate-500">
-              Default Master Password: <strong className="text-teal-400 font-mono">admin123</strong>
-            </span>
-          </div>
 
         </div>
       </div>

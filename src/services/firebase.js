@@ -148,6 +148,10 @@ export async function syncSettingsToFirestore(settings) {
     if (!toSave.telegramChatId || !String(toSave.telegramChatId).trim()) {
       delete toSave.telegramChatId;
     }
+    // Protect admin password - never overwrite existing password with empty string
+    if (!toSave.adminPass || typeof toSave.adminPass !== 'string' || !toSave.adminPass.trim()) {
+      delete toSave.adminPass;
+    }
     await db.collection('settings').doc('store_config').set(toSave, { merge: true });
     console.log('✅ Store settings synced to Firebase Firestore.');
   } catch (e) {

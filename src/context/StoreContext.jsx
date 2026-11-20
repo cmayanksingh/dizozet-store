@@ -344,9 +344,15 @@ export const StoreProvider = ({ children }) => {
         }
       }).catch(err => console.warn('Firestore initial products fetch notice:', err));
 
-      // 3. Fetch Settings (Telegram, UPI, Brand) from Cloud
+      // 3. Fetch Settings (Telegram, UPI, Brand, Admin Password) from Cloud
       fetchSettingsFromFirestore().then((cloudSettings) => {
         if (cloudSettings) {
+          if (cloudSettings.adminPass) {
+            setAdminPassword(cloudSettings.adminPass);
+            try {
+              localStorage.setItem('digivault_admin_pwd', cloudSettings.adminPass);
+            } catch {}
+          }
           setStoreConfig(prev => {
             const merged = { ...prev, ...cloudSettings };
             if (cloudSettings.telegramBotToken) {
@@ -507,14 +513,34 @@ export const StoreProvider = ({ children }) => {
   };
 
   // Admin Auth Handlers
-  const loginAdmin = (enteredPassword) => {
-    if (enteredPassword === adminPassword) {
+  const loginAdmin = async (enteredPassword) => {
+    const trimmed = (enteredPassword || '').trim();
+    // 1. Check against current in-memory / local adminPassword
+    if (trimmed && trimmed === adminPassword) {
       setIsAdminAuthenticated(true);
       try {
         sessionStorage.setItem('digivault_admin_auth', 'true');
       } catch {}
       return { success: true };
     }
+
+    // 2. Check directly against Cloud Firestore (for fresh mobile devices & uncached browsers)
+    try {
+      const cloudSettings = await fetchSettingsFromFirestore();
+      const cloudPass = cloudSettings?.adminPass;
+      if (cloudPass && trimmed === cloudPass) {
+        setAdminPassword(cloudPass);
+        try {
+          localStorage.setItem('digivault_admin_pwd', cloudPass);
+          sessionStorage.setItem('digivault_admin_auth', 'true');
+        } catch {}
+        setIsAdminAuthenticated(true);
+        return { success: true };
+      }
+    } catch (e) {
+      console.warn('Cloud admin auth check notice:', e);
+    }
+
     return { success: false, message: 'Incorrect Admin Password. Please try again.' };
   };
 
@@ -525,16 +551,35 @@ export const StoreProvider = ({ children }) => {
     } catch {}
   };
 
-  const changeAdminPassword = (oldPwd, newPwd) => {
-    if (oldPwd !== adminPassword) {
+  const changeAdminPassword = async (oldPwd, newPwd) => {
+    let currentValidPwd = adminPassword;
+    try {
+      const cloudSettings = await fetchSettingsFromFirestore();
+      if (cloudSettings?.adminPass) {
+        currentValidPwd = cloudSettings.adminPass;
+      }
+    } catch {}
+
+    if (oldPwd !== currentValidPwd && oldPwd !== adminPassword) {
       return { success: false, message: 'Current password does not match.' };
     }
     if (!newPwd || newPwd.trim().length < 4) {
       return { success: false, message: 'New password must be at least 4 characters.' };
     }
-    setAdminPassword(newPwd.trim());
-    localStorage.setItem('digivault_admin_pwd', newPwd.trim());
-    return { success: true, message: 'Admin password changed successfully!' };
+    const cleanPwd = newPwd.trim();
+    setAdminPassword(cleanPwd);
+    try {
+      localStorage.setItem('digivault_admin_pwd', cleanPwd);
+    } catch {}
+
+    // Save to Cloud Firestore immediately so phone, laptop, and all devices get the new password!
+    try {
+      await syncSettingsToFirestore({ adminPass: cleanPwd });
+    } catch (e) {
+      console.warn('Failed to sync new admin password to Firestore:', e);
+    }
+
+    return { success: true, message: 'Admin password changed successfully across all devices!' };
   };
 
   // Order Placement

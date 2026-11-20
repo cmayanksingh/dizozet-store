@@ -156,7 +156,7 @@ export default function CheckoutPage() {
       
       {/* Header */}
       <div>
-        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-red-600 mb-1.5 sm:mb-2 transition-colors">
+        <Link to="/cart" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-teal-700 mb-1.5 sm:mb-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Cart
         </Link>
         <h1 className="text-xl sm:text-3xl font-black text-slate-900">
@@ -172,12 +172,12 @@ export default function CheckoutPage() {
         {/* Left Column: Delivery Information Form */}
         <div className="lg:col-span-7 space-y-4 sm:space-y-6">
           
-          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-red-200/80 shadow-xs sm:shadow-sm space-y-4">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-[#a1e3d8]/80 shadow-xs sm:shadow-sm space-y-4">
             
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-full bg-slate-900 text-white font-black text-xs flex items-center justify-center">
+                <span className="w-7 h-7 rounded-full bg-[#a1e3d8] text-slate-950 font-black text-xs flex items-center justify-center">
                   1
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-slate-900">
@@ -209,7 +209,7 @@ export default function CheckoutPage() {
                   placeholder="Enter your real full name"
                   value={customer.name}
                   onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
-                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-slate-400"
+                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-[#a1e3d8] transition-all placeholder:text-slate-400"
                 />
               </div>
 
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
                   <label className="text-xs font-bold text-slate-700">
                     Email Address (For Instant Bundle Delivery) <span className="text-red-500">*</span>
                   </label>
-                  <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+                  <span className="text-[10px] font-semibold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-100">
                     Instant Delivery
                   </span>
                 </div>
@@ -229,7 +229,7 @@ export default function CheckoutPage() {
                   placeholder="you@example.com"
                   value={customer.email}
                   onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
-                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder:text-slate-400"
+                  className="w-full px-4 py-3 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-[#a1e3d8] transition-all placeholder:text-slate-400"
                 />
                 <p className="text-[11px] text-slate-400">
                   Google Drive bundle link & order details will be sent immediately to this email.
@@ -246,7 +246,7 @@ export default function CheckoutPage() {
                     {cleanPhoneDigits.length}/10 Digits
                   </span>
                 </div>
-                <div className="flex rounded-xl border border-slate-200 overflow-hidden focus-within:border-red-500 focus-within:ring-1 focus-within:ring-red-500 transition-all bg-white">
+                <div className="flex rounded-xl border border-slate-200 overflow-hidden focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-[#a1e3d8] transition-all bg-white">
                   <span className="inline-flex items-center px-3.5 bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm border-r border-slate-200 select-none">
                     +91
                   </span>
@@ -270,16 +270,16 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full py-4 px-6 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-lg shadow-red-500/25 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="w-full py-4 px-6 bg-[#a1e3d8] hover:bg-[#88dacd] text-slate-950 font-black text-sm sm:text-base rounded-2xl shadow-md shadow-[#a1e3d8]/40 border border-[#88dacd] transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
                 >
                   {isProcessing ? (
                     <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                       Connecting Cashfree Gateway...
                     </span>
                   ) : (
                     <>
-                      <Lock className="w-4 h-4 text-white" />
+                      <Lock className="w-4 h-4 text-slate-950" />
                       <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
                     </>
                   )}
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
                       {item.title}
                     </h4>
                     {item.planName && (
-                      <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-md">
+                      <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-bold text-teal-800 bg-[#a1e3d8]/20 border border-[#a1e3d8] rounded-md">
                         {item.planName}
                       </span>
                     )}
@@ -355,7 +355,7 @@ export default function CheckoutPage() {
           {/* Promo / Discount Code Section */}
           <div className="pt-2 border-t border-slate-100 space-y-2">
             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700">
-              <Tag className="w-3.5 h-3.5 text-red-500" />
+              <Tag className="w-3.5 h-3.5 text-teal-600" />
               <span>Promo / Discount Code</span>
             </div>
             {appliedCoupon ? (
@@ -378,7 +378,7 @@ export default function CheckoutPage() {
                   placeholder="ENTER COUPON CODE"
                   value={couponCodeInput}
                   onChange={(e) => setCouponCodeInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-red-500"
+                  className="flex-1 px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold uppercase focus:outline-none focus:border-teal-500"
                 />
                 <button
                   type="button"
@@ -388,7 +388,7 @@ export default function CheckoutPage() {
                     setCouponMsg(res.message);
                     if (res.success) setCouponCodeInput('');
                   }}
-                  className="px-5 py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                  className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
                 >
                   Apply
                 </button>
@@ -415,7 +415,7 @@ export default function CheckoutPage() {
             )}
             <div className="flex justify-between text-base sm:text-lg font-black pt-2 border-t border-slate-200">
               <span className="text-slate-900">Final Total</span>
-              <span className="text-[#e52e2e]">
+              <span className="text-slate-900">
                 {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)}
               </span>
             </div>
@@ -425,16 +425,16 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={isProcessing}
-            className="hidden lg:flex w-full py-4 px-6 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-base rounded-2xl shadow-lg shadow-red-500/25 transition-all items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="hidden lg:flex w-full py-4 px-6 bg-[#a1e3d8] hover:bg-[#88dacd] text-slate-950 font-black text-base rounded-2xl shadow-md shadow-[#a1e3d8]/40 border border-[#88dacd] transition-all items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {isProcessing ? (
               <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                 Connecting Cashfree Gateway...
               </span>
             ) : (
               <>
-                <Lock className="w-4 h-4 text-white" />
+                <Lock className="w-4 h-4 text-slate-950" />
                 <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
               </>
             )}
@@ -447,16 +447,16 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={isProcessing}
-              className="w-full py-3.5 px-4 bg-[#e52e2e] hover:bg-[#d12020] text-white font-extrabold text-sm sm:text-base rounded-2xl shadow-md shadow-red-500/30 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
+              className="w-full py-3.5 px-4 bg-[#a1e3d8] hover:bg-[#88dacd] text-slate-950 font-black text-sm sm:text-base rounded-2xl shadow-lg shadow-teal-500/20 border border-[#88dacd] transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               {isProcessing ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                   Connecting Gateway...
                 </span>
               ) : (
                 <>
-                  <Lock className="w-4 h-4 text-white" />
+                  <Lock className="w-4 h-4 text-slate-950" />
                   <span>Pay {storeConfig.currencySymbol}{Number(finalTotal).toFixed(2)} via Cashfree (Instant Access)</span>
                 </>
               )}
