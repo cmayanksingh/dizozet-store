@@ -548,6 +548,22 @@ export const StoreProvider = ({ children }) => {
     clearCart();
     // Sync to Cloud Firestore
     syncOrderToFirestore(newOrder);
+
+    // Send instant Telegram notification to store owner
+    if (storeConfig?.isTelegramNotificationActive !== false) {
+      try {
+        fetch('/api/notify-telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order: newOrder,
+            botToken: storeConfig?.telegramBotToken,
+            chatId: storeConfig?.telegramChatId
+          })
+        }).catch(err => console.warn('Telegram notification notice:', err));
+      } catch (e) {}
+    }
+
     return newOrder;
   };
 

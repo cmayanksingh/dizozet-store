@@ -20,7 +20,10 @@ export const initialStoreConfig = {
   },
   announcementText: "⚡ FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS | USE CODE: DIZO85",
   isBannerActive: true,
-  guaranteeText: "100% Genuine Licenses • 24/7 WhatsApp Support: 7895768118 • Instant Replacement Guarantee"
+  guaranteeText: "100% Genuine Licenses • 24/7 WhatsApp Support: 7895768118 • Instant Replacement Guarantee",
+  telegramBotToken: "",
+  telegramChatId: "",
+  isTelegramNotificationActive: true
 };
 
 export const whyChooseUsFeatures = [

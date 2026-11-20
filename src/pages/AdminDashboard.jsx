@@ -18,6 +18,8 @@ import {
   Trash2, 
   Check, 
   X, 
+  Send,
+  Bot,
   DollarSign, 
   TrendingUp, 
   RefreshCw,
@@ -135,6 +137,38 @@ export default function AdminDashboard() {
 
   // Settings & Appearance Forms
   const [settingsForm, setSettingsForm] = useState({ ...storeConfig });
+  const [testingTelegram, setTestingTelegram] = useState(false);
+  const [telegramTestStatus, setTelegramTestStatus] = useState('');
+
+  const handleTestTelegramNotification = async () => {
+    if (!settingsForm.telegramBotToken || !settingsForm.telegramChatId) {
+      setTelegramTestStatus('⚠️ Please enter both Telegram Bot Token and Chat ID first.');
+      return;
+    }
+    setTestingTelegram(true);
+    setTelegramTestStatus('⏳ Sending test message to your Telegram...');
+    try {
+      const res = await fetch('/api/notify-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          isTest: true,
+          botToken: settingsForm.telegramBotToken,
+          chatId: settingsForm.telegramChatId
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setTelegramTestStatus('✅ Success: Test message received on Telegram! Check your app.');
+      } else {
+        setTelegramTestStatus(`❌ Error: ${data.error || 'Failed to send message.'}`);
+      }
+    } catch (err) {
+      setTelegramTestStatus(`❌ Network error: ${err.message}`);
+    } finally {
+      setTestingTelegram(false);
+    }
+  };
   const [appearanceForm, setAppearanceForm] = useState({
     storeName: storeConfig.storeName || 'Dizozet',
     storeTagline: storeConfig.storeTagline || 'Premium Subscriptions & Viral Reels Bundles',
@@ -2096,6 +2130,85 @@ export default function AdminDashboard() {
                   />
                 </div>
 
+              </div>
+
+              {/* Telegram Bot Order Alerts Card */}
+              <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'} space-y-4`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-500 flex items-center justify-center">
+                      <Bot className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black">Telegram Bot Order Notifications</h4>
+                      <p className={`text-[11px] ${textMuted}`}>Get instant alerts on Telegram with full customer & product details on every purchase</p>
+                    </div>
+                  </div>
+                  <label className="flex items-center gap-2 text-xs font-bold cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settingsForm.isTelegramNotificationActive !== false}
+                      onChange={(e) => setSettingsForm(prev => ({ ...prev, isTelegramNotificationActive: e.target.checked }))}
+                      className="w-4 h-4 rounded text-sky-600 focus:ring-sky-500"
+                    />
+                    <span>Enable Telegram Alerts</span>
+                  </label>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold uppercase mb-1">Telegram Bot Token</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 7891234567:ABCdefGHIjklMNOpqr..."
+                      value={settingsForm.telegramBotToken || ''}
+                      onChange={(e) => setSettingsForm(prev => ({ ...prev, telegramBotToken: e.target.value }))}
+                      className={`w-full px-4 py-2.5 text-xs rounded-xl border font-mono text-[11px] ${inputBg}`}
+                    />
+                    <span className={`text-[10px] ${textMuted}`}>Obtained from @BotFather on Telegram</span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold uppercase mb-1">Telegram Chat ID</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 123456789 or -100123456789"
+                      value={settingsForm.telegramChatId || ''}
+                      onChange={(e) => setSettingsForm(prev => ({ ...prev, telegramChatId: e.target.value }))}
+                      className={`w-full px-4 py-2.5 text-xs rounded-xl border font-mono text-[11px] ${inputBg}`}
+                    />
+                    <span className={`text-[10px] ${textMuted}`}>Your personal Chat ID or Channel ID (from @userinfobot)</span>
+                  </div>
+                </div>
+
+                {/* Quick Setup Instructions & Test Button */}
+                <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      disabled={testingTelegram}
+                      onClick={handleTestTelegramNotification}
+                      className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs rounded-xl shadow-xs transition-all flex items-center gap-1.5 active:scale-95 disabled:opacity-50"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>{testingTelegram ? 'Sending Test...' : 'Send Test Notification'}</span>
+                    </button>
+                    {telegramTestStatus && (
+                      <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                        {telegramTestStatus}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* 4-Step Guide inside Admin UI */}
+                <div className={`p-3.5 rounded-xl text-xs space-y-1.5 ${isDark ? 'bg-slate-950/70 text-slate-300' : 'bg-white text-slate-600'} border border-slate-200 dark:border-slate-800`}>
+                  <p className="font-extrabold text-sky-500">📖 2-Minute Telegram Bot Setup Guide:</p>
+                  <p>1. Telegram open karein aur <strong>@BotFather</strong> search karke <code>/newbot</code> command send karein.</p>
+                  <p>2. Bot ka naam choose karein. BotFather aapko ek <strong>HTTP API Token</strong> dega, usko upar <strong>Bot Token</strong> me daalein.</p>
+                  <p>3. Telegram par <strong>@userinfobot</strong> ko start karein, ye aapko aapka <strong>Id</strong> (Chat ID) bata dega. Usko <strong>Chat ID</strong> me daalein.</p>
+                  <p>4. Apne banaye hue Bot ko Telegram me open karke <strong>Start</strong> button dabayein, fir <strong>Send Test Notification</strong> par click karein!</p>
+                </div>
               </div>
 
               <div>
