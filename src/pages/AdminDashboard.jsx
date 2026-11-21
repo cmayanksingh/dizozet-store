@@ -105,7 +105,7 @@ export default function AdminDashboard() {
 
   // Active Tab
   const [activeTab, setActiveTab] = useState('overview'); 
-  // 'overview', 'orders', 'subscriptions', 'reels', 'digital', 'reviews', 'coupons', 'banner', 'appearance', 'settings', 'security'
+  // 'overview', 'orders', 'reels', 'digital', 'reviews', 'coupons', 'banner', 'appearance', 'settings', 'security'
 
   // Global & Tab States
   const [searchTerm, setSearchTerm] = useState('');
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
 
   // Modals
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
-  const [productModalType, setProductModalType] = useState('subscription');
+  const [productModalType, setProductModalType] = useState('reels-bundle');
   const [editingProduct, setEditingProduct] = useState(null);
   const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
   const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
   };
   const [appearanceForm, setAppearanceForm] = useState({
     storeName: storeConfig.storeName || 'Dizozet',
-    storeTagline: storeConfig.storeTagline || 'Premium Subscriptions & Viral Reels Bundles',
+    storeTagline: storeConfig.storeTagline || '222,000+ Viral Reels Bundles & Digital Creator Products',
     primaryColor: storeConfig.primaryColor || '#a1e3d8',
     logoUrl: storeConfig.logoUrl || 'images/dizozet-logo.png'
   });
@@ -229,8 +229,8 @@ export default function AdminDashboard() {
     role: 'Content Creator, Delhi',
     rating: 5,
     title: 'Super fast delivery and top quality!',
-    comment: 'Activated within minutes and WhatsApp team is very responsive.',
-    purchasedItem: 'AI & Entertainment Subscription',
+    comment: 'Instant Google Drive link received and video quality is 1080p full HD!',
+    purchasedItem: '222K+ Viral Reels Bundle Mega Pack',
     verified: true
   });
 
@@ -250,8 +250,8 @@ export default function AdminDashboard() {
     customerPhone: '+91 ',
     customerCity: '',
     itemTitle: '',
-    itemType: 'subscription',
-    itemPrice: 199,
+    itemType: 'reels-bundle',
+    itemPrice: 99,
     paymentMethod: 'UPI / WhatsApp Pay',
     paymentStatus: 'Paid',
     orderStatus: 'Delivered'
@@ -577,12 +577,12 @@ export default function AdminDashboard() {
       items: [
         {
           id: `item-${Date.now()}`,
-          title: manualOrderForm.itemTitle || 'Custom Service Order',
+          title: manualOrderForm.itemTitle || '222K+ Viral Reels Bundle Pack',
           type: manualOrderForm.itemType,
-          price: Number(manualOrderForm.itemPrice) || 199,
+          price: Number(manualOrderForm.itemPrice) || 99,
           quantity: 1,
           thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
-          deliveryInfo: 'WhatsApp Activation: 7895768118'
+          deliveryInfo: 'Instant Google Drive Delivery'
         }
       ],
       subtotal: Number(manualOrderForm.itemPrice) || 199,
@@ -694,7 +694,6 @@ export default function AdminDashboard() {
   const navTabs = [
     { id: 'overview', label: 'Analytics & KPIs', icon: LayoutDashboard },
     { id: 'orders', label: `Orders & Dispatch (${orders.length})`, icon: ShoppingCart },
-    { id: 'subscriptions', label: `Subscriptions (${subscriptions.length})`, icon: Tv },
     { id: 'reels', label: `Reels Bundles (${reelsBundles.length})`, icon: Film },
     { id: 'digital', label: `Digital Products (${digitalProducts.length})`, icon: Download },
     { id: 'reviews', label: `Reviews & Ratings (${reviews.length})`, icon: Star },
@@ -704,6 +703,8 @@ export default function AdminDashboard() {
     { id: 'settings', label: 'Gateways & WhatsApp', icon: Settings },
     { id: 'security', label: 'Security & Backup', icon: Key },
   ];
+
+  const effectiveTab = (activeTab === 'subscriptions' || !navTabs.some(t => t.id === activeTab)) ? 'overview' : activeTab;
 
   return (
     <div className={`min-h-screen flex ${bgMain}`}>
@@ -765,7 +766,7 @@ export default function AdminDashboard() {
 
           {navTabs.map((t) => {
             const Icon = t.icon;
-            const isActive = activeTab === t.id;
+            const isActive = effectiveTab === t.id;
             return (
               <button
                 key={t.id}
@@ -851,7 +852,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-2 text-xs font-extrabold">
               <span className={textMuted}>Admin Portal</span>
               <span className={textMuted}>/</span>
-              <span className="text-teal-400 capitalize">{activeTab}</span>
+              <span className="text-teal-400 capitalize">{effectiveTab}</span>
             </div>
           </div>
 
@@ -921,7 +922,7 @@ export default function AdminDashboard() {
           {/* ==================================================== */}
           {/* 1. OVERVIEW & ANALYTICS TAB                          */}
           {/* ==================================================== */}
-          {activeTab === 'overview' && (
+          {effectiveTab === 'overview' && (
             <div className="space-y-6">
               
               {/* Header Banner */}
@@ -950,7 +951,7 @@ export default function AdminDashboard() {
                     <span>View Orders ({orders.length})</span>
                   </button>
                   <button
-                    onClick={() => handleOpenAddProduct('subscription')}
+                    onClick={() => handleOpenAddProduct('reels-bundle')}
                     className={`px-4 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center gap-1.5 ${
                       isDark ? 'border-slate-700 bg-slate-800 text-white' : 'border-slate-300 bg-slate-100 text-slate-800'
                     }`}
@@ -1003,10 +1004,10 @@ export default function AdminDashboard() {
                     <Layers className="w-4 h-4 text-purple-400" />
                   </div>
                   <div className="text-3xl font-black text-teal-400">
-                    {subscriptions.length + reelsBundles.length + digitalProducts.length}
+                    {reelsBundles.length + digitalProducts.length}
                   </div>
                   <p className={`text-[11px] ${textMuted}`}>
-                    {reelsBundles.length} Bundles, {subscriptions.length} Subscriptions
+                    {reelsBundles.length} Reels Bundles, {digitalProducts.length} Digital Products
                   </p>
                 </div>
 
@@ -1026,21 +1027,6 @@ export default function AdminDashboard() {
                     <div>
                       <div className="flex justify-between text-xs font-bold mb-1">
                         <span className="flex items-center gap-1.5">
-                          <Tv className="w-3.5 h-3.5 text-teal-400" /> Subscriptions Revenue
-                        </span>
-                        <span>{storeConfig.currencySymbol}{subscriptionsRevenue}</span>
-                      </div>
-                      <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                        <div 
-                          className="h-full bg-teal-400 rounded-full" 
-                          style={{ width: `${totalSalesRevenue ? Math.round((subscriptionsRevenue / totalSalesRevenue) * 100) : 40}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between text-xs font-bold mb-1">
-                        <span className="flex items-center gap-1.5">
                           <Film className="w-3.5 h-3.5 text-purple-400" /> Reels Bundles Revenue
                         </span>
                         <span>{storeConfig.currencySymbol}{reelsRevenue}</span>
@@ -1048,7 +1034,7 @@ export default function AdminDashboard() {
                       <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                         <div 
                           className="h-full bg-purple-400 rounded-full" 
-                          style={{ width: `${totalSalesRevenue ? Math.round((reelsRevenue / totalSalesRevenue) * 100) : 35}%` }}
+                          style={{ width: `${totalSalesRevenue ? Math.round((reelsRevenue / totalSalesRevenue) * 100) : 60}%` }}
                         />
                       </div>
                     </div>
@@ -1063,7 +1049,7 @@ export default function AdminDashboard() {
                       <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                         <div 
                           className="h-full bg-amber-400 rounded-full" 
-                          style={{ width: `${totalSalesRevenue ? Math.round((digitalRevenue / totalSalesRevenue) * 100) : 25}%` }}
+                          style={{ width: `${totalSalesRevenue ? Math.round((digitalRevenue / totalSalesRevenue) * 100) : 40}%` }}
                         />
                       </div>
                     </div>
@@ -1085,6 +1071,19 @@ export default function AdminDashboard() {
                       <span className="flex items-center gap-2">
                         <Film className="w-4 h-4 text-purple-400" />
                         <span>+ Add Reels Bundle</span>
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-slate-500" />
+                    </button>
+
+                    <button
+                      onClick={() => handleOpenAddProduct('digital-product')}
+                      className={`w-full p-3 rounded-2xl border flex items-center justify-between text-left transition-all ${
+                        isDark ? 'border-slate-800 hover:bg-slate-800/40 text-slate-200' : 'border-slate-200 hover:bg-slate-100 text-slate-800'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <Download className="w-4 h-4 text-amber-400" />
+                        <span>+ Add Digital Product</span>
                       </span>
                       <ChevronRight className="w-4 h-4 text-slate-500" />
                     </button>
@@ -1138,7 +1137,7 @@ export default function AdminDashboard() {
           {/* ==================================================== */}
           {/* 2. ORDERS & SALES TAB                                */}
           {/* ==================================================== */}
-          {activeTab === 'orders' && (
+          {effectiveTab === 'orders' && (
             <div className="space-y-6">
               
               {/* Controls Strip */}
@@ -1339,133 +1338,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 3. SUBSCRIPTIONS & SERVICES TAB                      */}
+          {/* 3. REELS BUNDLES TAB (222,000+ VIDEOS)               */}
           {/* ==================================================== */}
-          {activeTab === 'subscriptions' && (
-            <div className="space-y-6">
-              
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="relative w-full sm:w-80">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
-                  <input
-                    type="text"
-                    placeholder="Search subscriptions by title, category..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-2 text-xs rounded-xl border font-medium focus:outline-none focus:border-teal-500 ${inputBg}`}
-                  />
-                </div>
-
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <span className={`text-xs ${textMuted} font-semibold`}>
-                    Total: <strong className="text-teal-400">{subscriptions.length} Subscriptions</strong>
-                  </span>
-                  <button
-                    onClick={() => handleOpenAddProduct('subscription')}
-                    className="px-4 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-600 text-slate-950 font-black text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
-                  >
-                    <Plus className="w-4 h-4" /> + Add Subscription
-                  </button>
-                </div>
-              </div>
-
-              <div className={`rounded-3xl border shadow-sm overflow-hidden ${bgCard}`}>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className={`font-black uppercase border-b ${isDark ? 'bg-[#0f172a] text-slate-300 border-slate-800' : 'bg-slate-50 text-slate-700 border-slate-200'}`}>
-                      <tr>
-                        <th className="p-4">Subscription Service</th>
-                        <th className="p-4">Category</th>
-                        <th className="p-4">Duration Plans & Price</th>
-                        <th className="p-4">Rating</th>
-                        <th className="p-4">Badge</th>
-                        <th className="p-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className={`divide-y ${isDark ? 'divide-slate-800/80 text-slate-300' : 'divide-slate-100 text-slate-700'}`}>
-                      {subscriptions.filter(s => s.title.toLowerCase().includes(searchTerm.toLowerCase()) || (s.category || '').toLowerCase().includes(searchTerm.toLowerCase())).map((sub) => (
-                        <tr key={sub.id} className={hoverRow}>
-                          
-                          <td className="p-4 flex items-center gap-3">
-                            <img
-                              src={sub.thumbnail}
-                              alt={sub.title}
-                              className="w-12 h-12 rounded-xl object-cover bg-slate-900 border border-slate-800 shrink-0"
-                            />
-                            <div className="min-w-0">
-                              <div className="font-bold text-sm truncate max-w-xs">{sub.title}</div>
-                              <div className={`text-[11px] ${textMuted} line-clamp-1`}>{sub.shortDescription}</div>
-                            </div>
-                          </td>
-
-                          <td className="p-4 whitespace-nowrap">
-                            <span className="px-2.5 py-0.5 rounded-full font-bold text-[11px] bg-teal-500/10 text-teal-400 border border-teal-500/20">
-                              {sub.category}
-                            </span>
-                          </td>
-
-                          <td className="p-4 whitespace-nowrap">
-                            <div className="font-black text-sm">
-                              {storeConfig.currencySymbol}{sub.plans?.[0]?.price || 149}
-                            </div>
-                            <div className={`text-[10px] ${textMuted}`}>
-                              {sub.plans?.length || 1} duration tier(s)
-                            </div>
-                          </td>
-
-                          <td className="p-4 whitespace-nowrap">
-                            <div className="font-bold flex items-center gap-1 text-amber-400">
-                              <Star className="w-3.5 h-3.5 fill-amber-400" />
-                              <span>{sub.rating || 5.0}</span>
-                              <span className={`text-[10px] ${textMuted}`}>({sub.reviewCount || 100})</span>
-                            </div>
-                          </td>
-
-                          <td className="p-4 whitespace-nowrap">
-                            {sub.badge ? (
-                              <span className="bg-amber-500/10 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-amber-500/20">
-                                {sub.badge}
-                              </span>
-                            ) : (
-                              <span className={`text-[10px] ${textMuted}`}>—</span>
-                            )}
-                          </td>
-
-                          <td className="p-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-2">
-                              <button
-                                onClick={() => setEditingProduct({ type: 'subscription', data: { ...sub } })}
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs bg-teal-500/15 text-teal-400 hover:bg-teal-500 hover:text-slate-950 border border-teal-500/30 transition-all shadow-sm"
-                                title="Edit Subscription"
-                              >
-                                <Edit3 className="w-3.5 h-3.5" />
-                                <span>Edit</span>
-                              </button>
-                              <button
-                                onClick={() => handleDeleteProduct('subscription', sub.id, sub.title)}
-                                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl font-bold text-xs bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/20 transition-all"
-                                title="Delete Subscription"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                                <span>Delete</span>
-                              </button>
-                            </div>
-                          </td>
-
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-            </div>
-          )}
-
-          {/* ==================================================== */}
-          {/* 4. REELS BUNDLES TAB (130+)                          */}
-          {/* ==================================================== */}
-          {activeTab === 'reels' && (
+          {effectiveTab === 'reels' && (
             <div className="space-y-6">
               
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1585,9 +1460,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 5. DIGITAL PRODUCTS TAB                              */}
+          {/* 4. DIGITAL PRODUCTS TAB                              */}
           {/* ==================================================== */}
-          {activeTab === 'digital' && (
+          {effectiveTab === 'digital' && (
             <div className="space-y-6">
               
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1694,9 +1569,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 6. RATINGS & CUSTOMER REVIEWS TAB                    */}
+          {/* 5. RATINGS & CUSTOMER REVIEWS TAB                    */}
           {/* ==================================================== */}
-          {activeTab === 'reviews' && (
+          {effectiveTab === 'reviews' && (
             <div className="space-y-6">
               
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1790,9 +1665,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 7. COUPONS & OFFERS TAB                              */}
+          {/* 6. COUPONS & OFFERS TAB                              */}
           {/* ==================================================== */}
-          {activeTab === 'coupons' && (
+          {effectiveTab === 'coupons' && (
             <div className="space-y-6">
               
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1884,9 +1759,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 8. FLASH SALE BANNER TAB                             */}
+          {/* 7. FLASH SALE BANNER TAB                             */}
           {/* ==================================================== */}
-          {activeTab === 'banner' && (
+          {effectiveTab === 'banner' && (
             <div className={`p-6 sm:p-8 rounded-3xl border shadow-sm space-y-6 max-w-3xl ${bgCard}`}>
               <div className="pb-3 border-b border-slate-800">
                 <h3 className="font-black text-base">Top Flash Sale Announcement Banner</h3>
@@ -1982,9 +1857,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 9. STORE BRANDING & APPEARANCE TAB                   */}
+          {/* 8. STORE BRANDING & APPEARANCE TAB                   */}
           {/* ==================================================== */}
-          {activeTab === 'appearance' && (
+          {effectiveTab === 'appearance' && (
             <div className={`p-6 sm:p-8 rounded-3xl border shadow-sm space-y-6 max-w-3xl ${bgCard}`}>
               <div className="pb-3 border-b border-slate-800">
                 <h3 className="font-black text-base">Store Identity & Visual Appearance</h3>
@@ -2068,9 +1943,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 10. GATEWAYS & WHATSAPP SETTINGS TAB                 */}
+          {/* 9. GATEWAYS & WHATSAPP SETTINGS TAB                  */}
           {/* ==================================================== */}
-          {activeTab === 'settings' && (
+          {effectiveTab === 'settings' && (
             <div className={`p-6 sm:p-8 rounded-3xl border shadow-sm space-y-6 max-w-3xl ${bgCard}`}>
               <div className="pb-3 border-b border-slate-800">
                 <h3 className="font-black text-base">Payment Gateways & WhatsApp Direct Order Config</h3>
@@ -2249,9 +2124,9 @@ export default function AdminDashboard() {
           )}
 
           {/* ==================================================== */}
-          {/* 11. SECURITY, MASTER PIN & BACKUP TAB                */}
+          {/* 10. SECURITY, MASTER PIN & BACKUP TAB               */}
           {/* ==================================================== */}
-          {activeTab === 'security' && (
+          {effectiveTab === 'security' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
               
               {/* Change Password Card */}
@@ -2410,7 +2285,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* ==================================================== */}
-      {/* MODAL: ADD PRODUCT / SUBSCRIPTION / REELS            */}
+      {/* MODAL: ADD PRODUCT / REELS / DIGITAL                 */}
       {/* ==================================================== */}
       {isAddProductModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
@@ -2418,13 +2293,35 @@ export default function AdminDashboard() {
             
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <h3 className="font-black text-lg">
-                + Add New {productModalType === 'subscription' ? 'Subscription / Service' : productModalType === 'reels-bundle' ? 'Reels Bundle' : 'Digital Product'}
+                + Add New {productModalType === 'reels-bundle' ? 'Reels Bundle' : 'Digital Product'}
               </h3>
               <button
                 onClick={() => setIsAddProductModalOpen(false)}
                 className="p-1.5 text-slate-400 hover:text-white rounded-xl"
               >
                 <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Type Switcher */}
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-900 border border-slate-800">
+              <button
+                type="button"
+                onClick={() => setProductModalType('reels-bundle')}
+                className={`py-2 rounded-lg text-xs font-black flex items-center justify-center gap-2 transition-all ${
+                  productModalType === 'reels-bundle' ? 'bg-purple-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Film className="w-4 h-4" /> Reels Bundle
+              </button>
+              <button
+                type="button"
+                onClick={() => setProductModalType('digital-product')}
+                className={`py-2 rounded-lg text-xs font-black flex items-center justify-center gap-2 transition-all ${
+                  productModalType === 'digital-product' ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Download className="w-4 h-4" /> Digital Product
               </button>
             </div>
 
@@ -2437,7 +2334,7 @@ export default function AdminDashboard() {
                   required
                   value={productForm.title}
                   onChange={(e) => setProductForm(prev => ({ ...prev, title: e.target.value }))}
-                  placeholder="e.g. Canva Pro Lifetime + Gemini AI"
+                  placeholder="e.g. 5,000+ AI Avatar Viral Reels Bundle"
                   className={`w-full px-4 py-2.5 rounded-xl border font-medium focus:outline-none focus:border-teal-500 ${inputBg}`}
                 />
               </div>
@@ -2533,77 +2430,6 @@ export default function AdminDashboard() {
                       className={`w-full px-3 py-2 rounded-xl border font-mono text-[11px] ${inputBg}`}
                     />
                   </div>
-                </div>
-              )}
-
-              {/* Subscriptions Plans builder */}
-              {productModalType === 'subscription' && (
-                <div className={`p-4 rounded-2xl border space-y-3 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <div className="flex items-center justify-between">
-                    <label className="font-extrabold uppercase">Pricing Duration Tiers</label>
-                    <button
-                      type="button"
-                      onClick={() => setProductForm(prev => ({
-                        ...prev,
-                        plans: [...prev.plans, { id: `p-${Date.now()}`, name: '3 Months Plan', price: 399, regularPrice: 799, duration: '90 Days', isPopular: false }]
-                      }))}
-                      className="text-teal-400 font-extrabold text-[11px] hover:underline"
-                    >
-                      + Add Tier
-                    </button>
-                  </div>
-
-                  {productForm.plans.map((p, idx) => (
-                    <div key={p.id || idx} className={`grid grid-cols-4 gap-2 items-center p-2.5 rounded-xl border ${isDark ? 'bg-[#111827] border-slate-800' : 'bg-white border-slate-200'}`}>
-                      <input
-                        type="text"
-                        placeholder="Plan Name"
-                        value={p.name}
-                        onChange={(e) => {
-                          const updated = [...productForm.plans];
-                          updated[idx].name = e.target.value;
-                          setProductForm(prev => ({ ...prev, plans: updated }));
-                        }}
-                        className={`px-2 py-1 text-xs rounded border font-bold ${inputBg}`}
-                      />
-                      <input
-                        type="number"
-                        placeholder="Price ₹"
-                        value={p.price}
-                        onChange={(e) => {
-                          const updated = [...productForm.plans];
-                          updated[idx].price = Number(e.target.value);
-                          setProductForm(prev => ({ ...prev, plans: updated }));
-                        }}
-                        className={`px-2 py-1 text-xs rounded border font-bold ${inputBg}`}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Duration"
-                        value={p.duration}
-                        onChange={(e) => {
-                          const updated = [...productForm.plans];
-                          updated[idx].duration = e.target.value;
-                          setProductForm(prev => ({ ...prev, plans: updated }));
-                        }}
-                        className={`px-2 py-1 text-xs rounded border ${inputBg}`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (productForm.plans.length > 1) {
-                            setProductForm(prev => ({
-                              ...prev,
-                              plans: prev.plans.filter((_, i) => i !== idx)
-                            }));
-                          }
-                        }}
-                        className="text-red-400 font-bold hover:underline text-[11px] text-right pr-2"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
                 </div>
               )}
 
@@ -3399,7 +3225,7 @@ export default function AdminDashboard() {
                   required
                   value={manualOrderForm.itemTitle}
                   onChange={(e) => setManualOrderForm(prev => ({ ...prev, itemTitle: e.target.value }))}
-                  placeholder="e.g. Google Gemini Advanced 1-Year"
+                  placeholder="e.g. 222,000+ Viral Reels Bundle Mega Pack"
                   className={`w-full px-4 py-2 rounded-xl border font-bold ${inputBg}`}
                 />
               </div>

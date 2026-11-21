@@ -1,6 +1,6 @@
 export const initialStoreConfig = {
   storeName: "Dizozet",
-  storeTagline: "Premium Subscriptions & Viral Reels Bundles",
+  storeTagline: "222,000+ Viral Reels Bundles & Digital Creator Products",
   currencySymbol: "₹",
   supportEmail: "dizozet.org@gmail.com",
   supportWhatsApp: "+91 78957 68118",
@@ -20,7 +20,7 @@ export const initialStoreConfig = {
   },
   announcementText: "⚡ FLASH SALE: FLAT 85% OFF TODAY | GET 222,000+ REELS ACCESS | USE CODE: DIZO85",
   isBannerActive: true,
-  guaranteeText: "100% Genuine Licenses • 24/7 WhatsApp Support: 7895768118 • Instant Replacement Guarantee",
+  guaranteeText: "100% Genuine Quality • 24/7 WhatsApp Support: 7895768118 • Instant Google Drive Access",
   telegramBotToken: "",
   telegramChatId: "",
   isTelegramNotificationActive: true
@@ -29,23 +29,23 @@ export const initialStoreConfig = {
 export const whyChooseUsFeatures = [
   {
     icon: "Zap",
-    title: "Instant Delivery",
-    description: "Your download links, Google Drive folders, or login credentials appear promptly on-screen & via WhatsApp."
+    title: "Instant Google Drive Delivery",
+    description: "Your download links and Google Drive folders appear immediately on-screen & via WhatsApp upon payment."
   },
   {
     icon: "ShieldCheck",
-    title: "100% Genuine & Replacement Warranty",
-    description: "All subscriptions and products come with full warranty. If you ever face an issue, our support team fixes or replaces it quickly."
+    title: "100% Genuine & Lifetime Access",
+    description: "All reels bundles and digital products come with lifetime access, HD quality, and full commercial resale rights."
   },
   {
     icon: "Tag",
     title: "Transparent & Direct Pricing",
-    description: "Honest, straightforward pricing on premium subscriptions and high-quality viral video bundles."
+    description: "Honest, straightforward pricing starting from ₹29 on high-quality viral video bundles and digital products."
   },
   {
     icon: "Headphones",
     title: "Dedicated WhatsApp Support",
-    description: "Direct assistance on WhatsApp (+91 78957 68118) for all subscription activations, plan renewals, and inquiries."
+    description: "Direct assistance on WhatsApp (+91 78957 68118) for download links, bundles, and creator support."
   },
   {
     icon: "Sparkles",
@@ -108,23 +108,23 @@ export const customerReviews = [
 
 export const generalFaqs = [
   {
-    question: "How do I order subscriptions via WhatsApp?",
-    answer: "For all subscriptions, simply click 'Buy Now' on the product card or product page. It automatically opens WhatsApp with our official support number (7895768118) with the selected plan details pre-filled. Our team will verify and activate your subscription immediately!"
-  },
-  {
-    question: "How do I receive Reels Bundles?",
-    answer: "Reels Bundles are delivered automatically! You can buy them directly on the website and get instant Google Drive download links on-screen and via email."
+    question: "How do I receive my Reels Bundles and Digital Products?",
+    answer: "Reels Bundles and Digital Products are delivered automatically! You can buy them directly on the website and get instant Google Drive download links on-screen, via WhatsApp, and by email."
   },
   {
     question: "Are the Reels Bundles free of watermarks?",
-    answer: "Yes! All reels bundles are completely watermark-free, 1080x1920 Full HD MP4 files. Reseller license packages also allow you to resell them to clients and keep 100% profits."
+    answer: "Yes! All reels bundles are 100% watermark-free, 1080x1920 Full HD MP4 files. Reseller license packages also allow you to resell them to clients and keep 100% profits."
+  },
+  {
+    question: "What digital creator products do you offer?",
+    answer: "We offer video editing templates, presets, sound effects, creator toolkits, Canva templates, AI prompts, and guides designed to help you grow your social media pages 10x faster."
   },
   {
     question: "What payment methods are supported?",
     answer: "We support instant UPI (Google Pay, PhonePe, Paytm, BHIM), UPI QR Code scanning, WhatsApp Pay, Credit Cards, Debit Cards, and Net Banking."
   },
   {
-    question: "What is your replacement and warranty policy?",
-    answer: "We provide full replacement guarantee for all subscriptions throughout your active plan duration. If any account ever experiences downtime or login errors, our WhatsApp team (+91 78957 68118) fixes or replaces it promptly."
+    question: "What is your support and warranty policy?",
+    answer: "We provide full lifetime access and support. If you ever experience download link issues or need assistance accessing your files, our WhatsApp team (+91 78957 68118) assists you immediately."
   }
 ];
