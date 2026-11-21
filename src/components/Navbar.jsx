@@ -20,7 +20,6 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Subscriptions', path: '/subscriptions', icon: Tv },
     { name: 'Reels Bundles', path: '/reels-bundles', icon: Film },
     { name: 'Digital Products', path: '/digital-products', icon: Download },
   ];

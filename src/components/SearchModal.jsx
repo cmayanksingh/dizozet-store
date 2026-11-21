@@ -36,23 +36,14 @@ export default function SearchModal() {
 
   const query = searchTerm.toLowerCase().trim();
 
-  // Filter Subscriptions
-  const matchedSubscriptions = query
-    ? subscriptions.filter(s => 
-        s.title.toLowerCase().includes(query) || 
-        s.category.toLowerCase().includes(query) ||
-        s.shortDescription?.toLowerCase().includes(query)
-      ).map(s => ({ ...s, productType: 'subscription' }))
-    : subscriptions.slice(0, 4).map(s => ({ ...s, productType: 'subscription' }));
-
   // Filter Reels Bundles
   const matchedReels = query
     ? reelsBundles.filter(r =>
         r.title.toLowerCase().includes(query) ||
         r.category?.toLowerCase().includes(query) ||
         (r.categories && r.categories.some(c => c.toLowerCase().includes(query)))
-      ).slice(0, 15).map(r => ({ ...r, productType: 'reels-bundle' }))
-    : reelsBundles.slice(0, 4).map(r => ({ ...r, productType: 'reels-bundle' }));
+      ).slice(0, 20).map(r => ({ ...r, productType: 'reels-bundle' }))
+    : reelsBundles.slice(0, 6).map(r => ({ ...r, productType: 'reels-bundle' }));
 
   // Filter Digital Products
   const matchedDigital = query
@@ -64,7 +55,6 @@ export default function SearchModal() {
     : digitalProducts.slice(0, 4).map(d => ({ ...d, productType: 'digital-product' }));
 
   const allResults = [
-    ...(selectedTab === 'all' || selectedTab === 'subscriptions' ? matchedSubscriptions : []),
     ...(selectedTab === 'all' || selectedTab === 'reels' ? matchedReels : []),
     ...(selectedTab === 'all' || selectedTab === 'digital' ? matchedDigital : []),
   ];
@@ -89,7 +79,7 @@ export default function SearchModal() {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search subscriptions, 130+ reels bundles, templates..."
+            placeholder="Search 160+ viral reels bundles, Canva templates, toolkits..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 text-slate-800 placeholder-slate-400 font-medium text-base outline-none bg-transparent"
@@ -118,16 +108,6 @@ export default function SearchModal() {
             }`}
           >
             All Results
-          </button>
-          <button
-            onClick={() => setSelectedTab('subscriptions')}
-            className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
-              selectedTab === 'subscriptions'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'text-slate-600 hover:bg-slate-200/60'
-            }`}
-          >
-            <Tv className="w-3.5 h-3.5" /> Subscriptions ({matchedSubscriptions.length})
           </button>
           <button
             onClick={() => setSelectedTab('reels')}
@@ -210,8 +190,8 @@ export default function SearchModal() {
 
         {/* Footer shortcuts */}
         <div className="p-3 bg-slate-50 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between px-5">
-          <span>Search 130+ viral bundles and subscriptions</span>
-          <span className="text-teal-800 font-semibold">DigiVault Fast Search</span>
+          <span>Search 222,000+ viral reels and creator toolkits</span>
+          <span className="text-teal-800 font-semibold">Dizozet Fast Search</span>
         </div>
 
       </div>

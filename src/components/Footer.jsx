@@ -75,7 +75,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed pr-2 sm:pr-4">
-              Your trusted platform for subscriptions, 130+ viral reels bundles with commercial reseller rights, and creator tools.
+              Your trusted platform for 222,000+ viral reels bundles with commercial reseller rights, Canva editable templates, and creator tools.
             </p>
             <div className="pt-1 sm:pt-2 flex flex-col gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-slate-400">
               <div className="flex items-center gap-2">
@@ -105,11 +105,6 @@ export default function Footer() {
               <li>
                 <Link to="/" className="hover:text-[#a1e3d8] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-600" /> Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/subscriptions" className="hover:text-[#a1e3d8] transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-600" /> Subscriptions
                 </Link>
               </li>
               <li>

@@ -6,8 +6,7 @@ const BASE_URL = 'https://www.dizozet.shop';
 const staticPages = [
   { url: '/', priority: '1.0', changefreq: 'daily' },
   { url: '/reels-bundles', priority: '0.9', changefreq: 'daily' },
-  { url: '/subscriptions', priority: '0.9', changefreq: 'daily' },
-  { url: '/digital-products', priority: '0.8', changefreq: 'daily' },
+  { url: '/digital-products', priority: '0.9', changefreq: 'daily' },
   { url: '/orders', priority: '0.5', changefreq: 'weekly' }
 ];
 
@@ -32,36 +31,17 @@ try {
   console.warn('Could not read reels bundles for sitemap:', e.message);
 }
 
-// 2. Add Subscriptions
-try {
-  const subsPath = path.join(__dirname, '..', 'src', 'data', 'subscriptionsData.js');
-  if (fs.existsSync(subsPath)) {
-    const content = fs.readFileSync(subsPath, 'utf8');
-    const ids = Array.from(content.matchAll(/id:\s*['"]([^'"]+)['"]/g), m => m[1]);
-    const uniqueIds = Array.from(new Set(ids)).filter(id => id.startsWith('sub-'));
-    uniqueIds.forEach(id => {
-      urls.push({
-        url: `/product/subscription/${id}`,
-        priority: '0.8',
-        changefreq: 'weekly'
-      });
-    });
-  }
-} catch (e) {
-  console.warn('Could not read subscriptions for sitemap:', e.message);
-}
-
-// 3. Add Digital Products
+// 2. Add Digital Products
 try {
   const digiPath = path.join(__dirname, '..', 'src', 'data', 'digitalProductsData.js');
   if (fs.existsSync(digiPath)) {
     const content = fs.readFileSync(digiPath, 'utf8');
     const ids = Array.from(content.matchAll(/id:\s*['"]([^'"]+)['"]/g), m => m[1]);
-    const uniqueIds = Array.from(new Set(ids)).filter(id => id.startsWith('digi-') || id.startsWith('prod-'));
+    const uniqueIds = Array.from(new Set(ids)).filter(id => id.startsWith('dp-') || id.startsWith('digi-') || id.startsWith('prod-'));
     uniqueIds.forEach(id => {
       urls.push({
         url: `/product/digital-product/${id}`,
-        priority: '0.7',
+        priority: '0.8',
         changefreq: 'weekly'
       });
     });

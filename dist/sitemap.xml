@@ -13,16 +13,10 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/subscriptions</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://www.dizozet.shop/digital-products</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.dizozet.shop/orders</loc>
@@ -1033,67 +1027,37 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-gemini-advanced</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-reels-growth-playbook</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-netflix-uhd</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-notion-creator-os</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-canva-pro</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-canva-carousel-megapack</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-chatgpt-plus</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-chatgpt-prompts-vault</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-youtube-premium</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-video-editing-luts-sfx</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-adobe-creative-cloud</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-capcut-pro</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-prime-video</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-spotify-premium</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-midjourney</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.dizozet.shop/product/subscription/sub-nordvpn</loc>
+    <loc>https://www.dizozet.shop/product/digital-product/dp-youtube-thumbnail-suite</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
